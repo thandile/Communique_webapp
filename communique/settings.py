@@ -105,7 +105,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 #  logging in and logging out urls
 # where to redirect after logging in
-# LOGIN_REDIRECT_URL = reverse_lazy('dashboard')
+LOGIN_REDIRECT_URL = reverse_lazy('dashboard_home')
 LOGIN_URL = reverse_lazy('dj-auth:login')
 LOGOUT_URL = reverse_lazy('dj-auth:logout')
 
