@@ -24,16 +24,11 @@
 
     <body>
         <div id="wrapper">
-            <main>
-                {% block content %}
-                    This the default content.
-                {% endblock %}
-            </main>
-        </div>
-        <footer>
-            {% block footer %}
+            {% block menu %}
             {% endblock %}
-        </footer>
+            {% block content %}
+            {% endblock %}
+        </div>
 
         <!-- jQuery -->
         <script src="{% static "js/jquery.js" %}"></script>
