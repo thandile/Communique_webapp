@@ -1,5 +1,8 @@
 # pycharm specific files and folders
 .idea/
+# the default db.sqlite3 database created by Django
+db.sqlite3
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
