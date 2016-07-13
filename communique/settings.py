@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 from django.core.urlresolvers import reverse_lazy
 
+# importation for Heroku deployment
+import dj_database_url
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -24,9 +27,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'f8i039#2fq#1@27u-l$#s(#!=(ir52nq77cffsa10q)jbr_2im'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+#DEBUG = True
+# heroku deployment
+DEBUG = False
 
-ALLOWED_HOSTS = []
+#heroku deployment
+ALLOWED_HOSTS = ['*']
+#ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -77,12 +84,22 @@ WSGI_APPLICATION = 'communique.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# database for production, development and test should be defined
+# current settings for Heroku deploy
+DATABASES = {}
+DATABASES['default'] = dj_database_url.config()
+
+# setting for development and regular deployment
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#        'NAME': 'communique_database',
+#        'USER': 'communique_user',
+#        'PASSWORD':'',
+#        'HOST':'localhost',
+#        'PORT':'',
+#    }
+#}
 
 
 # Password validation
@@ -128,3 +145,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
+# heroku deployment
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
