@@ -14,7 +14,7 @@ from django.core.urlresolvers import reverse_lazy
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
 # managing static content for heroku
 # https://devcenter.heroku.com/articles/django-assets
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Application definition
 
