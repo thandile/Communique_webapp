@@ -1,5 +1,17 @@
 # pycharm specific files and folders
 .idea/
+# the default db.sqlite3 database created by Django
+db.sqlite3
+
+# the production environment
+prod_env/
+
+# the development environment
+dev_env/
+
+# the testing environment
+test_env/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
