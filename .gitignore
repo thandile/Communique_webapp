@@ -6,6 +6,12 @@ db.sqlite3
 # the production environment
 prod_env/
 
+# the development environment
+dev_env/
+
+# the testing environment
+test_env/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
