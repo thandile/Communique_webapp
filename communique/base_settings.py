@@ -1,5 +1,5 @@
 """
-Django settings for communique project.
+Django base settings for communique project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.9/topics/settings/
