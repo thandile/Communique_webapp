@@ -21,11 +21,16 @@ class Service(models.Model):
         """
         A method to generate a slug from the name of the service.
         """
-        return slugify(self.name, allow_unicode=True)
+        return slugify(self.name.lower(), allow_unicode=True)
 
     def get_absolute_url(self):
         # to utilise reverse and the slug
         pass
+
+    def save(self, *args, **kwargs):
+        # make sure that the name is saved in lower case
+        self.name = self.name.lower()
+        super(Service, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ['name']
