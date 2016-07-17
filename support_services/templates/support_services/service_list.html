@@ -31,14 +31,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Temporary service one</td>
-              <td>Temporary description one</td>
-            </tr>
-            <tr>
-              <td>Temporary service two</td>
-              <td>Temporary description two</td>
-            </tr>
+            {% for service in service_list %}
+              <tr>
+                <td>{{ service.name }}</td>
+                <td>{{ service.description }}</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
