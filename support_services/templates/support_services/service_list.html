@@ -64,7 +64,7 @@
           <tbody>
             {% for service in service_list %}
               <tr>
-                <td>{{ service.name }}</td>
+                <td><a href="{{ service.get_absolute_url }}">{{ service.name|title }}</a></td>
                 <td>{{ service.description }}</td>
               </tr>
             {% endfor %}

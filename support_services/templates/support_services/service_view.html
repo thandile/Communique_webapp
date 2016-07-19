@@ -1,11 +1,11 @@
 {% extends parent_template|default:"support_services/base_support_services.html" %}
 
 {% block title %}
-  Service - {{ service.name }}
+  Service - {{ service.name|title }}
 {% endblock %}
 
 {% block page_heading %}
- {{ service.name }}
+ {{ service.name|title }}
 {% endblock %}
 
 {% block page_subheading %}
@@ -18,7 +18,7 @@
     <i class="fa fa-table"></i> <a href="{% url 'support_services_service_list' %}">Services</a>
   </li>
   <li class="active">
-    {{ service.name }}
+    {{ service.name|title }}
   </li>
 {% endblock %}
 
