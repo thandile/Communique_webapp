@@ -18,18 +18,13 @@ class Service(models.Model):
     def __str__(self):
         return self.name.title()
 
-    def generate_slug(self):
-        """
-        A method to generate a slug from the name of the service.
-        """
-        return slugify(self.name.lower(), allow_unicode=True)
-
     def get_absolute_url(self):
         return reverse('support_services_service_detail', kwargs={'slug':self.slug})
 
     def save(self, *args, **kwargs):
         # make sure that the name is saved in lower case
         self.name = self.name.lower()
+        self.slug = slugify(self.name, allow_unicode=True)
         super(Service, self).save(*args, **kwargs)
 
     class Meta:
