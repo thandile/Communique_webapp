@@ -27,14 +27,15 @@
           <h3 class="panel-title"> Service Details</h3>
         </div>
         <div class="panel-body">
-          <form role="form">
+          <form role="form" action="{% url 'support_services_service_create' %}" method="post">
+            {% csrf_token %}
             <div class="form-group">
-              <label>Text input</label>
-              <input class="form-control" placeholder="Enter text">
+              {{ form.name.label_tag}}
+              <input class="form-control" placeholder="Enter name" type="text">
               <p class="help-block">Example block level text up here</p>
             </div>
             <div class="form-group">
-              <label>Text area</label>
+              {{ form.description.label_tag }}
               <textarea class="form-control" rows="3"></textarea>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
