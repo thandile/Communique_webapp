@@ -37,6 +37,19 @@
     </div>
   </div>
 
+  <!-- information alerts -->
+  {% if not service_list %}
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="alert alert-info alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <i class="fa fa-info-circle"></i>  <strong>Currently, there isn't an active service.</strong>
+          Click the <a href="{% url 'support_services_service_create' %}" class="alert-link">create service</a> button to create one.
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
   <div class="row">
     <div class="col-lg-12">
       <h2>Existing Services</h2>
