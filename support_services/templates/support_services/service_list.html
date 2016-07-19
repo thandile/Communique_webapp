@@ -20,6 +20,26 @@
 
 {% block page_content %}
   <div class="row">
+    <!-- search bar -->
+    <div class="col-lg-6">
+      <form role="form">
+        <div class="form-group input-group">
+          <input type="text" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+          </span>
+        </div>
+      </form>
+    </div>
+    <!-- create new service button -->
+    <div class="col-lg-6">
+      <form role="form">
+        <button type="submit" class="btn btn-primary" style="float:right">Create New Service</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-lg-12">
       <h2>Existing Services</h2>
       <div class="table-responsive">
