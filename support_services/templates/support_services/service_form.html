@@ -1,4 +1,5 @@
 {% extends parent_template|default:"support_services/base_support_services.html" %}
+{% load widget_tweaks %}
 
 {% block title %}
   Create a new service
@@ -31,15 +32,15 @@
             {% csrf_token %}
             <div class="form-group">
               {{ form.name.label_tag}}
-              <input class="form-control" placeholder="Enter name" type="text">
+              {{ form.name|attr:"placeholder:Enter service's name"|add_class:"form-control" }}
               <p class="help-block">Example block level text up here</p>
             </div>
             <div class="form-group">
               {{ form.description.label_tag }}
-              <textarea class="form-control" rows="3"></textarea>
+              {{ form.description|add_class:"form-control" }}
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
             <button type="reset" class="btn btn-default">Reset</button>
+            <button type="submit" class="btn btn-default">Submit</button>
           </form>
         </div>
       </div>

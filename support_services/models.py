@@ -9,9 +9,9 @@ class Service(models.Model):
     A support service has both a name and description and is provided to
     patients.
     """
-    name = models.CharField(verbose_name="service's name", unique=True,
+    name = models.CharField(verbose_name="Name", unique=True,
                             max_length=100)
-    description = models.TextField(verbose_name="service's description")
+    description = models.TextField(verbose_name="Description")
     # slug used to create unique url for service
     slug = models.SlugField(max_length=120, unique=True)
 
