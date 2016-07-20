@@ -2,21 +2,27 @@
 {% load widget_tweaks %}
 
 {% block title %}
-  Create a new service
+  Update service
 {% endblock %}
 
 {% block page_heading %}
-  Create
+  {{ service.name|title }}
 {% endblock %}
 
 {% block page_subheading %}
-  New service
+  Update
 {% endblock %}
 
 {% block page_breadcrumb %}
   {{ block.super }}
   <li>
-    <i class="fa fa-table"></i> <a href="{% url 'support_services_service_list'%}">Services</a>
+    <i class="fa fa-table"></i> <a href="{% url 'support_services_service_list' %}">Services</a>
+  </li>
+  <li>
+    <a href="{{ service.get_absolute_url }}">{{ service.name|title }}</a>
+  </li>
+  <li class="active">
+    Update
   </li>
 {% endblock %}
 
@@ -53,19 +59,18 @@
           <h3 class="panel-title"> Service Details</h3>
         </div>
         <div class="panel-body">
-          <form role="form" action="{% url 'support_services_service_create' %}" method="post">
+          <form role="form" action="{{ service.get_update_url }}" method="post">
             {% csrf_token %}
             <div class="form-group">
               {{ form.name.label_tag }}
-              {{ form.name|attr:"placeholder:Enter service's name"|add_class:"form-control" }}
-              <p class="help-block">Example block level text up here</p>
+              {{ form.name|add_class:"form-control" }}
             </div>
             <div class="form-group">
               {{ form.description.label_tag }}
               {{ form.description|add_class:"form-control" }}
             </div>
-            <button type="reset" class="btn btn-default">Reset</button>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <a href="{{ service.get_absolute_url }}" class="btn btn-primary">Cancel</a>
+            <button type="submit" class="btn btn-danger">Update</button>
           </form>
         </div>
       </div>
