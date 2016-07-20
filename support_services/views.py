@@ -37,6 +37,7 @@ class ServiceUpdateView(UpdateView):
     form_class = ServiceForm
     model = Service
     template_name = 'support_services/service_update_form.html'
+    context_object_name = 'service'
 
 class ServiceDeleteView(DeleteView):
     """
