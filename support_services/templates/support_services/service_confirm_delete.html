@@ -26,4 +26,20 @@
 {% endblock %}
 
 {% block page_content %}
+  <div class="row">
+    <div class="col-lg-12">
+      <h2 class="page-header">Confirm Deletion</h2>
+      <p class="lead">Are you sure that you want to delete the service '{{ service.name|title }}'?</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <form role="form" method="post" action="{{ service.get_delete_url }}">
+        {% csrf_token %}
+        <a href="{{ service.get_absolute_url }}" class="btn btn-success">Cancel</a>
+        <button type="submit" class="btn btn-danger">Delete</button>
+      </form>
+    </div>
+  </div>
 {% endblock %}
