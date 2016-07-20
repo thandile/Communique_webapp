@@ -1,0 +1,29 @@
+{% extends parent_template|default:"support_services/base_support_services.html" %}
+
+{% block title %}
+  Confirm Delete - {{ service.name|title }}
+{% endblock %}
+
+{% block page_heading %}
+  {{ service.name|title }}
+{% endblock %}
+
+{% block page_subheading %}
+  Confirm Deletion
+{% endblock %}
+
+{% block page_breadcrumb %}
+  {{ block.super }}
+  <li>
+    <i class="fa fa-table"></i> <a href="{% url 'support_services_service_list' %}">Services</a>
+  </li>
+  <li>
+    <a href="{{ service.get_absolute_url }}">{{ service.name|title }}</a>
+  </li>
+  <li class="active">
+    Delete
+  </li>
+{% endblock %}
+
+{% block page_content %}
+{% endblock %}
