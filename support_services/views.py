@@ -1,6 +1,6 @@
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 
 from .models import Service
@@ -29,6 +29,14 @@ class ServiceCreateView(CreateView):
     form_class = ServiceForm
     model = Service
     template_name = 'support_services/service_form.html'
+
+class ServiceUpdateView(UpdateView):
+    """
+    An UpdateView for the support service model. No shit.
+    """
+    form_class = ServiceForm
+    model = Service
+    template_name = 'support_services/service_update_form.html'
 
 class ServiceDeleteView(DeleteView):
     """
