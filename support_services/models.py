@@ -21,6 +21,9 @@ class Service(models.Model):
     def get_absolute_url(self):
         return reverse('support_services_service_detail', kwargs={'slug':self.slug})
 
+    def get_delete_url(self):
+        return reverse('support_services_service_delete', kwargs={'slug':self.slug})
+
     def save(self, *args, **kwargs):
         # make sure that the name is saved in lower case
         self.name = self.name.lower()
