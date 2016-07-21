@@ -16,7 +16,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -80,8 +79,8 @@ AUTH_PASSWORD_VALIDATORS = [
 #  logging in and logging out urls
 # where to redirect after logging in
 LOGIN_REDIRECT_URL = reverse_lazy('dashboard_home')
-LOGIN_URL = reverse_lazy('dj-auth:login')
-LOGOUT_URL = reverse_lazy('dj-auth:logout')
+LOGIN_URL = reverse_lazy('login')
+LOGOUT_URL = reverse_lazy('logout')
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
