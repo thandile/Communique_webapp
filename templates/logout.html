@@ -1,0 +1,43 @@
+{% extends parent_template|default:"base.html" %}
+{% load widget_tweaks %}
+
+{% block title %}
+  {{ block.super }} - Logout
+{% endblock %}
+
+{% block content %}
+  {% if form.errors %}
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="alert alert-danger alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <i class="fa fa-info-circle"></i> <strong>Your username and password didn't match.</strong>
+          Please try again.
+        </div>
+      </div>
+    </div>
+  {% else %}
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="alert alert-info alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <i class="fa fa-info-circle"></i> <strong>You have successfully logged out!</strong>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title"> Please Sign In</h3>
+        </div>
+        <div class="panel-body">
+          {% include "login_form.html" with login_button='Log Back In' %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
