@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from rest_framework import generics
+from rest_framework import permissions
 
 from .models import Service
 from .forms import ServiceForm
@@ -63,6 +64,7 @@ class ServiceListAPIView(generics.ListCreateAPIView):
     """
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 class ServiceDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     """
@@ -71,3 +73,4 @@ class ServiceDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
     """
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
+    permission_classes = (permissions.IsAuthenticated,)
