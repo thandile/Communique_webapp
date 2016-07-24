@@ -1,14 +1,15 @@
-from django.conf.urls import url
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.conf.urls import url, include
 
-from support_services.views import ServiceListAPIView, ServiceDetailAPIView
-from user.views import UserListAPIView, UserDetailAPIView
+from rest_framework.routers import DefaultRouter
+
+from support_services.views import ServiceViewSet
+from user.views import UserViewSet
+
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r'services', ServiceViewSet)
+router.register(r'users', UserViewSet)
 
 urlpatterns = [
-    url(r'^services/$', ServiceListAPIView.as_view()),
-    url(r'^services/(?P<pk>[0-9]+)/$', ServiceDetailAPIView.as_view()),
-    url(r'^users/$', UserListAPIView.as_view()),
-    url(r'^users/(?P<pk>[0-9]+)/$', UserDetailAPIView.as_view()),
+    url(r'^', include(router.urls)),
 ]
-
-urlpatterns = format_suffix_patterns(urlpatterns)

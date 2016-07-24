@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from rest_framework import generics
+from rest_framework import viewsets
 from rest_framework import permissions
 
 from .models import Service
@@ -57,19 +57,10 @@ class ServiceDeleteView(LoginRequiredMixin, DeleteView):
 Views for the REST API
 """
 
-class ServiceListAPIView(generics.ListCreateAPIView):
+class ServiceViewSet(viewsets.ModelViewSet):
     """
-    A view used by the REST API to retrieve a list of Services and create a new
-    Service
-    """
-    queryset = Service.objects.all()
-    serializer_class = ServiceSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-
-class ServiceDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
-    """
-    A view used the REST API to retrieve a single Service and also update or
-    delete it.
+    This view set automatically provides 'list', 'create', 'retrieve', 'update'
+    and 'destroy' actions for the Service model via REST API.
     """
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer

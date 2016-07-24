@@ -1,7 +1,6 @@
 from django.contrib.auth.models import User
 
-from rest_framework import generics
-from rest_framework import permissions
+from rest_framework import viewsets
 
 from .serializers import UserSerializer
 
@@ -9,18 +8,10 @@ from .serializers import UserSerializer
 Views for the REST API
 """
 
-class UserListAPIView(generics.ListAPIView):
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
     """
-    A view used by the REST API to get a list of Users.
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = (permissions.IsAuthenticated,)
-
-class UserDetailAPIView(generics.RetrieveAPIView):
-    """
-    A view used by the REST API to get details of a single User.
+    This view set automatically provides 'list' and 'detail' actions for the
+    User model via REST API
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (permissions.IsAuthenticated,)
