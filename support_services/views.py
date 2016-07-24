@@ -4,8 +4,11 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from rest_framework import generics
+
 from .models import Service
 from .forms import ServiceForm
+from .serializers import ServiceSerializer
 
 class ServiceListView(LoginRequiredMixin, ListView):
     """
@@ -48,3 +51,23 @@ class ServiceDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'support_services/service_confirm_delete.html'
     success_url = reverse_lazy('support_services_service_list')
     context_object_name = 'service'
+
+"""
+Views for the REST API
+"""
+
+class ServiceListAPIView(generics.ListCreateAPIView):
+    """
+    A view used by the REST API to retrieve a list of Services and create a new
+    Service
+    """
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+
+class ServiceDetailAPIView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    A view used the REST API to retrieve a single Service and also update or
+    delete it.
+    """
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
