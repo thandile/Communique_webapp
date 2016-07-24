@@ -1,3 +1,17 @@
-from django.shortcuts import render
+from django.contrib.auth.models import User
 
-# Create your views here.
+from rest_framework import viewsets
+
+from .serializers import UserSerializer
+
+"""
+Views for the REST API
+"""
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    This view set automatically provides 'list' and 'detail' actions for the
+    User model via REST API
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer

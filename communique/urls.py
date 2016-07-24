@@ -3,6 +3,7 @@ from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 
 from dashboard import urls as dashboard_urls
+from api import urls as api_urls
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(pattern_name='login', permanent=False)),
@@ -11,4 +12,5 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'template_name':'logout.html'},
         name='logout'),
     url(r'^dashboard/', include(dashboard_urls)),
+    url(r'^api/', include(api_urls)),
 ]

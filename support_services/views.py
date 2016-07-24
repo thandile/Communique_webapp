@@ -4,8 +4,12 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from rest_framework import viewsets
+from rest_framework import permissions
+
 from .models import Service
 from .forms import ServiceForm
+from .serializers import ServiceSerializer
 
 class ServiceListView(LoginRequiredMixin, ListView):
     """
@@ -48,3 +52,16 @@ class ServiceDeleteView(LoginRequiredMixin, DeleteView):
     template_name = 'support_services/service_confirm_delete.html'
     success_url = reverse_lazy('support_services_service_list')
     context_object_name = 'service'
+
+"""
+Views for the REST API
+"""
+
+class ServiceViewSet(viewsets.ModelViewSet):
+    """
+    This view set automatically provides 'list', 'create', 'retrieve', 'update'
+    and 'destroy' actions for the Service model via REST API.
+    """
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+    permission_classes = (permissions.IsAuthenticated,)
