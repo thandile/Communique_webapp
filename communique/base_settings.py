@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'api',
     'user',
     'dashboard',
+    'services',
     'support_services',
 ]
 
