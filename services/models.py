@@ -13,14 +13,13 @@ class PilotProgram(models.Model):
         return self.name.title()
 
     def get_absolute_url(self):
-        # return reverse('services_pilot_program_detail', kwargs={'slug':self.slug})
-        pass
+        return reverse('services_pilot_program_detail', kwargs={'pk':self.pk})
 
     def get_update_url(self):
-        pass
+        return reverse('services_pilot_program_update', kwargs={'pk':self.pk})
 
     def get_delete_url(self):
-        pass
+        return reverse('services_pilot_program_delete', kwargs={'pk':self.pk})
 
     class Meta:
         ordering = ['name']
@@ -39,13 +38,13 @@ class Patient(models.Model):
         return name
 
     def get_absolute_url(self):
-        pass
+        return reverse('services_patient_detail', kwargs={'pk':self.pk})
 
     def get_update_url(self):
-        pass
+        return reverse('services_patient_update', kwargs={'pk':self.pk})
 
     def get_delete_url(self):
-        pass
+        return reverse('services_patient_delete', kwargs={'pk':self.pk})
 
     class Meta:
         ordering = ['last_name']

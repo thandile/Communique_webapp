@@ -9,7 +9,7 @@ from rest_framework import permissions
 
 from .serializers import PatientSerializer, PilotProgramSerializer
 from .models import Patient, PilotProgram
-from .forms import PilotProgramForm
+from .forms import PilotProgramForm, PatientForm
 
 """
 Views for the Web App
@@ -27,7 +27,7 @@ class PilotProgramDetailView(LoginRequiredMixin, DetailView):
     A detail view for the Pilot Program model.
     """
     model = PilotProgram
-    template_name = 'services/pilot_program.html'
+    template_name = 'services/pilot_program_view.html'
     context_object_name = 'pilot_program'
 
 class PilotProgramCreateView(LoginRequiredMixin, CreateView):
@@ -47,7 +47,7 @@ class PilotProgramUpdateView(LoginRequiredMixin, UpdateView):
     template_name = 'services/pilot_program_update_form.html'
     context_object_name = 'pilot_program'
 
-class PilotProgramDetailView(LoginRequiredMixin, DeleteView):
+class PilotProgramDeleteView(LoginRequiredMixin, DeleteView):
     """
     A delete view for the pilot progrom model.
     """
@@ -55,6 +55,49 @@ class PilotProgramDetailView(LoginRequiredMixin, DeleteView):
     template_name = 'services/pilot_program_confirm_delete.html'
     success_url = reverse_lazy('services_pilot_program_list')
     context_object_name = 'pilot_program'
+
+class PatientListView(LoginRequiredMixin, ListView):
+    """
+    A list view for the patient model.
+    """
+    model = Patient
+    template_name = 'services/patient_list.html'
+    context_object_name = 'patient_list'
+
+class PatientDetailView(LoginRequiredMixin, DetailView):
+    """
+    A detail view for the patient model.
+    """
+    model = Patient
+    template_name = 'services/patient_view.html'
+    context_object_name = 'patient'
+
+class PatientCreateView(LoginRequiredMixin, CreateView):
+    """
+    A create view for the patient model.
+    """
+    form_class = PatientForm
+    model = Patient
+    template_name = 'services/patient_form.html'
+
+class PatientUpdateView(LoginRequiredMixin, UpdateView):
+    """
+    An update view for the patient model.
+    """
+    form_class = PatientForm
+    model = Patient
+    template_name = 'services/patient_update_form.html'
+    context_object_name = 'patient'
+
+class PatientDeleteView(LoginRequiredMixin, DeleteView):
+    """
+    A delete view for the patient model.
+    """
+    model = Patient
+    template_name = 'services/patient_confirm_delete.html'
+    success_url = reverse_lazy('services_patient_list')
+    context_object_name = 'patient'
+
 
 """
 Views for the REST API
