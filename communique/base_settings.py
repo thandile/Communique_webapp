@@ -84,6 +84,13 @@ LOGIN_REDIRECT_URL = reverse_lazy('dashboard_home')
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_URL = reverse_lazy('logout')
 
+# REST framework settings
+# http://www.django-rest-framework.org/api-guide/settings/
+REST_FRAMEWORK = {
+    'DATE_FORMAT':"%d-%m-%Y",
+    'DATE_INPUT_FORMATS':["%d/%m/%Y","%d-%m-%Y"]
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
