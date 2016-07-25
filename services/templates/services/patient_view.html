@@ -1,11 +1,11 @@
-{% extends parent_template|default:"support_services/base_services.html" %}
+{% extends parent_template|default:"services/base_services.html" %}
 
 {% block title %}
-  Patient - {{ patient.__str__ }}
+  Patient - {{ patient }}
 {% endblock %}
 
 {% block page_heading %}
- {{ patient.__str__ }}
+ {{ patient }}
 {% endblock %}
 
 {% block page_subheading %}
@@ -18,7 +18,7 @@
     <i class="fa fa-table"></i> <a href="{% url 'services_patient_list' %}">Patients</a>
   </li>
   <li class="active">
-    {{ patient.__str__ }}
+    {{ patient }}
   </li>
 {% endblock %}
 
