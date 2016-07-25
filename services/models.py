@@ -31,7 +31,7 @@ class Patient(models.Model):
     """
     first_name = models.CharField(verbose_name="First Name", max_length=60)
     last_name = models.CharField(verbose_name="Last Name", max_length=100)
-    birth_date = models.DateField(verbose_name="Birth Date")
+    birth_date = models.DateField(verbose_name="Birth Date", blank=True)
 
     def __str__(self):
         name = self.first_name + " " + self.last_name
