@@ -65,9 +65,9 @@
           <tbody>
             {% for patient in patient_list %}
               <tr>
-                <td>{{ patient.first_name|title }}</td>
-                <td>{{ patient.last_name|title }}</td>
-                <td>{{ patient.birth_date }}</td>
+                <td><a href="{{ patient.get_absolute_url }}">{{ patient.first_name|title }}</a></td>
+                <td><a href="{{ patient.get_absolute_url }}">{{ patient.last_name|title }}</a></td>
+                <td><a href="{{ patient.get_absolute_url }}">{{ patient.birth_date }}</a></td>
               </tr>
             {% endfor %}
           </tbody>

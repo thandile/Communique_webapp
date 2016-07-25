@@ -6,7 +6,7 @@
 {% endblock %}
 
 {% block page_heading %}
-  {{ patient.__str__ }}
+  {{ patient }}
 {% endblock %}
 
 {% block page_subheading %}
@@ -19,7 +19,7 @@
     <i class="fa fa-table"></i> <a href="{% url 'services_patient_list' %}">Patients</a>
   </li>
   <li>
-    <a href="{{ patient.get_absolute_url }}">{{ patient.__str__ }}</a>
+    <a href="{{ patient.get_absolute_url }}">{{ patient }}</a>
   </li>
   <li class="active">
     Update
