@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .model import Patient, PilotProgram
+from .models import Patient, PilotProgram
 
 class PilotProgramSerializer(serializers.ModelSerializer):
     """
