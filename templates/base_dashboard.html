@@ -112,7 +112,7 @@
                         </li>
                         <li class="divider"></li>
                         <li>
-                            <a href="#"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                            <a href="{% url 'logout' %}"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                         </li>
                     </ul>
                 </li>
@@ -127,13 +127,13 @@
                         <a href="#"> Users</a>
                     </li>
                     <li>
-                      <a href="#"> Patients</a>
+                      <a href="{% url 'services_patient_list' %}"> Patients</a>
                     </li>
                     <li>
                       <a href="#"> Cases</a>
                     </li>
                     <li>
-                      <a href="{% url 'support_services_service_list' %}"> Support Services</a>
+                      <a href="{% url 'services_pilot_program_list' %}"> Pilot Programs</a>
                     </li>
                 </ul>
             </div>

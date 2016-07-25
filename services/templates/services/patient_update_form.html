@@ -1,0 +1,83 @@
+{% extends parent_template|default:"services/base_services.html" %}
+{% load widget_tweaks %}
+
+{% block title %}
+  Update patient
+{% endblock %}
+
+{% block page_heading %}
+  {{ patient.__str__ }}
+{% endblock %}
+
+{% block page_subheading %}
+  Update
+{% endblock %}
+
+{% block page_breadcrumb %}
+  {{ block.super }}
+  <li>
+    <i class="fa fa-table"></i> <a href="{% url 'services_patient_list' %}">Patients</a>
+  </li>
+  <li>
+    <a href="{{ patient.get_absolute_url }}">{{ patient.__str__ }}</a>
+  </li>
+  <li class="active">
+    Update
+  </li>
+{% endblock %}
+
+{% block page_content %}
+  {% if form.errors %}
+    <div class="row">
+      <div class="col-lg-12">
+        {% for non_field_error in form.non_field_errors %}
+          <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <i class="fa fa-info-circle"></i> <strong>Oh snap!</strong> {{ non_field_error|escape }}
+          </div>
+        {% endfor %}
+
+        {% for field in form %}
+          {% if field.errors %}
+            {% for error in field.errors %}
+              <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <i class="fa fa-info-circle"></i> <strong>Error on the '{{ field.label }}' field: </strong>
+                {{ error|escape }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="panel panel-green">
+        <div class="panel-heading">
+          <h3 class="panel-title"> Patient Details</h3>
+        </div>
+        <div class="panel-body">
+          <form role="form" action="{{ patient.get_update_url }}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              {{ form.first_name.label_tag }}
+              {{ form.first_name|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+              {{ form.last_name.label_tag }}
+              {{ form.last_name|add_class:"form-control" }}
+            </div>
+            <div class="form-group">
+              {{ form.birth_date.label_tag }}
+              {{ form.birth_date|add_class:"form-control" }}
+            </div>
+            <a href="{{ patient.get_absolute_url }}" class="btn btn-primary">Cancel</a>
+            <button type="submit" class="btn btn-danger">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
