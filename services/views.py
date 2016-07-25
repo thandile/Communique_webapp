@@ -119,3 +119,4 @@ class PilotProgramViewSet(viewsets.ReadOnlyModelViewSet):
     """
     queryset = PilotProgram.objects.all()
     serializer_class = PilotProgramSerializer
+    permission_classes = (permissions.IsAuthenticated,)
