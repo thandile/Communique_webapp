@@ -1,0 +1,76 @@
+{% extends parent_template|default:"services/base_services.html" %}
+{% block title %}
+  {{ block.super }} - Pilot Programs
+{% endblock %}
+
+{% block page_heading %}
+  Pilot Programs
+{% endblock %}
+
+{% block page_subheading %}
+  List
+{% endblock %}
+
+{% block page_breadcrumb %}
+  {{ block.super }}
+  <li class="active">
+    <i class="fa fa-table"></i> Pilot Programs
+  </li>
+{% endblock %}
+
+{% block page_content %}
+  <div class="row">
+    <!-- search bar -->
+    <div class="col-lg-6">
+      <form role="form">
+        <div class="form-group input-group">
+          <input type="text" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+          </span>
+        </div>
+      </form>
+    </div>
+    <!-- create new pilot button -->
+    <div class="col-lg-6">
+      <a href="#" class="btn btn-primary" style="float:right">Start New Pilot Program</a>
+    </div>
+  </div>
+
+  <!-- information alerts -->
+  {% if not pilot_program_list %}
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="alert alert-info alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <i class="fa fa-info-circle"></i>  <strong>Currently, there isn't an active pilot program.</strong>
+          Click the <a href="#" class="alert-link">create pilot program</a> button to create one.
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Existing Pilot Programs</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for pilot_program in pilot_program_list %}
+              <tr>
+                <td><a href="#">{{ pilot_program.name|title }}</a></td>
+                <td>{{ pilot_program.description }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
