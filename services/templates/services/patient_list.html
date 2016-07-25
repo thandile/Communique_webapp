@@ -1,10 +1,10 @@
-{% extends parent_template|default:"support_services/base_support_services.html" %}
+{% extends parent_template|default:"services/base_services.html" %}
 {% block title %}
-  {{ block.super }} - Services
+  {{ block.super }} - Patients
 {% endblock %}
 
 {% block page_heading %}
-  Support Services
+  Patients
 {% endblock %}
 
 {% block page_subheading %}
@@ -14,7 +14,7 @@
 {% block page_breadcrumb %}
   {{ block.super }}
   <li class="active">
-    <i class="fa fa-table"></i> Services
+    <i class="fa fa-table"></i> Patients
   </li>
 {% endblock %}
 
@@ -31,20 +31,20 @@
         </div>
       </form>
     </div>
-    <!-- create new service button -->
+    <!-- create new patient button -->
     <div class="col-lg-6">
-      <a href="{% url 'support_services_service_create' %}" class="btn btn-primary" style="float:right">Start New Service</a>
+      <a href="{% url 'services_patient_create' %}" class="btn btn-primary" style="float:right">Add New Patient</a>
     </div>
   </div>
 
   <!-- information alerts -->
-  {% if not service_list %}
+  {% if not patient_list %}
     <div class="row">
       <div class="col-lg-12">
         <div class="alert alert-info alert-dismissable">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <i class="fa fa-info-circle"></i>  <strong>Currently, there isn't an active service.</strong>
-          Click the <a href="{% url 'support_services_service_create' %}" class="alert-link">create service</a> button to create one.
+          <i class="fa fa-info-circle"></i>  <strong>Currently, there isn't any registered patient.</strong>
+          Click the <a href="#" class="alert-link">add new patient </a> button to add one.
         </div>
       </div>
     </div>
@@ -52,20 +52,22 @@
 
   <div class="row">
     <div class="col-lg-12">
-      <h2>Existing Services</h2>
+      <h2>Existing Patients</h2>
       <div class="table-responsive">
         <table class="table table-bordered table-hover">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Description</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Date of Birth</th>
             </tr>
           </thead>
           <tbody>
-            {% for service in service_list %}
+            {% for patient in patient_list %}
               <tr>
-                <td><a href="{{ service.get_absolute_url }}">{{ service.name|title }}</a></td>
-                <td>{{ service.description }}</td>
+                <td>{{ patient.first_name|title }}</td>
+                <td>{{ patient.last_name|title }}</td>
+                <td>{{ patient.birth_date }}</td>
               </tr>
             {% endfor %}
           </tbody>
