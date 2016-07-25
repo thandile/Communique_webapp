@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'user',
     'dashboard',
     'services',
-    'support_services',
 ]
 
 MIDDLEWARE_CLASSES = [
