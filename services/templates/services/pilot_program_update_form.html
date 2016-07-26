@@ -1,0 +1,40 @@
+{% extends parent_template|default:"services/pilot_program_base_form.html" %}
+{% load widget_tweaks %}
+
+{% block title %}
+  Update Pilot Program
+{% endblock %}
+
+{% block page_heading %}
+  {{ pilot_program }}
+{% endblock %}
+
+{% block page_subheading %}
+  Update
+{% endblock %}
+
+{% block page_breadcrumb %}
+  {{ block.super }}
+  <li>
+    <a href="{{ pilot_program.get_absolute_url }}">{{ pilot_program }}</a>
+  </li>
+  <li class="active">
+    Update
+  </li>
+{% endblock %}
+
+{% block form %}
+  <form role="form" action="{{ pilot_program.get_update_url }}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ form.name.label_tag }}
+      {{ form.name|add_class:"form-control" }}
+    </div>
+    <div class="form-group">
+      {{ form.description.label_tag }}
+      {{ form.description|add_class:"form-control" }}
+    </div>
+    <a href="{{ pilot_program.get_absolute_url }}" class="btn btn-primary">Cancel</a>
+    <button type="submit" class="btn btn-danger">Update</button>
+  </form>
+{% endblock %}
