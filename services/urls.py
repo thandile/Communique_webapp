@@ -10,6 +10,8 @@ urlpatterns = [
         name='services_pilot_program_list'),
     url(r'^pilot-programs/create/$', PilotProgramCreateView.as_view(),
         name='services_pilot_program_create'),
+    url(r'^pilot-programs/(?P<pk>[0-9]+)/$', PilotProgramDetailView.as_view(),
+        name='services_pilot_program_detail'),
     url(r'^patients/$', PatientListView.as_view(),
         name='services_patient_list'),
     url(r'^patients/create/$', PatientCreateView.as_view(),

@@ -64,8 +64,8 @@
           <tbody>
             {% for pilot_program in pilot_program_list %}
               <tr>
-                <td><a href="#">{{ pilot_program.name|title }}</a></td>
-                <td>{{ pilot_program.description }}</td>
+                <td><a href="{{ pilot_program.get_absolute_url }}">{{ pilot_program.name|title }}</a></td>
+                <td><a href="{{ pilot_program.get_absolute_url }}">{{ pilot_program.description }}</a></td>
               </tr>
             {% endfor %}
           </tbody>
