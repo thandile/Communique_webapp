@@ -33,7 +33,7 @@
     </div>
     <!-- create new pilot button -->
     <div class="col-lg-6">
-      <a href="#" class="btn btn-primary" style="float:right">Start New Pilot Program</a>
+      <a href="{% url 'services_pilot_program_create' %}" class="btn btn-primary" style="float:right">Start New Pilot Program</a>
     </div>
   </div>
 
@@ -44,7 +44,7 @@
         <div class="alert alert-info alert-dismissable">
           <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
           <i class="fa fa-info-circle"></i>  <strong>Currently, there isn't an active pilot program.</strong>
-          Click the <a href="#" class="alert-link">create pilot program</a> button to create one.
+          Click the <a href="{% url 'services_pilot_program_create' %}" class="alert-link">create pilot program</a> button to create one.
         </div>
       </div>
     </div>
