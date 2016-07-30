@@ -81,8 +81,8 @@ AUTH_PASSWORD_VALIDATORS = [
 #  logging in and logging out urls
 # where to redirect after logging in
 LOGIN_REDIRECT_URL = reverse_lazy('dashboard_home')
-LOGIN_URL = reverse_lazy('login')
-LOGOUT_URL = reverse_lazy('logout')
+LOGIN_URL = reverse_lazy('user_login')
+LOGOUT_URL = reverse_lazy('user_logout')
 
 # REST framework settings
 # http://www.django-rest-framework.org/api-guide/settings/

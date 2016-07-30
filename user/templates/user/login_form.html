@@ -1,5 +1,5 @@
 {% load widget_tweaks %}
-<form role="form" action="{% url 'login' %}" method="post">
+<form role="form" action="{% url 'user_login' %}" method="post">
   {% csrf_token %}
   <div class="form-group">
     {{ form.username.label_tag }}
