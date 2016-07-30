@@ -1,0 +1,30 @@
+{% extends parent_template|default:"services/pilot_program_base_form.html" %}
+{% load widget_tweaks %}
+
+{% block title %}
+  Create New Pilot Program
+{% endblock %}
+
+{% block page_heading %}
+  Create
+{% endblock %}
+
+{% block page_subheading %}
+  Pilot Program
+{% endblock %}
+
+{% block form %}
+  <form role="form" action="{% url 'services_pilot_program_create' %}" method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      {{ form.name.label_tag }}
+      {{ form.name|attr:"placeholder:Enter pilot program name"|add_class:"form-control" }}
+    </div>
+    <div class="form-group">
+      {{ form.description.label_tag }}
+      {{ form.description|add_class:"form-control" }}
+    </div>
+    <button type="reset" class="btn btn-default">Reset</button>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+{% endblock %}
