@@ -1,4 +1,6 @@
 from django.test import TestCase
+from django.db import IntegrityError
+
 from services.models import PilotProgram, Patient
 
 class PilotProgramTestCase(TestCase):
@@ -7,6 +9,15 @@ class PilotProgramTestCase(TestCase):
         pilot_program = PilotProgram.objects.create(name='sample pilot Program',
             description='sample description')
         self.assertEqual(pilot_program.__str__(), 'Sample Pilot Program')
+
+    def test_name_uniqueness(self):
+        """ Test that the pilot program name is unique. """
+        pilot_program_one = PilotProgram.objects.create(name='sample pilot',
+            description='sample description')
+        with self.assertRaises(IntegrityError):
+            PilotProgram.objects.create(name='sample pilot',
+                description='sample description two')
+
 
 class PatientTestCase(TestCase):
     def test_patient_str(self):
