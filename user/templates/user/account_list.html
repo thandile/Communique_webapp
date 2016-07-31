@@ -1,0 +1,103 @@
+{% extends parent_template|default:"user/base_user.html" %}
+{% block title %}
+  {{ block.super }} - Accounts
+{% endblock %}
+
+{% block page_heading %}
+  Accounts
+{% endblock %}
+
+{% block page_subheading %}
+  List
+{% endblock %}
+
+{% block page_breadcrumb %}
+  {{ block.super }}
+  <li class="active">
+    <i class="fa fa-table"></i> Accounts
+  </li>
+{% endblock %}
+
+{% block page_content %}
+  <div class="row">
+    <!-- search bar -->
+    <div class="col-lg-6">
+      <form role="form">
+        <div class="form-group input-group">
+          <input type="text" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="button">Go!</button>
+          </span>
+        </div>
+      </form>
+    </div>
+    <!-- create new account button -->
+    <div class="col-lg-6">
+      <a href="#" class="btn btn-primary" style="float:right">
+        Add New Account
+      </a>
+    </div>
+  </div>
+
+  <!-- information alerts -->
+  {% if not account_list %}
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="alert alert-info alert-dismissable">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+          <i class="fa fa-info-circle"></i>
+            <strong>
+              Currently, there isn't any registered account.
+            </strong>
+            Click the <a href="#" class="alert-link">add new account </a> button to add one.
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <div class="row">
+    <div class="col-lg-12">
+      <h2>Existing Accounts</h2>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Position</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for account in account_list %}
+              <tr>
+                <td><a href="#">{{ account.get_username }}</a></td>
+                <td><a href="#">{{ account.username }}</a></td>
+                <td><a href="#">{{ account.email }}</a></td>
+                <td>
+                  <a href="#">
+                    {% if account.is_active %}
+                      Activated
+                    {% else %}
+                      Deactivated
+                    {% endif %}
+                  </a>
+                </td>
+                <td>
+                  <a href="#">
+                    {% if account.is_superuser %}
+                      Superuser
+                    {% else %}
+                      Staff
+                    {% endif %}
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
