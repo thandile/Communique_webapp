@@ -47,4 +47,16 @@ class AccountListViewTestCase(TestCase):
         account list view.
         """
         response = self.client.get(reverse('user_accounts_list_view'))
-        self.assertTrue(response.context['account_list'])
+        self.assertTrue(response.context['object_list'])
+
+class AccountCreateViewTestCase(TestCase):
+    def setUp(self):
+        User.objects.create_user('jon_snow', 'jonsnow@gmail.com', 'p@55words')
+        self.client.login(username='jon_snow', password='p@55words')
+
+    def test_template(self):
+        """
+        Test that the right template is used to render the account create page.
+        """
+        response = self.client.get(reverse('user_accounts_create_view'))
+        self.assertTemplateUsed(response, 'user/account_form.html')

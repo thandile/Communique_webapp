@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.list import ListView
+from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from rest_framework import viewsets
@@ -16,7 +18,16 @@ class AccountListView(LoginRequiredMixin, ListView):
     """
     model = User
     template_name = 'user/account_list.html'
-    context_object_name = 'account_list'
+    context_object_name = 'object_list'
+
+class AccountCreateView(LoginRequiredMixin, CreateView):
+    """
+    A view to create an account.
+    """
+    form_class = UserCreationForm
+    model = User
+    template_name = 'user/account_form.html'
+
 
 """
 Views for the REST API
