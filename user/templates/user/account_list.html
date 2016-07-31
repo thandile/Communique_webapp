@@ -16,12 +16,14 @@
 {% endblock %}
 
 {% block create_new_item_button %}
-  <a href="#" class="btn btn-primary" style="float:right">Add New Account</a>
+  <a href="{% url 'user_accounts_create_view' %}" class="btn btn-primary" style="float:right">
+    Add New Account</a>
 {% endblock %}
 
 {% block info_alert_body %}
   <strong>Currently there isn't any registered account.</strong>
-  Click the <a href="#" class="alert-link">add new account</a> button to add one.
+  Click the <a href="{% url 'user_accounts_create_view' %}" class="alert-link">
+    add new account</a> button to add one.
 {% endblock %}
 
 {% block table_title %}
