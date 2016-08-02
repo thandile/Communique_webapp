@@ -3,7 +3,10 @@ from django.core.urlresolvers import reverse
 
 from user.models import CommuniqueUser
 
-class UserViewsTestCase(TestCase):
+class CommuniqueUserAccessViewsTestCase(TestCase):
+    """
+    Test cases for the login and logout views.
+    """
     def setUp(self):
         CommuniqueUser.objects.create_user('jon_snow', 'jonsnow@gmail.com',
             'p@55words')
@@ -31,7 +34,10 @@ class UserViewsTestCase(TestCase):
         response = self.client.get(reverse('user_logout'))
         self.assertTemplateUsed(response, 'user/logout.html')
 
-class AccountListViewTestCase(TestCase):
+class CommuniqueUserListViewTestCase(TestCase):
+    """
+    Test cases for the user list view.
+    """
     def setUp(self):
         CommuniqueUser.objects.create_user('jon_snow', 'jonsnow@gmail.com', 'p@55words')
         self.client.login(username='jon_snow', password='p@55words')
@@ -51,7 +57,10 @@ class AccountListViewTestCase(TestCase):
         response = self.client.get(reverse('user_communique_user_list_view'))
         self.assertTrue(response.context['communique_user_list'])
 
-class AccountCreateViewTestCase(TestCase):
+class CommuniqueUserCreateViewTestCase(TestCase):
+    """
+    Test cases for the view to create users.
+    """
     def setUp(self):
         CommuniqueUser.objects.create_user('jon_snow', 'jonsnow@gmail.com', 'p@55words')
         self.client.login(username='jon_snow', password='p@55words')
