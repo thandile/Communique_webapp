@@ -1,4 +1,3 @@
-from django.contrib.auth.models import User
 from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,25 +7,26 @@ from rest_framework import permissions
 
 from .serializers import UserSerializer
 from .forms import *
+from .models import *
 
 """
 Views for the Web App
 """
-class AccountListView(LoginRequiredMixin, ListView):
+class CommuniqueUserListView(LoginRequiredMixin, ListView):
     """
-    A view to list all accounts of the system.
+    A view to list all users of the system.
     """
-    model = User
-    template_name = 'user/account_list.html'
-    context_object_name = 'object_list'
+    model = CommuniqueUser
+    template_name = 'user/communique_user_list.html'
+    context_object_name = 'communique_user_list'
 
-class AccountCreateView(LoginRequiredMixin, CreateView):
+class CommuniqueUserCreateView(LoginRequiredMixin, CreateView):
     """
-    A view to create an account.
+    A view to create a Communique user.
     """
-    form_class = UserForm
-    model = User
-    template_name = 'user/account_form.html'
+    form_class = CommuniqueUserForm
+    model = CommuniqueUser
+    template_name = 'user/communique_user_form.html'
 
 
 """

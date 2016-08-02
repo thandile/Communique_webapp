@@ -10,8 +10,8 @@ urlpatterns = [
         name='user_login'),
     url(r'^logout/$', auth_views.logout, {'template_name':'user/logout.html'},
         name='user_logout'),
-    url(r'^accounts/$', AccountListView.as_view(),
-        name='user_accounts_list_view'),
-    url(r'^accounts/create/$', AccountCreateView.as_view(),
-        name='user_accounts_create_view'),
+    url(r'^communique-users/$', CommuniqueUserListView.as_view(),
+        name='user_communique_user_list_view'),
+    url(r'^communique-users/create/$', CommuniqueUserCreateView.as_view(),
+        name='user_communique_user_create_view'),
 ]

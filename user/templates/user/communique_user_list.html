@@ -1,14 +1,14 @@
 {% extends parent_template|default:"base_dashboard_page_model_list_view.html" %}
 {% block title %}
-  {{ block.super }} - Accounts
+  {{ block.super }} - Communique Users
 {% endblock %}
 
 {% block page_heading %}
-  Accounts
+  Communique Users
 {% endblock %}
 
 {% block list_view_title %}
-  Accounts
+  Communique Users
 {% endblock %}
 
 {% block search_form %}
@@ -16,18 +16,18 @@
 {% endblock %}
 
 {% block create_new_item_button %}
-  <a href="{% url 'user_accounts_create_view' %}" class="btn btn-primary" style="float:right">
-    Add New Account</a>
+  <a href="{% url 'user_communique_user_create_view' %}" class="btn btn-primary" style="float:right">
+    Add New User</a>
 {% endblock %}
 
 {% block info_alert_body %}
-  <strong>Currently there isn't any registered account.</strong>
-  Click the <a href="{% url 'user_accounts_create_view' %}" class="alert-link">
-    add new account</a> button to add one.
+  <strong>Currently there isn't any registered user.</strong>
+  Click the <a href="{% url 'user_communique_user_create_view' %}" class="alert-link">
+    add new user</a> button to add one.
 {% endblock %}
 
 {% block table_title %}
-  <h2>Existing Accounts</h2>
+  <h2>Existing Users</h2>
 {% endblock %}
 
 {% block table_heading %}
@@ -44,14 +44,14 @@
 
 {% block table_body %}
   <tbody>
-    {% for account in object_list %}
+    {% for communique_user in communique_user_list %}
       <tr>
-        <td><a href="#">{{ account.get_username }}</a></td>
-        <td><a href="#">{{ account.username }}</a></td>
-        <td><a href="#">{{ account.email }}</a></td>
+        <td><a href="#">{{ communique_user.get_username }}</a></td>
+        <td><a href="#">{{ communique_user.username }}</a></td>
+        <td><a href="#">{{ communique_user.email }}</a></td>
         <td>
           <a href="#">
-            {% if account.is_active %}
+            {% if communique_user.is_active %}
               Activated
             {% else %}
               Deactivated
@@ -60,7 +60,7 @@
         </td>
         <td>
           <a href="#">
-            {% if account.is_superuser %}
+            {% if communique_user.is_superuser %}
               Superuser
             {% else %}
               Staff
