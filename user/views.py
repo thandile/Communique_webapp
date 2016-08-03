@@ -16,7 +16,7 @@ class CommuniqueUserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     """
     A view to list all users of the system. This is only available to logged in
     superusers of the system.
-    
+
     If the user is logged in but is not a superuser, he/she will be redirected
     to the login page.
     """
@@ -34,7 +34,7 @@ class CommuniqueUserCreateView(LoginRequiredMixin, CreateView):
     """
     A view to create a Communique user.
     """
-    form_class = CommuniqueUserForm
+    form_class = CommuniqueUserCreationForm
     model = CommuniqueUser
     template_name = 'user/communique_user_form.html'
 

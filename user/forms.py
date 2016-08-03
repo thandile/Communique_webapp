@@ -1,11 +1,12 @@
-from django.forms import ModelForm
+from django.contrib.auth.forms import UserCreationForm
 
 from .models import CommuniqueUser
 
-class CommuniqueUserForm(ModelForm):
+class CommuniqueUserCreationForm(UserCreationForm):
     """
-    A form for the user model.
+    A form used to register a new Communiqué user.
     """
-    class Meta:
+    class Meta (UserCreationForm.Meta):
         model = CommuniqueUser
-        fields = ('first_name', 'last_name', 'username', 'email', 'password')
+        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name',
+            'is_superuser', 'email',)
