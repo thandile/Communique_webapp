@@ -30,13 +30,20 @@ class CommuniqueUserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         """
         return self.request.user.is_superuser
 
-class CommuniqueUserCreateView(LoginRequiredMixin, CreateView):
+class CommuniqueUserCreateView(LoginRequiredMixin, UserPassesTestMixin,
+    CreateView):
     """
     A view to create a Communique user.
     """
     form_class = CommuniqueUserCreationForm
     model = CommuniqueUser
     template_name = 'user/communique_user_form.html'
+
+    def test_func(self):
+        """
+        Returns whether the user making the request is a superuser.
+        """
+        return self.request.user.is_superuser
 
 
 """
