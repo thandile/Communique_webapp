@@ -17,17 +17,17 @@
 
 {% block create_new_item_button %}
   <a href="{% url 'user_communique_user_create_view' %}" class="btn btn-primary" style="float:right">
-    Add New User</a>
+    Resgister New User</a>
 {% endblock %}
 
 {% block info_alert_body %}
   <strong>Currently there isn't any registered user.</strong>
   Click the <a href="{% url 'user_communique_user_create_view' %}" class="alert-link">
-    add new user</a> button to add one.
+    register new user</a> button to add one.
 {% endblock %}
 
 {% block table_title %}
-  <h2>Existing Users</h2>
+  <h2>Registered Users</h2>
 {% endblock %}
 
 {% block table_heading %}
@@ -46,7 +46,7 @@
   <tbody>
     {% for communique_user in communique_user_list %}
       <tr>
-        <td><a href="#">{{ communique_user.get_username }}</a></td>
+        <td><a href="#">{{ communique_user.get_full_name }}</a></td>
         <td><a href="#">{{ communique_user.username }}</a></td>
         <td><a href="#">{{ communique_user.email }}</a></td>
         <td>
