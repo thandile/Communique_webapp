@@ -39,21 +39,46 @@ class CommuniqueUserListViewTestCase(TestCase):
     Test cases for the user list view.
     """
     def setUp(self):
-        CommuniqueUser.objects.create_user('jon_snow', 'jonsnow@gmail.com', 'p@55words')
-        self.client.login(username='jon_snow', password='p@55words')
+        CommuniqueUser.objects.create_user('regular_user',
+            'regularuser@gmail.com', 'p@55words')
+        CommuniqueUser.objects.create_superuser('super_user',
+            'superuser@gmail.com', 'p@55words')
 
     def test_template(self):
         """
-        Test that the right template is used to render the account list page.
+        Tests that the right template is used to render the user list page.
         """
+        self.client.login(username='super_user', password='p@55words')
         response = self.client.get(reverse('user_communique_user_list_view'))
         self.assertTemplateUsed(response, 'user/communique_user_list.html')
+
+    def test_only_superuser_access(self):
+        """
+        Tests that only a superuser can access this view.
+
+        If the user is not a superuser, he or she is redirected to the login
+        page.
+        """
+        super_user = CommuniqueUser.objects.get(username='super_user')
+        self.assertTrue(super_user.is_superuser)
+        self.client.force_login(super_user)
+        response = self.client.get(reverse('user_communique_user_list_view'), follow=True)
+        self.assertTemplateUsed(response, 'user/communique_user_list.html')
+        self.client.logout()
+
+        regular_user = CommuniqueUser.objects.get(username='regular_user')
+        self.assertFalse(regular_user.is_superuser)
+        self.client.force_login(regular_user)
+        response = self.client.get(reverse('user_communique_user_list_view'),
+            follow=True)
+        self.assertTemplateUsed(response, 'user/login.html')
 
     def test_context_object(self):
         """
         Test that a context object is created and passed to the template of the
         account list view.
         """
+        self.client.login(username='super_user', password='p@55words')
         response = self.client.get(reverse('user_communique_user_list_view'))
         self.assertTrue(response.context['communique_user_list'])
 
