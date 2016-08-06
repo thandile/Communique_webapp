@@ -121,3 +121,42 @@ class CommuniqueUserCreateViewTestCase(TestCase):
         response = self.client.get(reverse('user_communique_user_create_view'),
             follow=True)
         self.assertTemplateUsed(response, 'user/communique_user_form.html')
+
+class CommuniqueUserDetailViewTestCase(TestCase):
+    """
+    Test cases for the view to see user details.
+    """
+    def setUp(self):
+        CommuniqueUser.objects.create_superuser('super_user',
+            'superuser@gmail.com', 'p@55words')
+        CommuniqueUser.objects.create_user('regular_user', 'superuser@gmail.com',
+            'p@55words')
+
+    def test_template(self):
+        """
+        Tests that the right template is used to render user detail view page.
+        """
+        self.client.login(username='super_user', password='p@55words')
+        response = self.client.get(reverse('user_communique_user_detail',
+            kwargs={'pk':1}))
+        self.assertTemplateUsed(response, 'user/communique_user_view.html')
+
+    def test_only_superuser_access(self):
+        """
+        Tests that only a superuser can access this view.
+        If the user is not a superuser, he/she is redirected to the login page.
+        """
+        regular_user = CommuniqueUser.objects.get(username='regular_user')
+        self.assertFalse(regular_user.is_superuser)
+        self.client.force_login(regular_user)
+        response = self.client.get(reverse('user_communique_user_detail',
+            kwargs={'pk':regular_user.id}), follow=True)
+        self.assertTemplateUsed(response, 'user/login.html')
+        self.client.logout()
+
+        super_user = CommuniqueUser.objects.get(username='super_user')
+        self.assertTrue(super_user.is_superuser)
+        self.client.force_login(super_user)
+        response = self.client.get(reverse('user_communique_user_detail',
+            kwargs={'pk':super_user.id}), follow=True)
+        self.assertTemplateUsed(response, 'user/communique_user_view.html')
