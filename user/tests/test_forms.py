@@ -1,3 +1,6 @@
+"""
+Contains test cases for the forms of the user app.
+"""
 from django.test import TestCase
 
 from user.forms import *

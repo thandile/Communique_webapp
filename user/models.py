@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 class CommuniqueUser(User):
     """
@@ -8,7 +9,7 @@ class CommuniqueUser(User):
         proxy = True
 
     def get_absolute_url(self):
-        pass
+        return reverse('user_communique_user_detail', kwargs={'pk':self.pk})
 
     def get_update_url(self):
         pass

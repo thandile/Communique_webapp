@@ -1,3 +1,6 @@
+"""
+Contains test cases for the views of the user app.
+"""
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 
