@@ -49,7 +49,7 @@ class CommuniqueUserListViewTestCase(TestCase):
         Tests that the right template is used to render the user list page.
         """
         self.client.login(username='super_user', password='p@55words')
-        response = self.client.get(reverse('user_communique_user_list_view'))
+        response = self.client.get(reverse('user_communique_user_list'))
         self.assertTemplateUsed(response, 'user/communique_user_list.html')
 
     def test_only_superuser_access(self):
@@ -62,7 +62,7 @@ class CommuniqueUserListViewTestCase(TestCase):
         super_user = CommuniqueUser.objects.get(username='super_user')
         self.assertTrue(super_user.is_superuser)
         self.client.force_login(super_user)
-        response = self.client.get(reverse('user_communique_user_list_view'),
+        response = self.client.get(reverse('user_communique_user_list'),
             follow=True)
         self.assertTemplateUsed(response, 'user/communique_user_list.html')
         self.client.logout()
@@ -70,7 +70,7 @@ class CommuniqueUserListViewTestCase(TestCase):
         regular_user = CommuniqueUser.objects.get(username='regular_user')
         self.assertFalse(regular_user.is_superuser)
         self.client.force_login(regular_user)
-        response = self.client.get(reverse('user_communique_user_list_view'),
+        response = self.client.get(reverse('user_communique_user_list'),
             follow=True)
         self.assertTemplateUsed(response, 'user/login.html')
 
@@ -80,7 +80,7 @@ class CommuniqueUserListViewTestCase(TestCase):
         account list view.
         """
         self.client.login(username='super_user', password='p@55words')
-        response = self.client.get(reverse('user_communique_user_list_view'))
+        response = self.client.get(reverse('user_communique_user_list'))
         self.assertTrue(response.context['communique_user_list'])
 
 class CommuniqueUserCreateViewTestCase(TestCase):
@@ -98,7 +98,7 @@ class CommuniqueUserCreateViewTestCase(TestCase):
         Tests that the right template is used to render the account create page.
         """
         self.client.login(username='super_user', password='p@55words')
-        response = self.client.get(reverse('user_communique_user_create_view'))
+        response = self.client.get(reverse('user_communique_user_create'))
         self.assertTemplateUsed(response, 'user/communique_user_form.html')
 
     def test_only_superuser_access(self):
@@ -110,7 +110,7 @@ class CommuniqueUserCreateViewTestCase(TestCase):
         regular_user = CommuniqueUser.objects.get(username='regular_user')
         self.assertFalse(regular_user.is_superuser)
         self.client.force_login(regular_user)
-        response = self.client.get(reverse('user_communique_user_create_view'),
+        response = self.client.get(reverse('user_communique_user_create'),
             follow=True)
         self.assertTemplateUsed(response, 'user/login.html')
         self.client.logout()
@@ -118,7 +118,7 @@ class CommuniqueUserCreateViewTestCase(TestCase):
         super_user = CommuniqueUser.objects.get(username='super_user')
         self.assertTrue(super_user.is_superuser)
         self.client.force_login(super_user)
-        response = self.client.get(reverse('user_communique_user_create_view'),
+        response = self.client.get(reverse('user_communique_user_create'),
             follow=True)
         self.assertTemplateUsed(response, 'user/communique_user_form.html')
 

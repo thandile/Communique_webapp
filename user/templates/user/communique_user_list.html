@@ -16,13 +16,13 @@
 {% endblock %}
 
 {% block create_new_item_button %}
-  <a href="{% url 'user_communique_user_create_view' %}" class="btn btn-primary" style="float:right">
+  <a href="{% url 'user_communique_user_create' %}" class="btn btn-primary" style="float:right">
     Resgister New User</a>
 {% endblock %}
 
 {% block info_alert_body %}
   <strong>Currently there isn't any registered user.</strong>
-  Click the <a href="{% url 'user_communique_user_create_view' %}" class="alert-link">
+  Click the <a href="{% url 'user_communique_user_create' %}" class="alert-link">
     register new user</a> button to add one.
 {% endblock %}
 

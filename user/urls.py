@@ -11,9 +11,9 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'template_name':'user/logout.html'},
         name='user_logout'),
     url(r'^communique-users/$', CommuniqueUserListView.as_view(),
-        name='user_communique_user_list_view'),
+        name='user_communique_user_list'),
     url(r'^communique-users/create/$', CommuniqueUserCreateView.as_view(),
-        name='user_communique_user_create_view'),
+        name='user_communique_user_create'),
     url(r'^communique-users/(?P<pk>[0-9]+)/$',
         CommuniqueUserDetailView.as_view(), name='user_communique_user_detail'),
 ]
