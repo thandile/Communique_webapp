@@ -160,3 +160,12 @@ class CommuniqueUserDetailViewTestCase(TestCase):
         response = self.client.get(reverse('user_communique_user_detail',
             kwargs={'pk':super_user.id}), follow=True)
         self.assertTemplateUsed(response, 'user/communique_user_view.html')
+
+    def test_context_object(self):
+        """
+        Tests that the context object with the expected name is created and
+        passed onto the template for rendering.
+        """
+        self.client.login(username='super_user', password='p@55words')
+        response = self.client.get(reverse('user_communique_user_detail', kwargs={'pk':1}))
+        self.assertTrue(response.context['communique_user'])
