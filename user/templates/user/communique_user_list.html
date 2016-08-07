@@ -46,11 +46,23 @@
   <tbody>
     {% for communique_user in communique_user_list %}
       <tr>
-        <td><a href="#">{{ communique_user.get_full_name }}</a></td>
-        <td><a href="#">{{ communique_user.username }}</a></td>
-        <td><a href="#">{{ communique_user.email }}</a></td>
         <td>
-          <a href="#">
+          <a href="{{ communique_user.get_absolute_url }}">
+            {{ communique_user.get_full_name }}
+          </a>
+        </td>
+        <td>
+          <a href="{{ communique_user.get_absolute_url }}">
+            {{ communique_user.username }}
+          </a>
+        </td>
+        <td>
+          <a href="{{ communique_user.get_absolute_url }}">
+            {{ communique_user.email }}
+          </a>
+        </td>
+        <td>
+          <a href="{{ communique_user.get_absolute_url }}">
             {% if communique_user.is_active %}
               Activated
             {% else %}
@@ -59,7 +71,7 @@
           </a>
         </td>
         <td>
-          <a href="#">
+          <a href="{{ communique_user.get_absolute_url }}">
             {% if communique_user.is_superuser %}
               Superuser
             {% else %}

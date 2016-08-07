@@ -1,0 +1,71 @@
+{% extends parent_template|default:"user/base_user.html" %}
+
+{% block title %}
+  {{ communique_user.get_full_name }}
+{% endblock %}
+
+{% block page_heading %}
+  {{ communique_use.get_full_name }}
+{% endblock %}
+
+{% block page_subheading %}
+  Details
+{% endblock %}
+
+{% block page_breadcrumb %}
+    {{ block.super }}
+    <li>
+      <i class="fa fa-table"></i>
+      <a href="{% url 'user_communique_user_list' %}">Communiqué Users</a>
+    </li>
+    <li class="active">
+      {{ communique_user.get_full_name }}
+    </li>
+{% endblock %}
+
+{% block page_content %}
+  <div class="row">
+    <div class="col-lg-4">
+      <h3 style="text-decoration:underline;">Username:</h3>
+      <h4>{{ communique_user.username }}</h4>
+    </div>
+    <div class="col-lg-4">
+      <h3 style="text-decoration:underline;">First name:</h3>
+      <h4>{{ communique_user.first_name }}</h4>
+    </div>
+    <div class="col-lg-4">
+      <h3 style="text-decoration:underline;">Last name:</h3>
+      <h4>{{ communique_user.last_name }}</h4>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-4">
+      <h3 style="text-decoration:underline;">Email:</h3>
+      <h4>{{ communique_user.email }}</h4>
+    </div>
+    <div class="col-lg-4">
+      <h3 style="text-decoration:underline;">Role:</h3>
+      <h4>
+        <span class="label label-warning">
+          {% if communique_user.is_superuser %}
+            Superuser
+          {% else %}
+            Staff
+          {% endif %}
+        </span>
+      </h4>
+    </div>
+    <div class="col-lg-4">
+      <h3 style="text-decoration:underline;">Status:</h3>
+      <h4>
+        {% if communique_user.is_active %}
+          <span class="label label-success">Activated</span>
+        {% else %}
+          <span class="label label-danger">Deactivated</span>
+        {% endif %}
+      </h4>
+    </div>
+  </div>
+
+{% endblock %}
