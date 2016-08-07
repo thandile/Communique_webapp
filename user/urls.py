@@ -18,4 +18,6 @@ urlpatterns = [
         name='user_communique_user_create'),
     url(r'^communique-users/(?P<pk>[0-9]+)/$',
         CommuniqueUserDetailView.as_view(), name='user_communique_user_detail'),
+    url(r'^communique-users/(?P<pk>[0-9]+)/update/$',
+        CommuniqueUserUpdateView.as_view(), name='user_communique_user_update'),
 ]

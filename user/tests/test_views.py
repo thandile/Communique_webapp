@@ -170,5 +170,57 @@ class CommuniqueUserDetailViewTestCase(TestCase):
         passed onto the template for rendering.
         """
         self.client.login(username='super_user', password='p@55words')
-        response = self.client.get(reverse('user_communique_user_detail', kwargs={'pk':1}))
+        response = self.client.get(reverse('user_communique_user_detail',
+            kwargs={'pk':1}))
         self.assertTrue(response.context['communique_user'])
+
+class CommuniqueUserUpdateViewTestCase(TestCase):
+    """
+    Test cases for the view to update user active and superuser status.
+    """
+    def setUp(self):
+        CommuniqueUser.objects.create_superuser('super_user',
+            'superuser@gmail.com', 'p@55words')
+        CommuniqueUser.objects.create_user('regular_user',
+            'regularuser@gmail.com', 'p@55words')
+
+    def test_template(self):
+        """
+        Tests that the right template is used to render user update page.
+        """
+        self.client.login(username='super_user', password='p@55words')
+        response = self.client.get(reverse('user_communique_user_update',
+            kwargs={'pk':1}))
+        self.assertTemplateUsed(response,
+            'user/communique_user_update_form.html')
+
+    def test_context_object(self):
+        """
+        Tests that the context object with the expected name is created and
+        passed onto the template for rendering.
+        """
+        self.client.login(username='super_user', password='p@55words')
+        response = self.client.get(reverse('user_communique_user_update',
+            kwargs={'pk':1}))
+        self.assertTrue(response.context['communique_user'])
+
+    def test_only_superuser_access(self):
+        """
+        Tests that only a superuser can access this view.
+        If the user is not a superuser, he/she is redirected to the login page.
+        """
+        regular_user = CommuniqueUser.objects.get(username='regular_user')
+        self.assertFalse(regular_user.is_superuser)
+        self.client.force_login(regular_user)
+        response = self.client.get(reverse('user_communique_user_update',
+            kwargs={'pk':regular_user.id}), follow=True)
+        self.assertTemplateUsed(response, 'user/login.html')
+        self.client.logout()
+
+        super_user = CommuniqueUser.objects.get(username='super_user')
+        self.assertTrue(super_user.is_superuser)
+        self.client.force_login(super_user)
+        response = self.client.get(reverse('user_communique_user_update',
+            kwargs={'pk':super_user.id}), follow=True)
+        self.assertTemplateUsed(response,
+            'user/communique_user_update_form.html')

@@ -1,5 +1,5 @@
 from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -61,6 +61,21 @@ class CommuniqueUserDetailView(LoginRequiredMixin, UserPassesTestMixin,
         """
         return self.request.user.is_superuser
 
+class CommuniqueUserUpdateView(LoginRequiredMixin, UserPassesTestMixin,
+    UpdateView):
+    """
+    A view to update the information for a user.
+    """
+    form_class = CommuniqueUserUpdateForm
+    model = CommuniqueUser
+    template_name = 'user/communique_user_update_form.html'
+    context_object_name = 'communique_user'
+
+    def test_func(self):
+        """
+        Returns whether the user making the request is a superuser.
+        """
+        return self.request.user.is_superuser
 
 """
 Views for the REST API
