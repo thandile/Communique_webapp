@@ -12,7 +12,7 @@ class CommuniqueUser(User):
         return reverse('user_communique_user_detail', kwargs={'pk':self.pk})
 
     def get_update_url(self):
-        pass
+        return reverse('user_communique_user_update', kwargs={'pk':self.pk})
 
     def get_deactivate_url(self):
         pass

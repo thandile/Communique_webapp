@@ -17,7 +17,7 @@
   {{ block.super }}
   <li>
     <i class="fa fa-table"></i>
-    <a href="{% url 'user_communique_user_list' %}">Communique Users</a>
+    <a href="{% url 'user_communique_user_list' %}">Communiqué Users</a>
   </li>
 {% endblock %}
 
@@ -30,7 +30,7 @@
     <div class="col-lg-6">
       <div class="panel panel-green">
         <div class="panel-heading">
-          <h3 class="panel-ttile"> User Details</h3>
+          <h3 class="panel-title"> User Details</h3>
         </div>
         <div class="panel-body">
           <form role="form" action="{% url 'user_communique_user_create' %}" method="post">
