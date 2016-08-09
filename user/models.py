@@ -16,3 +16,13 @@ class CommuniqueUser(User):
 
     def get_deactivate_url(self):
         pass
+
+class Profile(User):
+    """
+    A proxy model for the default User model, masquerading as a Profile.
+    """
+    class Meta:
+        proxy = True
+
+    def get_absolute_url(self):
+        return reverse('user_profile_detail', kwargs={'pk':self.pk})

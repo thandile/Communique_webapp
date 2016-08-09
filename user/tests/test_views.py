@@ -3,18 +3,20 @@ Contains test cases for the views of the user app.
 """
 from django.test import TestCase
 from django.core.urlresolvers import reverse
+from django.contrib.auth.models import User
 
-from user.models import CommuniqueUser
 
-class CommuniqueUserViewsTestCase(TestCase):
+from user.models import CommuniqueUser, Profile
+
+class UserViewsTestCase(TestCase):
     def setUp(self):
         """
-        Creates a super user and regular user to be used throughout testing.
+        Creates a super user and a regular user to be used throughout testing.
         """
-        CommuniqueUser.objects.create_user('regular_user',
-            'regularuser@gmail.com', 'p@55words')
-        CommuniqueUser.objects.create_superuser('super_user',
-            'superuser@gmail.com', 'p@55words')
+        User.objects.create_user('regular_user', 'regularuser@gmail.com',
+            'p@55words')
+        User.objects.create_superuser('super_user', 'superuser@gmail.com',
+            'p@55words')
 
     def template_test(self, view_url, template_name):
         """
@@ -33,6 +35,10 @@ class CommuniqueUserViewsTestCase(TestCase):
         response = self.client.get(view_url)
         self.assertTrue(response.context[context_object_name])
 
+"""
+Test cases for the views handling the CommuniqueUser model.
+"""
+class CommuniqueUserViewsTestCase(UserViewsTestCase):
     def only_superuser_access_test(self, view_url, template_name):
         """
         Tests that only a superuser can access the view.
@@ -174,3 +180,51 @@ class CommuniqueUserUpdateViewTestCase(CommuniqueUserViewsTestCase):
         view_url = reverse('user_communique_user_update', kwargs={'pk':1})
         template_name = 'user/communique_user_update_form.html'
         self.only_superuser_access_test(view_url, template_name)
+
+"""
+Test cases for the views handling the Profile model.
+"""
+class ProfileViewsTestCase(UserViewsTestCase):
+    def only_current_user_access_test(self, view_url, template_name):
+        """
+        Tests whether the user requesting this Profile view owns the Profile.
+
+        If the user doesn't own the profile, he/she is redirected to the login
+        page.
+        """
+        # regular user is created first and therefore has id/pk=1
+        regular_user = Profile.objects.get(username='regular_user')
+        self.assertTrue(regular_user.pk == 1)
+        self.client.force_login(regular_user)
+        response = self.client.get(view_url, follow=True)
+        self.assertTemplateUsed(response, template_name)
+        self.client.logout()
+
+        # super user is created second and therefore has id/pk=1
+        super_user = Profile.objects.get(username='super_user')
+        self.assertTrue(super_user.pk == 2)
+        self.client.force_login(super_user)
+        response = self.client.get(view_url, follow=True)
+        self.assertTemplateUsed(response, 'user/login.html')
+
+
+class ProfileDetailViewTestCase(ProfileViewsTestCase):
+    """
+    Test cases for the detail view for a Profile.
+    """
+    def test_only_current_user_access(self):
+        view_url = reverse('user_profile_detail', kwargs={'pk':1})
+        template_name = 'user/profile_view.html'
+        self.only_current_user_access_test(view_url, template_name)
+
+    def test_template(self):
+        # access is available through the super_user with pk=2
+        view_url = reverse('user_profile_detail', kwargs={'pk':2})
+        template_name = 'user/profile_view.html'
+        self.template_test(view_url, template_name)
+
+    def test_context_object(self):
+        # access is available through the super_user with pk=2
+        view_url = reverse('user_profile_detail', kwargs={'pk':2})
+        context_object_name = 'user_profile'
+        self.context_object_test(view_url, context_object_name)

@@ -101,10 +101,11 @@ class CommuniqueUserDetailView(LoginRequiredMixin, UserPassesTestMixin,
         """
         return self.request.user.is_superuser
 
+
 class CommuniqueUserUpdateView(LoginRequiredMixin, UserPassesTestMixin,
     UpdateView):
     """
-    A view to update the information for a user. This is only availabel to
+    A view to update the information for a user. This is only available to
     logged in superusers of the system.
 
     Should the user not be logged in or not a superuser, he/she will be
@@ -120,6 +121,25 @@ class CommuniqueUserUpdateView(LoginRequiredMixin, UserPassesTestMixin,
         Returns whether the user making the request is a superuser.
         """
         return self.request.user.is_superuser
+
+
+class ProfileDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    """
+    A view to display the details of a user. This is only available to a logged
+    in user who is trying to access his/her own details.
+
+    Should the user not be logged in or trying to access a profile that is not
+    his/hers, he/she will be redirected to the login page.
+    """
+    model = Profile
+    template_name = 'user/profile_view.html'
+    context_object_name = 'user_profile'
+
+    def test_func(self):
+        """
+        Returns whether the user is making to view his/her profile.
+        """
+        return str(self.request.user.pk) == str(self.kwargs['pk'])
 
 """
 Views for the REST API
