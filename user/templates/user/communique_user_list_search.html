@@ -1,0 +1,19 @@
+{% extends parent_template|default:"user/base_communique_user_list.html" %}
+
+{% block page_subheading %}
+  Search
+{% endblock %}
+
+{% block page_breadcrumb %}
+  {{ block.super }}
+  <li>
+    <i class="fa fa-table"></i>
+    <a href="{% url 'user_communique_user_list' %}">Communiqué Users</a>
+  </li>
+  <li class="active">
+    Search
+  </li>
+{% endblock %}
+
+{% block before_table_content %}
+{% endblock %}

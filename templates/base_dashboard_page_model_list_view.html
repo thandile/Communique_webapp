@@ -4,16 +4,6 @@
   List
 {% endblock %}
 
-{% block page_breadcrumb %}
-  {{ block.super }}
-  <li class="active">
-    <i class="fa fa-table"></i>
-    {% block list_view_title %}
-      Items
-    {% endblock %}
-  </li>
-{% endblock %}
-
 {% block page_content %}
   <div class="row">
     <!-- search bar -->
@@ -58,6 +48,9 @@
       </div>
     </div>
   {% endif %}
+
+  {% block before_table_content %}
+  {% endblock %}
 
   <div class="row">
     <div class="col-lg-12">
