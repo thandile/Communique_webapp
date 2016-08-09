@@ -15,5 +15,10 @@
   </li>
 {% endblock %}
 
-{% block before_table_content %}
+{% block info_alert_body %}
+  <strong>No users were found for the provided search query.</strong>
+{% endblock %}
+
+{% block table_title %}
+  <h2>Registered users for query: "{{ request.GET.q }}"</h2>
 {% endblock %}

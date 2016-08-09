@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block search_form %}
-  {% include "list_view_search_form.html" %}
+  {% include "list_view_search_form.html" with search_url="/user/communique-users/search/" %}
 {% endblock %}
 
 {% block create_new_item_button %}
