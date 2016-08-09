@@ -2,6 +2,10 @@ from django.views.generic.list import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
+
+from functools import reduce
+import operator
 
 from rest_framework import viewsets
 from rest_framework import permissions
@@ -31,10 +35,42 @@ class CommuniqueUserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         """
         return self.request.user.is_superuser
 
+class CommuniqueUserSearchListView(CommuniqueUserListView):
+    """
+    A view to list users that satisfy the criteria of the provided query.
+    This is only available to logged in superusers of the system.
+
+    Should the user not be logged in or not a superuser, he/she will be
+    redirected to the login page.
+    """
+    template_name = 'user/communique_user_list_search.html'
+
+    def get_queryset(self):
+        result = super(CommuniqueUserListView, self).get_queryset()
+
+        query = self.request.GET.get('q')
+
+        if query:
+            query_list = query.split()
+            result = result.filter(
+                reduce(operator.and_,
+                    (Q(username__icontains=q) for q in query_list)) |
+                reduce(operator.and_,
+                    (Q(first_name__icontains=q) for q in query_list)) |
+                reduce(operator.and_,
+                    (Q(last_name__icontains=q) for q in query_list))
+            )
+
+        return result
+
 class CommuniqueUserCreateView(LoginRequiredMixin, UserPassesTestMixin,
     CreateView):
     """
-    A view to create a Communique user.
+    A view to create a Communique user. This is only available to logged in
+    superusers of the system.
+
+    Should the user not be logged in or not a superuser, he/she will be
+    redirected to the login page.
     """
     form_class = CommuniqueUserCreationForm
     model = CommuniqueUser
@@ -49,7 +85,11 @@ class CommuniqueUserCreateView(LoginRequiredMixin, UserPassesTestMixin,
 class CommuniqueUserDetailView(LoginRequiredMixin, UserPassesTestMixin,
     DetailView):
     """
-    A view to display information of a user.
+    A view to display information of a user. This is only availabel to logged in
+    superusers of the system.
+
+    Should the user not be logged in or not a superuser, he/she will be
+    redirected to the login page.
     """
     model = CommuniqueUser
     template_name = 'user/communique_user_view.html'
@@ -64,7 +104,11 @@ class CommuniqueUserDetailView(LoginRequiredMixin, UserPassesTestMixin,
 class CommuniqueUserUpdateView(LoginRequiredMixin, UserPassesTestMixin,
     UpdateView):
     """
-    A view to update the information for a user.
+    A view to update the information for a user. This is only availabel to
+    logged in superusers of the system.
+
+    Should the user not be logged in or not a superuser, he/she will be
+    redirected to the login page.
     """
     form_class = CommuniqueUserUpdateForm
     model = CommuniqueUser
