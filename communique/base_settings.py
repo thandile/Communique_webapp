@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'send_email.apps.SendEmailConfig',
     'widget_tweaks',
     'rest_framework',
     'api',
