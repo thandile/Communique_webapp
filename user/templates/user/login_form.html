@@ -10,6 +10,7 @@
     {{ form.password|attr:"placeholder:Password"|add_class:"form-control" }}
   </div>
   <input type="hidden" name="next" value="{{ next }}" />
+  <a class="btn btn-warning" href="{% url 'password_reset' %}">Reset Password</a>
   <button class="btn btn-success" type="submit">
     {{ login_button|default:'Log In'}}
   </button>
