@@ -1,6 +1,9 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
+from django.core.urlresolvers import reverse
+
+
 from .views import *
 
 urlpatterns = [
@@ -27,4 +30,11 @@ urlpatterns = [
         name='user_profile_detail'),
     url(r'^profile/(?P<pk>[0-9]+)/update/$', ProfileUpdateView.as_view(),
         name='user_profile_update'),
+    url(r'^profile/password-change/$', auth_views.password_change,
+        {'template_name':'user/password_change_form.html',
+            'post_change_redirect':'/user/profile/password-change-done/'},
+                name='password_change'),
+    url(r'^profile/password-change-done/$', auth_views.password_change_done,
+        {'template_name':'user/password_change_done.html'},
+            name='password_change_done'),
 ]
