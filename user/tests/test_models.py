@@ -39,11 +39,19 @@ class ProfileTestCase(TestCase):
         Profile.objects.create_superuser('jon_snow', 'jonsnow@gmail.com',
             'p@55words')
 
-    def test_get_update_url(self):
+    def test_get_absolute_url(self):
         """
-        Tests that the right url path is returned to obtain the detauls of a
+        Tests that the right url path is returned to obtain the details of a
         Profile.
         """
         profile = Profile.objects.get(username='jon_snow')
         self.assertEqual(profile.get_absolute_url(), '/user/profile/' +
             str(profile.pk) + '/')
+
+    def test_get_update_url(self):
+        """
+        Tests that the right url path is returned to update the details of a
+        Profile.
+        """
+        profile = Profile.objects.get(username='jon_snow')
+        self.assertEqual(profile.get_update_url(), '/user/profile/' + str(profile.pk) + '/update/')
