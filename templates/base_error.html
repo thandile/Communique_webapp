@@ -1,0 +1,14 @@
+{% extends parent_template|default:"base_page.html" %}
+
+{% block page_content %}
+  <div class="jumbotron">
+    <h1>
+      {% block error_heading %}
+        Error Heading
+      {% endblock %}
+    </h1>
+    {% block error_body %}
+      <p>Error paragragh</p>
+    {% endblock %}
+  </div>
+{% endblock %}

@@ -9,8 +9,8 @@
     {{ form.password.label_tag }}
     {{ form.password|attr:"placeholder:Password"|add_class:"form-control" }}
   </div>
-  <button class="btn btn-lg btn-success btn-block" type="submit">
+  <input type="hidden" name="next" value="{{ next }}" />
+  <button class="btn btn-success" type="submit">
     {{ login_button|default:'Log In'}}
   </button>
-  <input type="hidden" name="next" value="{{ next }}" />
 </form>
