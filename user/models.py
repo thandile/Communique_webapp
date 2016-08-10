@@ -14,6 +14,10 @@ class CommuniqueUser(User):
     def get_update_url(self):
         return reverse('user_communique_user_update', kwargs={'pk':self.pk})
 
+    def get_set_password_url(self):
+        return reverse('user_communique_user_set_password',
+            kwargs={'pk':self.pk})
+
     def get_deactivate_url(self):
         pass
 

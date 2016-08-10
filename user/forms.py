@@ -20,6 +20,14 @@ class CommuniqueUserUpdateForm(ModelForm):
         model = CommuniqueUser
         fields = ['is_active', 'is_superuser']
 
+class CommuniqueUserSetPasswordForm(ModelForm):
+    """
+    A form used to set the password of a user.
+    """
+    class Meta:
+        model = CommuniqueUser
+        fields = ['password']
+
 class ProfileUpdateForm(ModelForm):
     """
     A form used to update a user profile's information

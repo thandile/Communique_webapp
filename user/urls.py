@@ -25,6 +25,9 @@ urlpatterns = [
         CommuniqueUserDetailView.as_view(), name='user_communique_user_detail'),
     url(r'^communique-users/(?P<pk>[0-9]+)/update/$',
         CommuniqueUserUpdateView.as_view(), name='user_communique_user_update'),
+    url(r'^communique-users/(?P<pk>[0-9]+)/set-password/',
+        CommuniqueUserSetPasswordView.as_view(),
+            name='user_communique_user_set_password'),
     # urls to view and update user profile
     url(r'^profile/(?P<pk>[0-9]+)/$', ProfileDetailView.as_view(),
         name='user_profile_detail'),

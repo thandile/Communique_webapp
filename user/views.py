@@ -122,6 +122,27 @@ class CommuniqueUserUpdateView(LoginRequiredMixin, UserPassesTestMixin,
         """
         return self.request.user.is_superuser
 
+class CommuniqueUserSetPasswordView(LoginRequiredMixin, UserPassesTestMixin,
+    UpdateView):
+    """
+    A view to set the password of a user. This is only available to logged in
+    superusers of the system and is to be utilised if a user forgets his/her
+    password.
+
+    Should the user not be logged in or not a superuser, he/she will be
+    redirected to the login page.
+    """
+    form_class = CommuniqueUserSetPasswordForm
+    model = CommuniqueUser
+    template_name = 'user/communique_user_password_set_form.html'
+    context_object_name = 'communique_user'
+
+    def test_func(self):
+        """
+        Returns whether the user making the request is a superuser.
+        """
+        return self.request.user.is_superuser
+
 
 class ProfileDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     """
