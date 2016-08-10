@@ -25,4 +25,6 @@ urlpatterns = [
     # urls to view and update user profile
     url(r'^profile/(?P<pk>[0-9]+)/$', ProfileDetailView.as_view(),
         name='user_profile_detail'),
+    url(r'^profile/(?P<pk>[0-9]+)/update/$', ProfileUpdateView.as_view(),
+        name='user_profile_update'),
 ]

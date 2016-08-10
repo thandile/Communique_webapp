@@ -137,7 +137,26 @@ class ProfileDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
     def test_func(self):
         """
-        Returns whether the user is making to view his/her profile.
+        Returns whether the user is making request to view his/her profile.
+        """
+        return str(self.request.user.pk) == str(self.kwargs['pk'])
+
+class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """
+    A view to update a user's profile. This is only available to a logged in
+    user that is trying to update his/her own profile.
+
+    Should the user not be logged in or trying to update a profile that is not
+    his/hers, he/she will be redirected to the login page.
+    """
+    form_class = ProfileUpdateForm
+    model = Profile
+    template_name = 'user/profile_update_form.html'
+    context_object_name = 'user_profile'
+
+    def test_func(self):
+        """
+        Returns whether the user making requests to his/her own profiles.
         """
         return str(self.request.user.pk) == str(self.kwargs['pk'])
 

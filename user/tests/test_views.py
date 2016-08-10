@@ -64,21 +64,20 @@ class CommuniqueUserSearchListViewTestCase(CommuniqueUserViewsTestCase):
     """
     Test cases for the user search view.
     """
+    view_name = 'user_communique_user_list_search'
+    view_template_name = 'user/communique_user_list_search.html'
+    view_context_object_name = 'communique_user_list'
+    view_url = reverse(view_name)
+
     def test_template(self):
-        view_url = reverse('user_communique_user_list_search')
-        template_name = 'user/communique_user_list_search.html'
-        self.template_test(view_url, template_name)
+        self.template_test(self.view_url, self.view_template_name)
 
     def test_context_object(self):
-        view_url = reverse('user_communique_user_list_search')
-        view_url = view_url + '?q=super'
-        context_object_name = 'communique_user_list'
-        self.context_object_test(view_url, context_object_name)
+        self.view_url = self.view_url + '?q=super'
+        self.context_object_test(self.view_url, self.view_context_object_name)
 
     def test_only_superuser_access(self):
-        view_url = reverse('user_communique_user_list_search')
-        template_name = 'user/communique_user_list_search.html'
-        self.only_superuser_access_test(view_url, template_name)
+        self.only_superuser_access_test(self.view_url, self.view_template_name)
 
 class CommuniqueUserAccessViewsTestCase(CommuniqueUserViewsTestCase):
     """
@@ -107,79 +106,69 @@ class CommuniqueUserListViewTestCase(CommuniqueUserViewsTestCase):
     """
     Test cases for the user list view.
     """
+    view_name = 'user_communique_user_list'
+    view_template_name = 'user/communique_user_list.html'
+    view_context_object_name = 'communique_user_list'
+    view_url = reverse(view_name)
 
     def test_template(self):
-        view_url = reverse('user_communique_user_list')
-        template_name = 'user/communique_user_list.html'
-        self.template_test(view_url, template_name)
+        self.template_test(self.view_url, self.view_template_name)
 
     def test_only_superuser_access(self):
-        view_url = reverse('user_communique_user_list')
-        template_name = 'user/communique_user_list.html'
-        self.only_superuser_access_test(view_url, template_name)
+        self.only_superuser_access_test(self.view_url, self.view_template_name)
 
     def test_context_object(self):
-        view_url = reverse('user_communique_user_list')
-        context_object_name = 'communique_user_list'
-        self.context_object_test(view_url, context_object_name)
+        self.context_object_test(self.view_url, self.view_context_object_name)
 
 class CommuniqueUserCreateViewTestCase(CommuniqueUserViewsTestCase):
     """
     Test cases for the view to create users.
     """
+    view_name = 'user_communique_user_create'
+    view_template_name = 'user/communique_user_form.html'
+    view_url = reverse(view_name)
 
     def test_template(self):
-        """
-        Tests that the right template is used to render the account create page.
-        """
-        view_url = reverse('user_communique_user_create')
-        template_name = 'user/communique_user_form.html'
-        self.template_test(view_url, template_name)
+        self.template_test(self.view_url, self.view_template_name)
 
     def test_only_superuser_access(self):
-        view_url = reverse('user_communique_user_create')
-        template_name = 'user/communique_user_form.html'
-        self.only_superuser_access_test(view_url, template_name)
+        self.only_superuser_access_test(self.view_url, self.view_template_name)
 
 class CommuniqueUserDetailViewTestCase(CommuniqueUserViewsTestCase):
     """
     Test cases for the view to see user details.
     """
+    view_name = 'user_communique_user_detail'
+    view_template_name = 'user/communique_user_view.html'
+    view_context_object_name = 'communique_user'
+    view_url = reverse(view_name, kwargs={'pk':1})
 
     def test_template(self):
-        view_url = reverse('user_communique_user_detail', kwargs={'pk':1})
-        template_name = 'user/communique_user_view.html'
-        self.template_test(view_url, template_name)
+        self.template_test(self.view_url, self.view_template_name)
 
     def test_only_superuser_access(self):
-        view_url = reverse('user_communique_user_detail', kwargs={'pk':1})
-        template_name = 'user/communique_user_view.html'
-        self.only_superuser_access_test(view_url, template_name)
+        self.only_superuser_access_test(self.view_url, self.view_template_name)
 
     def test_context_object(self):
-        view_url = reverse('user_communique_user_detail', kwargs={'pk':1})
-        context_object_name = 'communique_user'
-        self.context_object_test(view_url, context_object_name)
+        self.context_object_test(self.view_url, self.view_context_object_name)
 
 class CommuniqueUserUpdateViewTestCase(CommuniqueUserViewsTestCase):
     """
     Test cases for the view to update user active and superuser status.
     """
+    view_name = 'user_communique_user_update'
+    view_template_name = 'user/communique_user_update_form.html'
+    view_context_object_name = 'communique_user'
+    view_url = reverse(view_name, kwargs={'pk':1})
 
     def test_template(self):
-        view_url = reverse('user_communique_user_update', kwargs={'pk':1})
-        template_name = 'user/communique_user_update_form.html'
-        self.template_test(view_url, template_name)
+        self.template_test(self.view_url, self.view_template_name)
 
     def test_context_object(self):
-        view_url = reverse('user_communique_user_update', kwargs={'pk':1})
-        context_object_name = 'communique_user'
-        self.context_object_test(view_url, context_object_name)
+        self.context_object_test(self.view_url, self.view_context_object_name)
 
     def test_only_superuser_access(self):
-        view_url = reverse('user_communique_user_update', kwargs={'pk':1})
-        template_name = 'user/communique_user_update_form.html'
-        self.only_superuser_access_test(view_url, template_name)
+        self.only_superuser_access_test(self.view_url, self.view_template_name)
 
 """
 Test cases for the views handling the Profile model.
@@ -212,19 +201,42 @@ class ProfileDetailViewTestCase(ProfileViewsTestCase):
     """
     Test cases for the detail view for a Profile.
     """
+    view_name = 'user_profile_detail'
+    view_template_name = 'user/profile_view.html'
+    view_context_object_name = 'user_profile'
+
     def test_only_current_user_access(self):
-        view_url = reverse('user_profile_detail', kwargs={'pk':1})
-        template_name = 'user/profile_view.html'
-        self.only_current_user_access_test(view_url, template_name)
+        view_url = reverse(self.view_name, kwargs={'pk':1})
+        self.only_current_user_access_test(view_url, self.view_template_name)
 
     def test_template(self):
         # access is available through the super_user with pk=2
-        view_url = reverse('user_profile_detail', kwargs={'pk':2})
-        template_name = 'user/profile_view.html'
-        self.template_test(view_url, template_name)
+        view_url = reverse(self.view_name, kwargs={'pk':2})
+        self.template_test(view_url, self.view_template_name)
 
     def test_context_object(self):
         # access is available through the super_user with pk=2
-        view_url = reverse('user_profile_detail', kwargs={'pk':2})
-        context_object_name = 'user_profile'
-        self.context_object_test(view_url, context_object_name)
+        view_url = reverse(self.view_name, kwargs={'pk':2})
+        self.context_object_test(view_url, self.view_context_object_name)
+
+class ProfileUpdateViewTestCase(ProfileViewsTestCase):
+    """
+    Test cases for the update view for a Profile.
+    """
+    view_name = 'user_profile_update'
+    view_template_name = 'user/profile_update_form.html'
+    view_context_object_name = 'user_profile'
+
+    def test_only_current_user_access(self):
+        view_url = reverse(self.view_name, kwargs={'pk':1})
+        self.only_current_user_access_test(view_url, self.view_template_name)
+
+    def test_template(self):
+        # access is available through the super_user with pk=2
+        view_url = reverse(self.view_name, kwargs={'pk':2})
+        self.template_test(view_url, self.view_template_name)
+
+    def test_context_object(self):
+        # access is available through the super_user with pk=2
+        view_url = reverse(self.view_name, kwargs={'pk':2})
+        self.context_object_test(view_url, self.view_context_object_name)

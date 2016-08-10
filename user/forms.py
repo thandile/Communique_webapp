@@ -20,7 +20,7 @@ class CommuniqueUserUpdateForm(ModelForm):
         model = CommuniqueUser
         fields = ['is_active', 'is_superuser']
 
-class Profile(ModelForm):
+class ProfileUpdateForm(ModelForm):
     """
     A form used to update a user profile's information
     """
