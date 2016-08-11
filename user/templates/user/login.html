@@ -1,37 +1,31 @@
-{% extends parent_template|default:"base_page.html" %}
+{% extends parent_template|default:"base.html" %}
+{% load staticfiles %}
 
 {% block title %}
   {{ block.super }} - Login
 {% endblock %}
 
-{% block page_content %}
-  {% if form.errors %}
-    <div class="row">
-      <div class="col-lg-3">
+{% block body %}
+  <body class="hold-transition login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <b>Communiqué</b> App
       </div>
-      <div class="col-lg-4">
-        <div class="alert alert-danger alert-dismissable">
-          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-          <i class="fa fa-info-circle"></i> <strong>Your username and password didn't match.</strong>
-          Please try again.
-        </div>
+      <div class="login-box-body">
+        {% if form.errors %}
+          <p class="login-box-msg text-red">
+            Your username and password didn't match. Please try again.
+          </p>
+        {% else %}
+          <p class="login-box-msg">Log in to start your session</p>
+        {% endif %}
+        {% include "user/login_form.html" %}
       </div>
     </div>
-  {% endif %}
 
-  <div class="row">
-    <div class="col-lg-3">
-    </div>
-    <div class="col-lg-4">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title"> Please Sign In</h3>
-        </div>
-        <div class="panel-body">
-          {% include "user/login_form.html" %}
-        </div>
-      </div>
-    </div>
-  </div>
-
+    <!-- jQuery 2.2.3 -->
+    <script src="{% static "plugins/jQuery/jquery-2.2.3.min.js" %}"></script>
+    <!-- bootstrap 3.3.6 -->
+    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+  </body>
 {% endblock %}
