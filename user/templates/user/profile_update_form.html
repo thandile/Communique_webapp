@@ -1,0 +1,74 @@
+{% extends parent_template|default:"user/base_user.html" %}
+{% load widget_tweaks %}
+
+{% block title %}
+  Update User Profile
+{% endblock %}
+
+{% block page_heading %}
+  {{ user_profile.get_full_name }}
+{% endblock %}
+
+{% block page_subheading %}
+  Update
+{% endblock %}
+
+{% block page_breadcrumb %}
+  {{ block.super }}
+  <li>
+    <a href="{{ user_profile.get_absolute_url }}">Profile</a>
+  </li>
+  <li class="active">
+    Update
+  </li>
+{% endblock %}
+
+{% block page_content %}
+  {% include "base_dashboard_page_model_form_errors.html" %}
+
+  <div class="row">
+    <div class="col-lg-3">
+    </div>
+    <div class="col-lg-6">
+      <div class="panel panel-green">
+        <div class="panel-heading">
+          <h3>Profile Details</h3>
+        </div>
+      </div>
+      <div class="panel-body">
+        <form role="form" action="{{ user_profile.get_update_url }}" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            {{ form.first_name.label_tag }}
+            {{ form.first_name|attr:"placeholder:Enter first name"|add_class:"form-control" }}
+            {% if form.first_name.help_text %}
+              <p class="help-block">{{ form.first_name.help_text }}</p>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            {{ form.last_name.label_tag }}
+            {{ form.last_name|attr:"placeholder:Enter last name"|add_class:"form-control" }}
+            {% if form.last_name.help_text %}
+              <p class="help-block">{{ form.last_name.help_text }}</p>
+            {% endif %}
+          </div>
+          <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email|attr:"placeholder:Enter email address"|add_class:"form-control" }}
+            {% if form.email.help_text %}
+              <p class="help-block">{{ form.email.help_text }}</p>
+            {% endif %}
+          </div>
+          <a href="{{ user_profile.get_absolute_url }}" class="btn btn-warning">
+            Cancel
+          </a>
+          <button type="submit" class="btn btn-success">
+            Submit
+          </button>
+        </form>
+      </div>
+    </div>
+    <div class="col-lg-3">
+    </div>
+  </div>
+{% endblock %}

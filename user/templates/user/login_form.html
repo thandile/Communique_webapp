@@ -1,5 +1,5 @@
 {% load widget_tweaks %}
-<form role="form" action="{% url 'login' %}" method="post">
+<form role="form" action="{% url 'user_login' %}" method="post">
   {% csrf_token %}
   <div class="form-group">
     {{ form.username.label_tag }}
@@ -9,8 +9,9 @@
     {{ form.password.label_tag }}
     {{ form.password|attr:"placeholder:Password"|add_class:"form-control" }}
   </div>
-  <button class="btn btn-lg btn-success btn-block" type="submit">
+  <input type="hidden" name="next" value="{{ next }}" />
+  <a class="btn btn-warning" href="{% url 'password_reset' %}">Reset Password</a>
+  <button class="btn btn-success" type="submit">
     {{ login_button|default:'Log In'}}
   </button>
-  <input type="hidden" name="next" value="{{ next }}" />
 </form>
