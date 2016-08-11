@@ -31,15 +31,6 @@ class CommuniqueUserTestCase(TestCase):
         self.assertEqual(user.get_update_url(), '/user/communique-users/'
             + str(user.pk) + '/update/')
 
-    def test_get_set_password_url(self):
-        """
-        Tests that the right url path is returned to set the password of a
-        Communiqué user.
-        """
-        user = CommuniqueUser.objects.get(username='jon_snow')
-        self.assertEqual(user.get_set_password_url(), '/user/communique-users/'
-            + str(user.pk) + '/set-password/')
-
 class ProfileTestCase(TestCase):
     """
     Test cases for the Profile model.
