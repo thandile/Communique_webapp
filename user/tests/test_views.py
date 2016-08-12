@@ -59,29 +59,6 @@ class CommuniqueUserViewsTestCase(UserViewsTestCase):
         response = self.client.get(view_url, follow=True)
         self.assertTemplateUsed(response, 'user/login.html')
 
-class CommuniqueUserAccessViewsTestCase(CommuniqueUserViewsTestCase):
-    """
-    Test cases for the login and logout views.
-    """
-
-    def test_login(self):
-        """
-        Test that login occurs on providing the right credentials.
-        """
-        self.assertFalse(self.client.login(username='dumb', password='secret'))
-        self.assertTrue(self.client.login(username='super_user',
-            password='p@55words'))
-
-    def test_login_view_template(self):
-        view_url = reverse('user_login')
-        template_name = 'user/login.html'
-        self.template_test(view_url, template_name)
-
-    def test_logout_view_template(self):
-        view_url = reverse('user_logout')
-        template_name = 'user/logout.html'
-        self.template_test(view_url, template_name)
-
 class CommuniqueUserListViewTestCase(CommuniqueUserViewsTestCase):
     """
     Test cases for the user list view.
