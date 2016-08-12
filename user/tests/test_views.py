@@ -59,26 +59,6 @@ class CommuniqueUserViewsTestCase(UserViewsTestCase):
         response = self.client.get(view_url, follow=True)
         self.assertTemplateUsed(response, 'user/login.html')
 
-
-class CommuniqueUserSearchListViewTestCase(CommuniqueUserViewsTestCase):
-    """
-    Test cases for the user search view.
-    """
-    view_name = 'user_communique_user_list_search'
-    view_template_name = 'user/communique_user_list_search.html'
-    view_context_object_name = 'communique_user_list'
-    view_url = reverse(view_name)
-
-    def test_template(self):
-        self.template_test(self.view_url, self.view_template_name)
-
-    def test_context_object(self):
-        self.view_url = self.view_url + '?q=super'
-        self.context_object_test(self.view_url, self.view_context_object_name)
-
-    def test_only_superuser_access(self):
-        self.only_superuser_access_test(self.view_url, self.view_template_name)
-
 class CommuniqueUserAccessViewsTestCase(CommuniqueUserViewsTestCase):
     """
     Test cases for the login and logout views.

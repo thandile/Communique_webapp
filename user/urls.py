@@ -34,8 +34,6 @@ urlpatterns = [
     # urls to CRUD Communique users
     url(r'^communique-users/$', CommuniqueUserListView.as_view(),
         name='user_communique_user_list'),
-    url(r'^communique-users/search/$', CommuniqueUserSearchListView.as_view(),
-        name='user_communique_user_list_search'),
     url(r'^communique-users/create/$', CommuniqueUserCreateView.as_view(),
         name='user_communique_user_create'),
     url(r'^communique-users/(?P<pk>[0-9]+)/$',
