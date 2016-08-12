@@ -12,7 +12,8 @@ urlpatterns = [
         permanent=False)),
     url(r'^login/$', auth_views.login, {'template_name':'user/login.html'},
         name='user_login'),
-    url(r'^logout/$', auth_views.logout, {'template_name':'user/logout.html'},
+    url(r'^logout/$', auth_views.logout, {'template_name':'user/logout.html',
+        'next_page':'/user/login/'},
         name='user_logout'),
     # urls for resetting a user's password
     url(r'^password-reset/$', auth_views.password_reset,
