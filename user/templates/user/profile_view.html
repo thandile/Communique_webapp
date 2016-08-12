@@ -40,7 +40,9 @@
               <b>Email</b> <a class="pull-right">{{ user_profile.email }}</a>
             </li>
           </ul>
-          <a href="{{ user_profile.get_update_url }}" class="btn btn-primary btn-block"><b>Edit</b></a>
+          <a href="{{ user_profile.get_update_url }}" class="btn btn-primary"><b>Edit Details</b></a>
+          <a href="{% url 'password_change' %}" class="btn btn-warning pull-right"><b>Update Password</b></a>
+
         </div>
       </div>
     </div>
