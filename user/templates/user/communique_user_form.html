@@ -1,4 +1,4 @@
-{% extends parent_template|default:"base.html" %}
+{% extends parent_template|default:"user/base_user.html" %}
 {% load widget_tweaks %}
 
 {% block title %}
@@ -16,12 +16,12 @@
 {% block page_breadcrumb %}
   <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
   <li><a href="{% url 'user_communique_user_list' %}"><i class="fa fa-user"></i> Communiqué Users</a></li>
-  <li class="active"><i class="fa fa-user"></i> Register User</li>
+  <li class="active"><i class="fa fa-edit"></i> Register User</li>
 {% endblock %}
 
 {% block page_content %}
   {% include "form_errors.html" with class="col-md-12" %}
-  
+
   <div class="row">
     <div class="col-md-12">
       <div class="box box-primary">
