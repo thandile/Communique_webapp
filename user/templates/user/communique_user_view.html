@@ -1,38 +1,96 @@
 {% extends parent_template|default:"user/base_user.html" %}
+{% load staticfiles %}
 
 {% block title %}
-  {{ communique_user.get_full_name }}
+  {{ block.super }} | User Profile
 {% endblock %}
 
 {% block page_heading %}
-  {{ communique_use.get_full_name }}
+  User Profile
 {% endblock %}
 
 {% block page_subheading %}
-  Details
 {% endblock %}
 
 {% block page_breadcrumb %}
-    {{ block.super }}
-    <li>
-      <i class="fa fa-table"></i>
-      <a href="{% url 'user_communique_user_list' %}">Communiqué Users</a>
-    </li>
-    <li class="active">
-      {{ communique_user.get_full_name }}
-    </li>
+  <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+  <li><a href="{% url 'user_communique_user_list' %}"><i class="fa fa-user"></i> Communiqué Users</a></li>
+  <li class="active"><i class="fa fa-user"></i> User Profile</li>
 {% endblock %}
 
 {% block page_content %}
-
-  {% include "user/user_details.html" %}
-
   <div class="row">
-    <div class="col-lg-12">
-      <a href="{{ communique_user.get_update_url }}" class="btn btn-primary">
-        Update User Information
-      </a>
+    <div class="col-md-3">
+      <div class="box box-primary">
+        <div class="box-body box-profile">
+          <img class="profile-user-img img-responsive img-circle" src="{% static "dist/img/user4-128x128.jpg" %}" alt="User profile picture">
+
+          <h3 class="profile-username text-center">{{ communique_user.get_full_name }}</h3>
+
+          <ul class="list-group list-group-unbordered">
+            <li class="list-group-item">
+              <b>Username</b> <a class="pull-right">{{ communique_user.username }}</a>
+            </li>
+            <li class="list-group-item">
+              <b>First name</b> <a class="pull-right">{{ communique_user.first_name }}</a>
+            </li>
+            <li class="list-group-item">
+              <b>Last name</b> <a class="pull-right">{{ communique_user.last_name }}</a>
+            </li>
+            <li class="list-group-item">
+              <b>Email</b> <a class="pull-right">{{ communique_user.email }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="box box-primary">
+        <div class="box-body">
+          <h3 class="text-center">System Information</h3>
+          <ul class="list-group list-group-unbordered">
+            <li class="list-group-item">
+              <b>Last login</b> <a class="pull-right">{{ communique_user.last_login }}</a>
+            </li>
+            <li class="list-group-item">
+              <b>Date added</b> <a class="pull-right">{{ communique_user.date_joined }}</a>
+            </li>
+            <li class="list-group-item">
+              <b>Account status</b>
+              {% if communique_user.is_active %}
+                <span class="label label-success pull-right">Activated</span>
+              {% else %}
+                <span class="label label-danger pull-right">Deactivated</span>
+              {% endif %}
+            </li>
+            <li class="list-group-item">
+              <b>Position</b>
+              {% if communique_user.is_superuser %}
+                <span class="label label-warning pull-right">Superuser</span>
+              {% else %}
+                <span class="label label-success pull-right">Staff</span>
+              {% endif %}
+            </li>
+          </ul>
+          <a href="{{ communique_user.get_update_url }}" class="btn btn-primary btn-block"><b>Edit</b></a>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="box box-primary">
+        <div class="box-header with-border">
+          <h3 class="box-title">Recent Activity</h3>
+        </div>
+
+        <div class="box-body">
+        </div>
+
+        <div class="box-footer">
+        </div>
+      </div>
     </div>
   </div>
-
 {% endblock %}
