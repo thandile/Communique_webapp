@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 
 from user.models import CommuniqueUser, Profile
 
+
 class UserViewsTestCase(TestCase):
     def setUp(self):
         """
@@ -35,9 +36,12 @@ class UserViewsTestCase(TestCase):
         response = self.client.get(view_url)
         self.assertTrue(response.context[context_object_name])
 
+
 """
 Test cases for the views handling the CommuniqueUser model.
 """
+
+
 class CommuniqueUserViewsTestCase(UserViewsTestCase):
     def only_superuser_access_test(self, view_url, template_name):
         """
@@ -59,6 +63,7 @@ class CommuniqueUserViewsTestCase(UserViewsTestCase):
         response = self.client.get(view_url, follow=True)
         self.assertTemplateUsed(response, 'user/login.html')
 
+
 class CommuniqueUserListViewTestCase(CommuniqueUserViewsTestCase):
     """
     Test cases for the user list view.
@@ -77,6 +82,7 @@ class CommuniqueUserListViewTestCase(CommuniqueUserViewsTestCase):
     def test_context_object(self):
         self.context_object_test(self.view_url, self.view_context_object_name)
 
+
 class CommuniqueUserCreateViewTestCase(CommuniqueUserViewsTestCase):
     """
     Test cases for the view to create users.
@@ -90,6 +96,7 @@ class CommuniqueUserCreateViewTestCase(CommuniqueUserViewsTestCase):
 
     def test_only_superuser_access(self):
         self.only_superuser_access_test(self.view_url, self.view_template_name)
+
 
 class CommuniqueUserDetailViewTestCase(CommuniqueUserViewsTestCase):
     """
@@ -108,6 +115,7 @@ class CommuniqueUserDetailViewTestCase(CommuniqueUserViewsTestCase):
 
     def test_context_object(self):
         self.context_object_test(self.view_url, self.view_context_object_name)
+
 
 class CommuniqueUserUpdateViewTestCase(CommuniqueUserViewsTestCase):
     """
@@ -131,6 +139,8 @@ class CommuniqueUserUpdateViewTestCase(CommuniqueUserViewsTestCase):
 """
 Test cases for the views handling the Profile model.
 """
+
+
 class ProfileViewsTestCase(UserViewsTestCase):
     def only_current_user_access_test(self, view_url, template_name):
         """
@@ -176,6 +186,7 @@ class ProfileDetailViewTestCase(ProfileViewsTestCase):
         # access is available through the super_user with pk=2
         view_url = reverse(self.view_name, kwargs={'pk':2})
         self.context_object_test(view_url, self.view_context_object_name)
+
 
 class ProfileUpdateViewTestCase(ProfileViewsTestCase):
     """
