@@ -5,6 +5,14 @@
   {{ block.super }} | Register User
 {% endblock %}
 
+{% block user_create_menu %}
+  <li class="active">
+    <a href="{% url 'user_communique_user_create' %}">
+      <i class="fa fa-circle-o"></i> Register User
+    </a>
+  </li>
+{% endblock %}
+
 {% block page_heading %}
   Register User
 {% endblock %}
