@@ -1,7 +1,6 @@
 from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
-from django.core.urlresolvers import reverse
 
 
 from .views import *

@@ -4,6 +4,7 @@ from django.views.generic import RedirectView
 from user import urls as user_urls
 from api import urls as api_urls
 from services import urls as services_urls
+from programs import urls as programs_urls
 
 from .views import DashboardTemplateView
 
@@ -12,5 +13,6 @@ urlpatterns = [
     url(r'^dashboard/$', DashboardTemplateView.as_view(), name='dashboard_home'),
     url(r'^services/', include(services_urls)),
     url(r'^user/', include(user_urls)),
+    url(r'^programs/', include(programs_urls)),
     url(r'^api/', include(api_urls)),
 ]
