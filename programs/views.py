@@ -7,6 +7,7 @@ from .models import *
 Views for the web app.
 """
 
+
 class ProgramListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     """
     A view to list all programs of the system. This view is only available to logged in active registered users of the
