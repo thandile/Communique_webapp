@@ -24,6 +24,7 @@
 
 {% block table_columns %}
     <th>Name</th>
+    <th>Status</th>
     <th>Date Created</th>
     <th>Date Modified</th>
 {% endblock %}
@@ -32,6 +33,13 @@
     {% for program in program_list %}
         <tr>
             <td><a href="{{ program.get_absolute_url }}">{{ program }}</a></td>
+            <td>
+                {% if program.is_open %}
+                    <span class="label label-success">Open</span>
+                {% else %}
+                    <span class="label label-danger">Closed</span>
+                {% endif %}
+            </td>
             <td><a href="{{ program.get_absolute_url }}">{{ program.date_created }}</a></td>
             <td><a href="{{ program.get_absolute_url }}">{{ program.date_last_modified }}</a></td>
         </tr>
@@ -40,6 +48,7 @@
 
 {% block table_footer %}
     <th>Name</th>
+    <th>Status</th>
     <th>Date Created</th>
     <th>Date Modified</th>
 {% endblock %}
