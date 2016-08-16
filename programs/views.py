@@ -1,4 +1,5 @@
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -36,6 +37,22 @@ class ProgramCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     form_class = ProgramForm
     model = Program
     template_name = 'programs/program_form.html'
+
+    def test_func(self):
+        """
+        Checks whether the user is an active user.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class ProgramDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    """
+    A view to display the details of a Program. The name sort of gives it away.
+    """
+    model = Program
+    template_name = 'programs/program_view.html'
+    context_object_name = 'program'
 
     def test_func(self):
         """

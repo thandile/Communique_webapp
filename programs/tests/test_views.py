@@ -5,6 +5,7 @@ from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
+from programs.models import Program
 
 class ProgramsViewsTestCase(TestCase):
     def setUp(self):
@@ -60,3 +61,16 @@ class ProgramCreateViewTestCase(ProgramsViewsTestCase):
 
     def test_active_user_access(self):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
+
+
+class ProgramDetailViewTestCase(ProgramsViewsTestCase):
+    """
+    Test cases for view to show the details of a program.
+    """
+    view_name = 'programs_program_detail'
+    view_template_name = 'programs/program_view.html'
+
+    def test_active_user_access(self):
+        program = Program.objects.create(name='Sample Program', description='Sample Description')
+        self.only_active_user_access_test(program.get_absolute_url(), self.view_template_name)
+
