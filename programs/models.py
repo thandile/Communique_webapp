@@ -19,7 +19,4 @@ class Program(models.Model):
         return reverse('programs_program_detail', kwargs={'pk':self.pk})
 
     def get_update_url(self):
-        pass
-
-    def get_archive_url(self):
-        pass
+        return reverse('programs_program_update', kwargs={'pk':self.pk})

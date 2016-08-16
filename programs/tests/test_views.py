@@ -74,3 +74,15 @@ class ProgramDetailViewTestCase(ProgramsViewsTestCase):
         program = Program.objects.create(name='Sample Program', description='Sample Description')
         self.only_active_user_access_test(program.get_absolute_url(), self.view_template_name)
 
+
+class ProgramUpdateViewTestCase(ProgramsViewsTestCase):
+    """
+    Test cases for view to update the details of a program.
+    """
+    view_name = 'programs_program_update'
+    view_template_name = 'programs/program_update_form.html'
+
+    def test_active_user_access(self):
+        program = Program.objects.create(name='Sample Program', description='Sample Description')
+        self.only_active_user_access_test(program.get_update_url(), self.view_template_name)
+
