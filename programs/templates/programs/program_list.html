@@ -14,4 +14,32 @@
 
 {% block page_breadcrumb %}
     <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'programs_program_list' %}"><i class="fa fa-book"></i> Pilot Programs</a></li>
+    <li class="active">List</li>
+{% endblock %}
+
+{% block table_title %}
+    Existing Pilot Programs
+{% endblock %}
+
+{% block table_columns %}
+    <th>Name</th>
+    <th>Date Created</th>
+    <th>Date Modified</th>
+{% endblock %}
+
+{% block table_content %}
+    {% for program in program_list %}
+        <tr>
+            <td><a href="{{ program.get_absolute_url }}">{{ program }}</a></td>
+            <td><a href="{{ program.get_absolute_url }}">{{ program.date_created }}</a></td>
+            <td><a href="{{ program.get_absolute_url }}">{{ program.date_last_modified }}</a></td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block table_footer %}
+    <th>Name</th>
+    <th>Date Created</th>
+    <th>Date Modified</th>
 {% endblock %}
