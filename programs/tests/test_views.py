@@ -48,3 +48,15 @@ class ProgramListViewTestCase(ProgramsViewsTestCase):
 
     def test_active_user_access(self):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
+
+
+class ProgramCreateViewTestCase(ProgramsViewsTestCase):
+    """
+    Test cases for view to create a program.
+    """
+    view_name = 'programs_program_create'
+    view_template_name = 'programs/program_form.html'
+    view_url = reverse(view_name)
+
+    def test_active_user_access(self):
+        self.only_active_user_access_test(self.view_url, self.view_template_name)
