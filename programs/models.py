@@ -10,6 +10,7 @@ class Program(models.Model):
     description = models.TextField(verbose_name="Description")
     date_created = models.DateField(auto_now_add=True)
     date_last_modified = models.DateField(auto_now=True)
+    is_open = models.BooleanField(default=True, help_text='Is this program ongoing or closed?')
 
     def __str__(self):
         return self.name.title()
