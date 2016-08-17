@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'api',
     'user',
     'services',
+    'programs',
 ]
 
 MIDDLEWARE_CLASSES = [

@@ -1,20 +1,12 @@
-{% extends parent_template|default:"user/base_user.html" %}
+{% extends parent_template|default:"programs/base_programs.html" %}
 {% load widget_tweaks %}
 
 {% block title %}
-    {{ block.super }} | Register User
-{% endblock %}
-
-{% block user_create_menu %}
-    <li class="active">
-        <a href="{% url 'user_communique_user_create' %}">
-            <i class="fa fa-circle-o text-red"></i> Register User
-        </a>
-    </li>
+    {{ block.super }} | Update Pilot Program
 {% endblock %}
 
 {% block page_heading %}
-    Register User
+    Update Pilot Program
 {% endblock %}
 
 {% block page_subheading %}
@@ -23,8 +15,8 @@
 
 {% block page_breadcrumb %}
     <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-    <li><a href="{% url 'user_communique_user_list' %}"><i class="fa fa-user"></i> Communiqué Users</a></li>
-    <li class="active"><i class="fa fa-edit"></i> Register User</li>
+    <li><a href="{% url 'programs_program_list' %}"><i class="fa fa-tags"></i> Pilot Programs</a></li>
+    <li class="active"><i class="fa fa-edit"></i> Update Pilot Program</li>
 {% endblock %}
 
 {% block page_content %}
@@ -34,30 +26,28 @@
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">User Details</h3>
+                    <h3 class="box-title">Pilot Program Details</h3>
                 </div>
-                <form role="form" action="{% url 'user_communique_user_create' %}" method="post">
+                <form role="form" action="{{ program.get_update_url }}" method="post">
                     {% csrf_token %}
                     <div class="box-body">
                         {% for field in form %}
                             <div class="{% if field.errors %}form-group has-error{% else %}form-group{% endif %}">
                                 {{ field.label_tag }}
-                                {% if field.label == "Superuser status" %}
+                                {% if field.label == "Program name" %}
+                                    {{ field|attr:"placeholder:Enter program name"|add_class:"form-control" }}
+                                {% elif field.label == "Description" %}
+                                    {{ field|attr:"placeholder:Enter program description"|add_class:"form-control" }}
+                                {% elif field.label == "Is open" %}
                                     {{ field }}
-                                {% elif field.label == "Username" %}
-                                    {{ field|attr:"placeholder:Enter username"|add_class:"form-control" }}
-                                {% elif field.label == "First name" %}
-                                    {{ field|attr:"placeholder:Enter first name"|add_class:"form-control" }}
-                                {% elif field.label == "Last name" %}
-                                    {{ field|attr:"placeholder:Enter last name"|add_class:"form-control" }}
-                                {% elif field.label == "Email address" %}
-                                    {{ field|attr:"placeholder:Enter email address"|add_class:"form-control" }}
                                 {% else %}
                                     {{ field|add_class:"form-control" }}
                                 {% endif %}
+
                                 {% if field.help_text %}
                                     <p class="help-block">{{ field.help_text }}</p>
                                 {% endif %}
+
                                 {% if field.errors %}
                                     <ul>
                                         {% for error in field.errors %}
@@ -69,7 +59,7 @@
                         {% endfor %}
                     </div>
                     <div class="box-footer">
-                        <button type="reset" class="btn btn-warning">Reset</button>
+                        <a href="{{ program.get_absolute_url }}" class="btn btn-warning">Cancel</a>
                         <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </form>
