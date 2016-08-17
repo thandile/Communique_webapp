@@ -58,6 +58,7 @@ class UserActivity(models.Model):
     date_time = models.DateTimeField(auto_now_add=True)
     object_name = models.CharField(max_length=100, default='Model')
     object_url = models.CharField(max_length=100, blank=True, null=True)
+    object_identifier = models.CharField(max_length=100, blank=True, null=True)
     description = models.TextField(blank=True, null=True)
 
     class Meta:
