@@ -28,7 +28,13 @@
                             <b>Date added</b> <a class="pull-right">{{ program.date_created }}</a>
                         </li>
                         <li class="list-group-item">
+                            <b>Added by</b> <a class="pull-right">{{ program.created_by.get_full_name }}</a>
+                        </li>
+                        <li class="list-group-item">
                             <b>Last modified</b> <a class="pull-right">{{ program.date_last_modified }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Last modified by</b> <a class="pull-right">{{ program.last_modified_by.get_full_name }}</a>
                         </li>
                         <li class="list-group-item">
                             <b>Status</b>
