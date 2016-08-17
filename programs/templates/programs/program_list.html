@@ -26,7 +26,10 @@
     <th>Name</th>
     <th>Status</th>
     <th>Date Created</th>
-    <th>Date Modified</th>
+    <th>Created By</th>
+    <th>Date Last Modified</th>
+    <th>Last Modified By</th>
+
 {% endblock %}
 
 {% block table_content %}
@@ -41,7 +44,9 @@
                 {% endif %}
             </td>
             <td><a href="{{ program.get_absolute_url }}">{{ program.date_created }}</a></td>
+            <td>{{ program.created_by.get_full_name }}</td>
             <td><a href="{{ program.get_absolute_url }}">{{ program.date_last_modified }}</a></td>
+            <td>{{ program.last_modified_by.get_full_name }}</td>
         </tr>
     {% endfor %}
 {% endblock %}
@@ -50,5 +55,7 @@
     <th>Name</th>
     <th>Status</th>
     <th>Date Created</th>
+    <th>Created By</th>
     <th>Date Modified</th>
+    <th>Last Modified By</th>
 {% endblock %}

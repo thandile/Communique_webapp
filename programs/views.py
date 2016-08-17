@@ -41,6 +41,14 @@ class ProgramCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Program
     template_name = 'programs/program_form.html'
 
+    def form_valid(self, form):
+        program = form.save(commit=False)
+        # update the created by and last modified by markers
+        program.created_by = self.request.user
+        program.last_modified_by = self.request.user
+
+        return super(ProgramCreateView, self).form_valid(form)
+
     def test_func(self):
         """
         Checks whether the user is an active user.
