@@ -56,8 +56,9 @@ class UserActivity(models.Model):
     actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_activities',
                               related_query_name='user_activity')
     date_time = models.DateTimeField(auto_now_add=True)
-    object = models.TextField()
-    object_url = models.TextField(blank=True, null=True)
+    object_name = models.CharField(max_length=100, default='Model')
+    object_url = models.CharField(max_length=100, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
 
     class Meta:
         ordering = ['-date_time']

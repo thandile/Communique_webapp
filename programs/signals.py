@@ -10,4 +10,5 @@ def post_program_save_callback(sender, **kwargs):
     Records the user that has created or updated a program.
     """
     if kwargs['created']:
+        # new program has been created
         print('A new object is created')
