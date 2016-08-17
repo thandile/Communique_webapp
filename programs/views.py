@@ -88,6 +88,13 @@ class ProgramUpdateView(LoginRequiredMixin, UserPassesTestMixin ,UpdateView):
     template_name = 'programs/program_update_form.html'
     context_object_name = 'program'
 
+    def form_valid(self, form):
+        program = form.save(commit=False)
+        # update the last modified by markers
+        program.last_modified_by = self.request.user
+
+        return super(ProgramUpdateView, self).form_valid(form)
+
     def test_func(self):
         """
         Checks whether the user is an active user.
