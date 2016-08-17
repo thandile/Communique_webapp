@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 
 from programs.models import Program
 
+
 class ProgramsViewsTestCase(TestCase):
     def setUp(self):
         """
