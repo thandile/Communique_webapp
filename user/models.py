@@ -59,3 +59,6 @@ class UserActivity(models.Model):
     object = models.TextField()
     object_url = models.TextField(blank=True, null=True)
 
+    class Meta:
+        ordering = ['-date_time']
+
