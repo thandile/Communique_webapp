@@ -15,3 +15,16 @@ class PatientListViewTestCase(ViewsTestCase):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
 
 
+class PatientCreateViewTestCase(ViewsTestCase):
+    """
+    Test cases for the view that creates patients.
+    """
+    view_name = 'patients_patient_create'
+    view_template_name = 'patients/patient_form.html'
+    view_url = reverse(view_name)
+
+    def test_active_user_access(self):
+        self.only_active_user_access_test(self.view_url, self.view_template_name)
+
+
+
