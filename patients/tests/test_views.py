@@ -2,6 +2,8 @@ from django.core.urlresolvers import reverse
 
 from communique.tests import ViewsTestCase
 
+from patients.models import Patient
+
 
 class PatientListViewTestCase(ViewsTestCase):
     """
@@ -27,4 +29,13 @@ class PatientCreateViewTestCase(ViewsTestCase):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
 
 
+class PatientDetailViewTestCase(ViewsTestCase):
+    """
+    Test cases for the view that displays patient information.
+    """
+    view_name = 'patients_patient_detail'
+    view_template_name = 'patients/patient_view.html'
 
+    def test_active_user_access(self):
+        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
+        self.only_active_user_access_test(patient.get_absolute_url(), self.view_template_name)
