@@ -1,4 +1,5 @@
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -47,6 +48,25 @@ class PatientCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         patient.last_modified_by = self.request.user
 
         return super(PatientCreateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is an active user.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class PatientDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    """
+    A view to display the details of a patient. This view is only available to logged in and active registered users of
+    the system.
+
+    If the user fails any of the criteria, this view will redirect them to the login page.
+    """
+    model = Patient
+    template_name = 'patients/patient_view.html'
+    context_object_name = 'patient'
 
     def test_func(self):
         """
