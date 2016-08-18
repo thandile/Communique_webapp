@@ -46,5 +46,8 @@ class Patient(models.Model):
 
         return name.title()
 
+    def get_absolute_url(self):
+        pass
+
 
 
