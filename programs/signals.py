@@ -23,7 +23,7 @@ def post_program_save_callback(sender, **kwargs):
     else:
         # program has been updated, yet to discern what type of update i.e closed
         if program.last_modified_by:
-            description_str = "{0} update a program titled '{1}'.".format(program.last_modified_by.get_full_name(),
+            description_str = "{0} updated a program titled '{1}'.".format(program.last_modified_by.get_full_name(),
                                                                           program.name)
             UserActivity.objects.create(action=UserActivity.UPDATE, actor=program.last_modified_by,
                                         object_name="Program", object_url=program.get_absolute_url(),
