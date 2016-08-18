@@ -44,7 +44,7 @@ class Patient(models.Model):
         else:
             name = self.first_name + ' ' + self.last_name
 
-        return name
+        return name.title()
 
 
 
