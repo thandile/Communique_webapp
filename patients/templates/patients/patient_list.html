@@ -1,0 +1,62 @@
+{% extends parent_template|default:"patients/base_patients_data_table.html" %}
+
+{% block title %}
+    {{ block.super }} | Patients
+{% endblock %}
+
+{% block patients_list_menu %}
+    <li class="active">
+        <a href="{% url 'patients_patient_list' %}">
+            <i class="fa fa-circle-o text-red"></i> Patients List
+        </a>
+    </li>
+{% endblock %}
+
+{% block page_heading %}
+    Patients
+{% endblock %}
+
+{% block page_subheading %}
+    List
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'patients_patient_list' %}"><i class="fa fa-heartbeat"></i> Patients</a></li>
+    <li class="active">List</li>
+{% endblock %}
+
+{% block table_title %}
+    Registered Patients
+{% endblock %}
+
+{% block table_columns %}
+    <th>Name</th>
+    <th>Identifier</th>
+    <th>Date Added</th>
+    <th>Added By</th>
+    <th>Last Modified Date</th>
+    <th>Last Modified By</th>
+{% endblock %}
+
+{% block table_content %}
+    {% for patient in patient_list %}
+        <tr>
+            <td><a href="#">{{ patient }}</a></td>
+            <td><a href="#"></a>{{ patient.identifier }}</td>
+            <td><a href="#">{{ patient.date_created }}</a></td>
+            <td><a href="#">{{ patient.created_by.get_full_name }}</a></td>
+            <td><a href="#">{{ patient.date_last_modified }}</a></td>
+            <td><a href="#">{{ patient.last_modified_by.get_full_name }}</a></td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block table_footer %}
+    <th>Name</th>
+    <th>Identifier</th>
+    <th>Date Added</th>
+    <th>Added By</th>
+    <th>Last Modified Date</th>
+    <th>Last Modified By</th>
+{% endblock %}
