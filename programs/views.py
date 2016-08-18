@@ -41,6 +41,14 @@ class ProgramCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Program
     template_name = 'programs/program_form.html'
 
+    def form_valid(self, form):
+        program = form.save(commit=False)
+        # update the created by and last modified by markers
+        program.created_by = self.request.user
+        program.last_modified_by = self.request.user
+
+        return super(ProgramCreateView, self).form_valid(form)
+
     def test_func(self):
         """
         Checks whether the user is an active user.
@@ -79,6 +87,13 @@ class ProgramUpdateView(LoginRequiredMixin, UserPassesTestMixin ,UpdateView):
     model = Program
     template_name = 'programs/program_update_form.html'
     context_object_name = 'program'
+
+    def form_valid(self, form):
+        program = form.save(commit=False)
+        # update the last modified by markers
+        program.last_modified_by = self.request.user
+
+        return super(ProgramUpdateView, self).form_valid(form)
 
     def test_func(self):
         """

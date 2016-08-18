@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.db import models
+
 
 class CommuniqueUser(User):
     """
@@ -14,8 +16,6 @@ class CommuniqueUser(User):
     def get_update_url(self):
         return reverse('user_communique_user_update', kwargs={'pk':self.pk})
 
-    def get_deactivate_url(self):
-        pass
 
 class Profile(User):
     """
@@ -29,3 +29,38 @@ class Profile(User):
 
     def get_update_url(self):
         return reverse('user_profile_update', kwargs={'pk':self.pk})
+
+
+class UserActivity(models.Model):
+    """
+    A model to log user activity with regards to CRUD for other models.
+    """
+    CREATE = 'CR'
+    UPDATE = 'UP'
+    DELETE = 'DL'
+    OPEN = 'OP'
+    CLOSE = 'CL'
+    ACTIVATE = 'AC'
+    DEACTIVATE = 'DE'
+
+    ACTION_CHOICES = (
+        (CREATE, 'Created'),
+        (UPDATE, 'Updated'),
+        (DELETE, 'Deleted'),
+        (OPEN, 'Opened'),
+        (CLOSE, 'Closed'),
+        (ACTIVATE, 'Activated'),
+        (DEACTIVATE, 'Deactivated'),
+    )
+    action = models.CharField(max_length=2, choices=ACTION_CHOICES)
+    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_activities',
+                              related_query_name='user_activity')
+    date_time = models.DateTimeField(auto_now_add=True)
+    object_name = models.CharField(max_length=100, default='Model')
+    object_url = models.CharField(max_length=100, blank=True, null=True)
+    object_identifier = models.CharField(max_length=100, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['-date_time']
+
