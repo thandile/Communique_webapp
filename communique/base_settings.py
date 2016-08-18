@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'api',
     'user',
     'programs',
+    'patients',
 ]
 
 MIDDLEWARE_CLASSES = [
