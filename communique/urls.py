@@ -4,7 +4,7 @@ from django.views.generic import RedirectView
 from user import urls as user_urls
 from api import urls as api_urls
 from programs import urls as programs_urls
-from patients import urls as patients_urls
+from patients.urls import patient_urls as patients_urls
 
 from .views import DashboardTemplateView
 
