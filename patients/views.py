@@ -1,7 +1,8 @@
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.urlresolvers import reverse_lazy
 
 from .models import Patient
 
@@ -102,3 +103,23 @@ class PatientUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         :return: True if user is active, false otherwise.
         """
         return self.request.user.is_active
+
+
+class PatientDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """
+    A view to handle the deletion of a patient. This view is only available to logged in registered users of the system.
+
+    If the user fails any of the criteria, this view will redirect them to the login page.
+    """
+    model = Patient
+    success_url = reverse_lazy('patients_patient_list')
+    context_object_name = 'patient'
+    template_name = 'patients/patient_confirm_delete.html'
+
+    def test_func(self):
+        """
+        Checks whether the current user is an active user
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
