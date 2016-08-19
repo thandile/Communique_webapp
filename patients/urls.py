@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^$', PatientListView.as_view(), name='patients_patient_list'),
     url(r'^create/$', PatientCreateView.as_view(), name='patients_patient_create'),
     url(r'^(?P<pk>[0-9]+)/$', PatientDetailView.as_view(), name='patients_patient_detail'),
+    url(r'^(?P<pk>[0-9]+)/update/$', PatientUpdateView.as_view(), name='patients_patient_update'),
 ]
