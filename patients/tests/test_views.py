@@ -75,3 +75,15 @@ class EnrollmentListViewTestCase(ViewsTestCase):
 
     def test_active_user_access(self):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
+
+
+class EnrollmentCreateViewTestCase(ViewsTestCase):
+    """
+    Test cases for the enrollment create view.
+    """
+    view_name = 'patients_enrollment_create'
+    view_template_name = 'patients/enrollment_form.html'
+    view_url = reverse(view_name)
+
+    def test_active_user_access(self):
+        self.only_active_user_access_test(self.view_url, self.view_template_name)

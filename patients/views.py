@@ -142,3 +142,29 @@ class EnrollmentListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         """
         return self.request.user.is_active
 
+
+class EnrollmentCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """
+    A view to handle creation of an enrollment. This view is only available to logged in and active registered users of
+    the system.
+
+    If the user fails any of the criteria, this view will redirect them to the login page.
+    """
+    model = Enrollment
+    fields = ['patient', 'program', 'comment']
+    template_name = 'patients/enrollment_form.html'
+
+    def form_valid(self, form):
+        enrollment = form.save(commit=False)
+        # add user that has enrolled patient into program
+        enrollment.enrolled_by = self.request.user
+
+        return super(EnrollmentCreateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is an active user/
+        :return: True if user is active, false otherwise
+        """
+        return self.request.user.is_active
+
