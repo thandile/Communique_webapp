@@ -1,6 +1,6 @@
 from django.conf.urls import url
 
-from patients.views import *
+from patients.views import PatientListView, PatientCreateView, PatientDetailView, PatientUpdateView, PatientDeleteView
 
 urlpatterns = [
     url(r'^$', PatientListView.as_view(), name='patients_patient_list'),
