@@ -42,12 +42,12 @@
 {% block table_content %}
     {% for patient in patient_list %}
         <tr>
-            <td><a href="#">{{ patient }}</a></td>
-            <td><a href="#"></a>{{ patient.identifier }}</td>
-            <td><a href="#">{{ patient.date_created }}</a></td>
-            <td><a href="#">{{ patient.created_by.get_full_name }}</a></td>
-            <td><a href="#">{{ patient.date_last_modified }}</a></td>
-            <td><a href="#">{{ patient.last_modified_by.get_full_name }}</a></td>
+            <td><a href="{{ patient.get_absolute_url }}">{{ patient }}</a></td>
+            <td><a href="{{ patient.get_absolute_url }}"></a>{{ patient.identifier }}</td>
+            <td><a href="{{ patient.get_absolute_url }}">{{ patient.date_created }}</a></td>
+            <td><a href="{{ patient.get_absolute_url }}">{{ patient.created_by.get_full_name }}</a></td>
+            <td><a href="{{ patient.get_absolute_url }}">{{ patient.date_last_modified }}</a></td>
+            <td><a href="{{ patient.get_absolute_url }}">{{ patient.last_modified_by.get_full_name }}</a></td>
         </tr>
     {% endfor %}
 {% endblock %}
