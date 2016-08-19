@@ -51,3 +51,15 @@ class PatientUpdateViewTestCase(ViewsTestCase):
     def test_active_user_access(self):
         patient = Patient.objects.create(first_name='Jon', last_name='Snow')
         self.only_active_user_access_test(patient.get_update_url(), self.view_template_name)
+
+
+class PatientDeleteViewTestCase(ViewsTestCase):
+    """
+    Test cases for the delete view of a patient.
+    """
+    view_name = 'patients_patient_delete'
+    view_template_name = 'patients/patient_confirm_delete.html'
+
+    def test_active_user_access(self):
+        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
+        self.only_active_user_access_test(patient.get_delete_url(), self.view_template_name)
