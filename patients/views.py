@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.urlresolvers import reverse_lazy
 
-from .models import Patient
+from .models import Patient, Enrollment
 
 """
 Views for the web app.
@@ -120,6 +120,25 @@ class PatientDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         """
         Checks whether the current user is an active user
         :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class EnrollmentListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    """
+    A view to list all the enrollments that currently exist in the system. This view is only available to logged in and
+    active registered users of the system.
+
+    If the user fails any part of the criteria, this view will redirect them to the login page.
+    """
+    model = Enrollment
+    template_name = 'patients/enrollment_list.html'
+    context_object_name = 'enrollment_list'
+
+    def test_func(self):
+        """
+        Checks whether the user is an active user.
+        :return: True is user is active, false otherwise.
         """
         return self.request.user.is_active
 
