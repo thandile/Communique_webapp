@@ -78,7 +78,7 @@
                             <b>Last Modified By</b> <a class="pull-right">{{ patient.last_modified_by.get_full_name }}</a>
                         </li>
                     </ul>
-                    <a href="#" class="btn btn-primary"><b>Edit Details</b></a>
+                    <a href="{{ patient.get_update_url }}" class="btn btn-primary"><b>Edit Details</b></a>
                     <a href="#" class="btn btn-danger"><b>Delete</b></a>
                 </div>
             </div>
