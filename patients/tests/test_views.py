@@ -39,3 +39,15 @@ class PatientDetailViewTestCase(ViewsTestCase):
     def test_active_user_access(self):
         patient = Patient.objects.create(first_name='Jon', last_name='Snow')
         self.only_active_user_access_test(patient.get_absolute_url(), self.view_template_name)
+
+
+class PatientUpdateViewTestCase(ViewsTestCase):
+    """
+    Test cases for the update view for patient information.
+    """
+    view_name = 'patients_patient_update'
+    view_template_name = 'patients/patient_update_form.html'
+
+    def test_active_user_access(self):
+        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
+        self.only_active_user_access_test(patient.get_update_url(), self.view_template_name)
