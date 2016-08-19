@@ -2,6 +2,8 @@ from django.db import models
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
 
+from programs.models import Program
+
 
 class Patient(models.Model):
     """
@@ -36,6 +38,8 @@ class Patient(models.Model):
     date_created = models.DateTimeField(auto_now_add=True, help_text='The date/time the patient was created.')
     date_last_modified = models.DateTimeField(auto_now=True,
                                               help_text="The last date/time the patient's information was modified.")
+    enrolled_programs = models.ManyToManyField(Program, through='Enrollment', related_name='enrolled_patients',
+                                               related_query_name='enrolled_patient')
 
     def __str__(self):
         name = ''
@@ -54,6 +58,25 @@ class Patient(models.Model):
 
     def get_delete_url(self):
         return reverse('patients_patient_delete', kwargs={'pk':self.pk})
+
+
+class Enrollment(models.Model):
+    """
+    A model representing an enrollment between a patient and a program.
+    """
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, related_name='enrollments',
+                                related_query_name='enrollment', help_text='The patient enrolled in the program.')
+    program = models.ForeignKey(Program, on_delete=models.CASCADE, related_name='enrollments',
+                                related_query_name='enrollment', help_text='The program to which a patient is enrolled')
+    date_enrolled = models.DateField(verbose_name='date of enrollment', auto_now_add=True,
+                                     help_text='The date the patient was enrolled into the program.')
+    enrolled_by = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True,
+                                    related_name='registered_enrollments', related_query_name='registered_enrollment',
+                                    help_text="The user that registers a patient's enrollment into a program.")
+    comment = models.TextField(verbose_name='comment', help_text='A comment on the enrollment')
+    is_active = models.BooleanField(verbose_name='is open', default=True,
+                                    help_text='Whether this enrollment is still active.')
+
 
 
 
