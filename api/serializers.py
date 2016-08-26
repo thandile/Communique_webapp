@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from programs.models import Program
 from patients.models import Patient, Enrollment
-from user.models import CommuniqueUser
+from user.models import CommuniqueUser, Profile
 
 
 class ProgramSerializer(serializers.ModelSerializer):
@@ -50,5 +50,15 @@ class CommuniqueUserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = CommuniqueUser
+        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'is_superuser')
+        read_only_fields = ('last_login', 'date_joined',)
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    """
+    A serializer for the Profile model.
+    """
+    class Meta:
+        model = Profile
         fields = ('id', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'is_superuser')
         read_only_fields = ('last_login', 'date_joined',)
