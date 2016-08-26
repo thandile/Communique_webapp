@@ -9,7 +9,7 @@ class ProgramSerializer(serializers.ModelSerializer):
     """
     created_by = serializers.ReadOnlyField(source='created_by.username')
     last_modified_by = serializers.ReadOnlyField(source='last_modified_by.username')
-    
+
     class Meta:
         model = Program
         fields = ('id', 'name', 'description', 'date_created', 'date_last_modified', 'is_open',
