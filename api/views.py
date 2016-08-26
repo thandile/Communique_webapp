@@ -2,7 +2,7 @@
 from rest_framework import viewsets
 
 from .serializers import ProgramSerializer, PatientSerializer, EnrollmentSerializer, CommuniqueUserSerializer
-from .permissions import IsActiveUser
+from .permissions import IsActiveUser, IsSuperUser
 
 from programs.models import Program
 from patients.models import Patient, Enrollment
@@ -62,4 +62,4 @@ class CommuniqueUserViewSet(viewsets.ModelViewSet):
     """
     queryset = CommuniqueUser.objects.all()
     serializer_class = CommuniqueUser
-    permission_classes = (IsActiveUser,)
+    permission_classes = (IsActiveUser, IsSuperUser,)
