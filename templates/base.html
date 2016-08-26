@@ -248,6 +248,53 @@
                                 </ul>
                             </li>
                         {% endblock %}
+                        {% block patients_menu %}
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-heartbeat"></i> <span>Patients</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{% url 'patients_patient_list' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Patients List
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'patients_patient_create' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Register Patient
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endblock %}
+                        {% block enrollments_menu %}
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-support"></i> <span>Enrollments</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{% url 'patients_enrollment_list' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Enrollment List
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'patients_enrollment_create' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Register Enrollment
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endblock %}
+                        <li>
+                            <a href="#"><i class="fa fa-book"></i> <span>Manual</span></a>
+                        </li>
                     </ul>
                 </section>
             </aside>

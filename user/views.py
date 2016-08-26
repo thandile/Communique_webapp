@@ -6,7 +6,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from rest_framework import viewsets
 from rest_framework import permissions
 
-from .serializers import UserSerializer
 from .forms import *
 from .models import *
 
@@ -128,15 +127,3 @@ class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         """
         return str(self.request.user.pk) == str(self.kwargs['pk'])
 
-"""
-Views for the REST API
-"""
-
-class UserViewSet(viewsets.ReadOnlyModelViewSet):
-    """
-    This view set automatically provides 'list' and 'detail' actions for the
-    User model via REST API
-    """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = (permissions.IsAuthenticated,)

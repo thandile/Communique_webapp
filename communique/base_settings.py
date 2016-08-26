@@ -25,8 +25,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'user',
-    'services',
     'programs',
+    'patients',
 ]
 
 MIDDLEWARE_CLASSES = [
