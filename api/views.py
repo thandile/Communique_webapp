@@ -67,7 +67,7 @@ class CommuniqueUserViewSet(viewsets.ModelViewSet):
     permission_classes = (IsActiveUser, IsSuperUser,)
 
 
-class ProfileUserViewSet(viewsets.ModelViewSet):
+class ProfileViewSet(viewsets.ModelViewSet):
     """
     This endpoint provides calls to CRUD Profile models.
     """
