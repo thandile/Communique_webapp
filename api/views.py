@@ -2,7 +2,7 @@
 from rest_framework import viewsets
 
 from .serializers import *
-from .permissions import IsActiveUser, IsSuperUser
+from .permissions import IsActiveUser, IsSuperUser, IsProfileOrReadOnly
 
 from programs.models import Program
 from patients.models import Patient, Enrollment
@@ -73,4 +73,4 @@ class ProfileUserViewSet(viewsets.ModelViewSet):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = (IsActiveUser,)
+    permission_classes = (IsActiveUser, IsProfileOrReadOnly,)
