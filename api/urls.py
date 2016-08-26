@@ -14,4 +14,5 @@ router.register(r'profiles', ProfileViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
+    url(r'^login/(?P<username>\w+)/$', ProfileLoginView.as_view(), name='api_login'),
 ]
