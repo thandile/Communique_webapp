@@ -1,0 +1,32 @@
+{% if form.errors %}
+  <div class="row">
+    <div class="{{ class|default:"col-md-12" }}">
+      <div class="box box-default">
+        <div class="box-header with-border">
+          <i class="fa fa-warning"></i>
+
+          <h3 class="box-title">Alerts</h3>
+        </div>
+        <div class="box-body">
+          {% for error in form.non_field_errors %}
+            <div class="alert alert-danger alert-dismissible">
+              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+              <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+              {{ error|escape }}
+            </div>
+          {% endfor %}
+
+          {% for field in form %}
+            {% if field.errors %}
+              <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                There was an error on the '{{ field.label }}' field. Please check it for more information.
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

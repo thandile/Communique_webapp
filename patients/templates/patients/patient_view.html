@@ -1,0 +1,137 @@
+{% extends parent_template|default:"patients/base_patients.html" %}
+
+{% block title %}
+    {{ block.super }} | Patient
+{% endblock %}
+
+{% block page_heading %}
+    Patient Details
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'patients_patient_list' %}"><i class="fa fa-heartbeat"></i> Patients</a></li>
+    <li class="active"><i class="fa fa-heartbeat"></i> Patient Details</li>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-3">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <h3 class="text-center">{{ patient }}</h3>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>First name</b> <a class="pull-right">{{ patient.first_name }}</a>
+                        </li>
+                        {% if patient.middle_name %}
+                            <li class="list-group-item">
+                                <b>Middle name</b> <a class="pull-right">{{ patient.middle_name }}</a>
+                            </li>
+                        {% endif %}
+                        <li class="list-group-item">
+                            <b>Last name</b> <a class="pull-right">{{ patient.last_name }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Birth Date</b>
+                            <a class="pull-right">
+                                {% if patient.birth_date %}
+                                    {{ patient.birth_date }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Identifier</b>
+                            <a class="pull-right">
+                                {% if patient.identifier %}
+                                    {{ patient.identifier }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Contact Number</b>
+                            <a class="pull-right">
+                                {% if patient.contact_number %}
+                                    {{ patient.contact_number }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Date Added</b> <a class="pull-right">{{ patient.date_created }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Added By</b> <a class="pull-right">{{ patient.created_by.get_full_name }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Date Last Modified</b> <a class="pull-right">{{ patient.date_last_modified }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Last Modified By</b> <a class="pull-right">{{ patient.last_modified_by.get_full_name }}</a>
+                        </li>
+                    </ul>
+                    <a href="{{ patient.get_update_url }}" class="btn btn-primary"><b>Edit Details</b></a>
+                    <a href="{{ patient.get_delete_url }}" class="btn btn-danger"><b>Delete</b></a>
+                </div>
+            </div>
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="">Patient physical locations</h3>
+                </div>
+
+                <div class="box-body">
+                    <strong><i class="fa fa-home margin-r-5"></i> Home</strong>
+                    <p>
+                        {% if patient.location %}
+                            {{ patient.location }}
+                        {% else %}
+                            Unavailable
+                        {% endif %}
+                    </p>
+
+                    <hr>
+
+                    <strong><i class="fa fa-h-square"></i> Reference Health Centre</strong>
+                    <p>
+                        {% if patient.reference_health_centre %}
+                            {{ patient.reference_health_centre }}
+                        {% else %}
+                            Unavailable
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="#registrations" data-toggle="tab">Pilot Program Registrations</a></li>
+                    <li><a href="#sessions" data-toggle="tab">Recent Sessions</a></li>
+                    <li><a href="#medication">Medication</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="active tab-pane" id="registrations">
+
+                    </div>
+                    <div class="tab-pane" id="sessions">
+
+                    </div>
+
+                    <div class="tab-pane" id="medication">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

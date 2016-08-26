@@ -1,0 +1,82 @@
+{% extends parent_template|default:"base_data_table.html" %}
+
+{% block title %}
+    {{ block.super }} | Enrollments
+{% endblock %}
+
+{% block enrollments_menu %}
+    <li class="treeview active">
+        <a href="#">
+            <i class="fa fa-support"></i> <span>Enrollments</span>
+            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+            </span>
+        </a>
+        <ul class="treeview-menu">
+            <li class="active">
+                <a href="{% url 'patients_enrollment_list' %}">
+                    <i class="fa fa-circle-o text-red"></i> Enrollment List
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-circle-o text-aqua"></i> Register Enrollment
+                </a>
+            </li>
+        </ul>
+    </li>
+{% endblock %}
+
+{% block page_heading %}
+    Enrollments
+{% endblock %}
+
+{% block page_subheading %}
+    List
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'patients_enrollment_list' %}"><i class="fa fa-support"></i> Enrollments</a></li>
+    <li class="active">List</li>
+{% endblock %}
+
+{% block table_title %}
+    Registered Enrollments
+{% endblock %}
+
+{% block table_columns %}
+    <th>Patient</th>
+    <th>Program</th>
+    <th>Date Enrolled</th>
+    <th>Enrolled By</th>
+    <th>Enrollment Status</th>
+{% endblock %}
+
+{% block table_content %}
+    {% for enrollment in enrollment_list %}
+        <tr>
+            <td><a>{{ enrollment.patient }}</a></td>
+            <td><a>{{ enrollment.program }}</a></td>
+            <td><a>{{ enrollment.date_enrolled }}</a></td>
+            <td><a>{{ enrollment.enrolled_by.get_full_name }}</a></td>
+            <td>
+                <a>
+                    {% if enrollment.is_active %}
+                        <span class="label label-success">Open</span>
+                    {% else %}
+                        <span class="label label-danger">Closed</span>
+                    {% endif %}
+                </a>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block table_footer %}
+    <th>Patient</th>
+    <th>Program</th>
+    <th>Date Enrolled</th>
+    <th>Enrolled By</th>
+    <th>Enrollment Status</th>
+{% endblock %}

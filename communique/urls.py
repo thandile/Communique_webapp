@@ -1,16 +1,20 @@
 from django.conf.urls import url, include
-from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 
-from dashboard import urls as dashboard_urls
+from user import urls as user_urls
 from api import urls as api_urls
+from programs import urls as programs_urls
+from patients.urls import patient_urls as patients_urls
+from patients.urls import enrollment_urls as enrollment_urls
+
+from .views import DashboardTemplateView
 
 urlpatterns = [
-    url(r'^$', RedirectView.as_view(pattern_name='login', permanent=False)),
-    url(r'^login/$', auth_views.login, {'template_name':'login.html'},
-        name='login'),
-    url(r'^logout/$', auth_views.logout, {'template_name':'logout.html'},
-        name='logout'),
-    url(r'^dashboard/', include(dashboard_urls)),
+    url(r'^$', RedirectView.as_view(pattern_name='user_login', permanent=False)),
+    url(r'^dashboard/$', DashboardTemplateView.as_view(), name='dashboard_home'),
+    url(r'^user/', include(user_urls)),
+    url(r'^programs/', include(programs_urls)),
+    url(r'^patients/', include(patients_urls)),
+    url(r'^enrollments/', include(enrollment_urls)),
     url(r'^api/', include(api_urls)),
 ]
