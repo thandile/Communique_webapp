@@ -1,12 +1,12 @@
 
 from rest_framework import viewsets
 
-from .serializers import ProgramSerializer, PatientSerializer, EnrollmentSerializer, CommuniqueUserSerializer
+from .serializers import *
 from .permissions import IsActiveUser, IsSuperUser
 
 from programs.models import Program
 from patients.models import Patient, Enrollment
-from user.models import CommuniqueUser
+from user.models import CommuniqueUser, Profile
 
 
 class ProgramViewSet(viewsets.ModelViewSet):
@@ -59,7 +59,18 @@ class EnrollmentViewSet(viewsets.ModelViewSet):
 class CommuniqueUserViewSet(viewsets.ModelViewSet):
     """
     This endpoint provides calls to CRUD CommuniqueUser models.
+
+    Only superusers can access it.
     """
     queryset = CommuniqueUser.objects.all()
-    serializer_class = CommuniqueUser
+    serializer_class = CommuniqueUserSerializer
     permission_classes = (IsActiveUser, IsSuperUser,)
+
+
+class ProfileUserViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint provides calls to CRUD Profile models.
+    """
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = (IsActiveUser,)
