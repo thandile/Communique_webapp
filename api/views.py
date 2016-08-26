@@ -1,5 +1,6 @@
 
 from rest_framework import viewsets
+from rest_framework import generics
 
 from .serializers import *
 from .permissions import IsActiveUser, IsSuperUser, IsProfileOrReadOnly
@@ -74,3 +75,13 @@ class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     permission_classes = (IsActiveUser, IsProfileOrReadOnly,)
+
+
+class ProfileLoginView(generics.RetrieveAPIView):
+    """
+    This endpoint retrieves a user's profile on successful login.
+    """
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    lookup_field = 'username'
+    lookup_url_kwarg = 'username'
