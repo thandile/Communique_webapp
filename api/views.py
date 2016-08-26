@@ -2,6 +2,7 @@
 from rest_framework import viewsets
 
 from .serializers import ProgramSerializer
+from .permissions import IsActiveUser
 
 from programs.models import Program
 
@@ -12,6 +13,7 @@ class ProgramViewSet(viewsets.ModelViewSet):
     """
     queryset = Program.objects.all()
     serializer_class = ProgramSerializer
+    permission_classes = (IsActiveUser,)
 
     def perform_create(self, serializer):
         # save the user that has created the Program
