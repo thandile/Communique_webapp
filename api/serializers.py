@@ -12,5 +12,5 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Program
-        fields = ('id', 'name', 'description', 'date_created', 'date_last_modified', 'is_open',
-                  'created_by', 'last_modified_by')
+        fields = ('id', 'name', 'description', 'is_open', 'created_by', 'last_modified_by')
+        read_only_fields = ('date_created', 'date_last_modified',)
