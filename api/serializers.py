@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from programs.models import Program
-from patients.models import Patient
+from patients.models import Patient, Enrollment
 
 
 class ProgramSerializer(serializers.ModelSerializer):
@@ -29,3 +29,15 @@ class PatientSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name', 'middle_name', 'birth_date', 'identifier', 'location',
                   'contact_number', 'reference_health_centre', 'enrolled_programs')
         read_only_fields = ('date_created', 'date_last_modified',)
+
+
+class EnrollmentSerializer(serializers.ModelSerializer):
+    """
+    A serializer for the Enrollment model.
+    """
+    enrolled_by = serializers.ReadOnlyField(source='enrolled_by.username')
+
+    class Meta:
+        model = Patient
+        fields = ('id', 'patient', 'program', 'comment', 'is_active', 'enrolled_by')
+        read_only_fields = ('date_enrolled',)
