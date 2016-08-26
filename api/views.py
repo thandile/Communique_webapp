@@ -1,10 +1,11 @@
 
 from rest_framework import viewsets
 
-from .serializers import ProgramSerializer
+from .serializers import ProgramSerializer, PatientSerializer
 from .permissions import IsActiveUser
 
 from programs.models import Program
+from patients.models import Patient
 
 
 class ProgramViewSet(viewsets.ModelViewSet):
@@ -21,4 +22,21 @@ class ProgramViewSet(viewsets.ModelViewSet):
 
     def perform_update(self, serializer):
         # save the user that has made the modification
+        serializer.save(last_modified_by=self.request.user)
+
+
+class PatientViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint provides calls to CRUD Patient models.
+    """
+    queryset = Patient.objects.all()
+    serializer_class = PatientSerializer
+    permission_classes = (IsActiveUser,)
+
+    def perform_create(self, serializer):
+        # save the user that has created the Patient
+        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
+
+    def perform_update(self, serializer):
+        # save teh user that has made the modification
         serializer.save(last_modified_by=self.request.user)
