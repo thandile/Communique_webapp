@@ -1,11 +1,12 @@
 
 from rest_framework import viewsets
 
-from .serializers import ProgramSerializer, PatientSerializer, EnrollmentSerializer
+from .serializers import ProgramSerializer, PatientSerializer, EnrollmentSerializer, CommuniqueUserSerializer
 from .permissions import IsActiveUser
 
 from programs.models import Program
 from patients.models import Patient, Enrollment
+from user.models import CommuniqueUser
 
 
 class ProgramViewSet(viewsets.ModelViewSet):
@@ -53,3 +54,12 @@ class EnrollmentViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         # save the user that is enrolling the patient
         serializer.save(enrolled_by=self.request.user)
+
+
+class CommuniqueUserViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint provides calls to CRUD CommuniqueUser models.
+    """
+    queryset = CommuniqueUser.objects.all()
+    serializer_class = CommuniqueUser
+    permission_classes = (IsActiveUser,)
