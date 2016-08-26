@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from programs.models import Program
 from patients.models import Patient, Enrollment
+from user.models import CommuniqueUser
 
 
 class ProgramSerializer(serializers.ModelSerializer):
@@ -38,6 +39,16 @@ class EnrollmentSerializer(serializers.ModelSerializer):
     enrolled_by = serializers.ReadOnlyField(source='enrolled_by.username')
 
     class Meta:
-        model = Patient
+        model = Enrollment
         fields = ('id', 'patient', 'program', 'comment', 'is_active', 'enrolled_by')
         read_only_fields = ('date_enrolled',)
+
+
+class CommuniqueUserSerializer(serializers.ModelSerializer):
+    """
+    A serializer for the CommuniqueUser model.
+    """
+    class Meta:
+        model = CommuniqueUser
+        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'is_superuser')
+        read_only_fields = ('last_login', 'date_joined',)
