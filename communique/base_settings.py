@@ -98,6 +98,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 # REST framework settings
 # http://www.django-rest-framework.org/api-guide/settings/
 REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated'
+    ),
     'DATE_FORMAT':"%d-%m-%Y",
     'DATE_INPUT_FORMATS':["%d/%m/%Y","%d-%m-%Y"]
 }
