@@ -1,6 +1,7 @@
 
 from rest_framework import viewsets
 from rest_framework import generics
+from rest_framework import permissions
 
 from .serializers import *
 from .permissions import IsActiveUser, IsSuperUser, IsProfileOrReadOnly
@@ -16,7 +17,7 @@ class ProgramViewSet(viewsets.ModelViewSet):
     """
     queryset = Program.objects.all()
     serializer_class = ProgramSerializer
-    permission_classes = (IsActiveUser,)
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
 
     def perform_create(self, serializer):
         # save the user that has created the Program
@@ -33,7 +34,7 @@ class PatientViewSet(viewsets.ModelViewSet):
     """
     queryset = Patient.objects.all()
     serializer_class = PatientSerializer
-    permission_classes = (IsActiveUser,)
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
 
     def perform_create(self, serializer):
         # save the user that has created the Patient
@@ -50,7 +51,7 @@ class EnrollmentViewSet(viewsets.ModelViewSet):
     """
     queryset = Enrollment.objects.all()
     serializer_class = EnrollmentSerializer
-    permission_classes = (IsActiveUser,)
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
 
     def perform_create(self, serializer):
         # save the user that is enrolling the patient
@@ -65,7 +66,7 @@ class CommuniqueUserViewSet(viewsets.ModelViewSet):
     """
     queryset = CommuniqueUser.objects.all()
     serializer_class = CommuniqueUserSerializer
-    permission_classes = (IsActiveUser, IsSuperUser,)
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser, IsSuperUser,)
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
@@ -74,7 +75,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-    permission_classes = (IsActiveUser, IsProfileOrReadOnly,)
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser, IsProfileOrReadOnly,)
 
 
 class ProfileLoginView(generics.RetrieveAPIView):
@@ -85,3 +86,4 @@ class ProfileLoginView(generics.RetrieveAPIView):
     serializer_class = ProfileSerializer
     lookup_field = 'username'
     lookup_url_kwarg = 'username'
+    permission_classes = (permissions.IsAuthenticated,)

@@ -28,7 +28,7 @@ class PatientSerializer(serializers.ModelSerializer):
     class Meta:
         model = Patient
         fields = ('id', 'first_name', 'last_name', 'middle_name', 'birth_date', 'identifier', 'location',
-                  'contact_number', 'reference_health_centre', 'enrolled_programs')
+                  'contact_number', 'reference_health_centre', 'enrolled_programs', 'created_by', 'last_modified_by')
         read_only_fields = ('date_created', 'date_last_modified',)
 
 
