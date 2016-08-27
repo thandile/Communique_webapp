@@ -1,9 +1,15 @@
 {% extends parent_template|default:"base.html" %}
+{% load staticfiles %}
 {% load widget_tweaks %}
 
 {% block title %}
     {{ block.super }} | Enroll Patient
 {% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static "plugins/select2/select2.min.css" %}">
+{% endblock %}
+
 
 {% block enrollments_menu %}
     <li class="treeview active">
@@ -57,7 +63,12 @@
                         {% for field in form %}
                             <div class="{% if field.errors %}form-group has-error{% else %}form-group{% endif %}">
                                 {{ field.label_tag }}
-                                {{ field|add_class:"form-control" }}
+
+                                {% if field.label == 'Patient' or field.label == 'Program' %}
+                                    {{ field|add_class:"form-control select2"|append_attr:"style:width: 100%;" }}
+                                {% else %}
+                                    {{ field|add_class:'form-control' }}
+                                {% endif %}
 
                                 {% if field.help_text %}
                                     <p class="help-block">{{ field.help_text }}</p>
@@ -81,4 +92,13 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="{% static "plugins/select2/select2.full.min.js" %}"></script>
+    <script>
+        $(function () {
+            $(".select2").select2();
+        });
+    </script>
 {% endblock %}
