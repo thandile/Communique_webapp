@@ -80,4 +80,7 @@ class Enrollment(models.Model):
     def get_absolute_url(self):
         return reverse('patients_enrollment_detail', kwargs={'pk':self.pk})
 
+    def get_update_url(self):
+        return reverse('patients_enrollment_update', kwargs={'pk':self.pk})
+
 

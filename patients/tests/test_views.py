@@ -102,3 +102,17 @@ class EnrollmentDetailViewTestCase(ViewsTestCase):
         program = Program.objects.create(name='Sample', description='sample text')
         enrollment = Enrollment.objects.create(patient=patient, program=program, comment='No comment')
         self.only_active_user_access_test(enrollment.get_absolute_url(), self.view_template_name)
+
+
+class EnrollmentUpdateViewTestCase(ViewsTestCase):
+    """
+    Test cases for the enrollment update view.
+    """
+    view_name = 'patients_enrollment_update'
+    view_template_name = 'patients/enrollment_update_form.html'
+
+    def test_active_user_access(self):
+        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
+        program = Program.objects.create(name='Sample', description='sample text')
+        enrollment = Enrollment.objects.create(patient=patient, program=program, comment='No comment')
+        self.only_active_user_access_test(enrollment.get_update_url(), self.view_template_name)

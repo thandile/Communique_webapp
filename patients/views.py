@@ -186,3 +186,23 @@ class EnrollmentDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
         :return: True if user is active, false otherwise.
         """
         return self.request.user.is_active
+
+
+class EnrollmentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """
+    A view to handle updating an enrollment. This view is only available to logged in and active users of the system.
+
+    If the user fails any of the criteria, this view will redirect them to the login page.
+    """
+    model = Enrollment
+    fields = ['is_active']
+    template_name = 'patients/enrollment_update_form.html'
+    context_object_name = 'enrollment'
+
+    def test_func(self):
+        """
+        Checks whether the user is an active user.
+        :return: True is user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
