@@ -168,3 +168,21 @@ class EnrollmentCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         """
         return self.request.user.is_active
 
+
+class EnrollmentDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    """
+    A view to display details of an enrollment. This view is only available to logged in and active registered users of
+    the system.
+
+    If the user fails any of the criteria, this view will redirect them to the login page.
+    """
+    model = Enrollment
+    template_name = 'patients/enrollment_view.html'
+    context_object_name = 'enrollment'
+
+    def test_func(self):
+        """
+        Checks whether the user is an active user.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
