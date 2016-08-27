@@ -53,6 +53,7 @@
                 <form role="form" action="{{ enrollment.get_update_url }}" method="post">
                     {% csrf_token %}
                     <div class="box-body">
+                        {{ enrollment.patient }}'s enrollment in {{ enrollment.program }}
                         {% for field in form %}
                             <div class="{% if field.errors %}form-group has-error{% else %}form-group{% endif %}">
                                 {{ field.label_tag }}
