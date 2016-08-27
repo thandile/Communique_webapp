@@ -218,6 +218,11 @@ class PatientEnrollmentCreateView(LoginRequiredMixin, UserPassesTestMixin, Creat
     fields = ['program', 'comment']
     template_name = 'patients/patient_enrollment_form.html'
 
+    def get_success_url(self):
+        # on enrolling the patient, redirect to their details view
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        return patient.get_absolute_url()
+
     def get_context_data(self, **kwargs):
         context = super(PatientEnrollmentCreateView, self).get_context_data(**kwargs)
         patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
