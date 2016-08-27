@@ -1,7 +1,13 @@
 {% extends parent_template|default:"programs/base_programs.html" %}
+{% load staticfiles %}
 
 {% block title %}
     {{ block.super }} | Pilot Program
+{% endblock %}
+
+{% block head %}
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
 {% endblock %}
 
 {% block page_heading %}
@@ -73,12 +79,74 @@
                 </div>
 
                 <div class="box-body">
-                </div>
-
-                <div class="box-footer">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Patient Identifier</th>
+                                <th>Enrollment Date</th>
+                                <th>Enrollment Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for enrollment in program.enrollments.all %}
+                                <tr>
+                                    <th>
+                                        <a href="{{ enrollment.patient.get_absolute_url }}">{{ enrollment.patient }}</a>
+                                    </th>
+                                    <th>
+                                        <a href="{{ enrollment.patient.get_absolute_url }}">
+                                            {{ enrollment.patient.identifier }}
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a href="{{ enrollment.patient.get_absolute_url }}">
+                                            {{ enrollment.date_enrolled }}
+                                        </a>
+                                    </th>
+                                    <th>
+                                        <a href="{{ enrollment.patient.get_absolute_url }}">
+                                            {% if enrollment.is_active %}
+                                                <span class="label label-success">Open</span>
+                                            {% else %}
+                                                <span class="label label-danger">Closed</span>
+                                            {% endif %}
+                                        </a>
+                                    </th>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Patient Identifier</th>
+                                <th>Enrollment</th>
+                                <th>Enrollment Status</th>
+                            </tr>
+                        </tfoot>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 {% endblock %}
 
+{% block scripts %}
+  <!-- DataTables -->
+  <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+  <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+  <!-- page script -->
+  <script>
+    $(function () {
+      $("#example1").DataTable();
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false
+      });
+    });
+  </script>
+{% endblock %}
