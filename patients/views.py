@@ -237,4 +237,4 @@ class PatientEnrollmentCreateView(LoginRequiredMixin, UserPassesTestMixin, Creat
         Checks whether the user is an active user
         :return: True if user is active, false otherwise
         """
-        return self.request.user
+        return self.request.user.is_active
