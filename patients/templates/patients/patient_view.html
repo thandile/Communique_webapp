@@ -66,13 +66,13 @@
                             </a>
                         </li>
                         <li class="list-group-item">
-                            <b>Date Added</b> <a class="pull-right">{{ patient.date_created }}</a>
+                            <b>Added</b> <a class="pull-right">{{ patient.date_created }}</a>
                         </li>
                         <li class="list-group-item">
                             <b>Added By</b> <a class="pull-right">{{ patient.created_by.get_full_name }}</a>
                         </li>
                         <li class="list-group-item">
-                            <b>Date Last Modified</b> <a class="pull-right">{{ patient.date_last_modified }}</a>
+                            <b>Last Modified</b> <a class="pull-right">{{ patient.date_last_modified }}</a>
                         </li>
                         <li class="list-group-item">
                             <b>Last Modified By</b> <a class="pull-right">{{ patient.last_modified_by.get_full_name }}</a>
@@ -115,12 +115,52 @@
         <div class="col-md-9">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#registrations" data-toggle="tab">Pilot Program Registrations</a></li>
+                    <li class="active"><a href="#registrations" data-toggle="tab">Program Enrollments</a></li>
                     <li><a href="#sessions" data-toggle="tab">Recent Sessions</a></li>
-                    <li><a href="#medication">Medication</a></li>
+                    <li><a href="#medication" data-toggle="tab">Medication</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="active tab-pane" id="registrations">
+                        <ul class="timeline timeline-inverse">
+                            {% for enrollment in patient.enrollments.all %}
+                                <li>
+                                    <i class="fa fa-support bg-blue"></i>
+
+                                    <div class="timeline-item">
+                                            <span class="time">
+                                                <i class="fa fa-clock-o"> {{ enrollment.date_enrolled }}</i>
+                                            </span>
+
+                                        <h3 class="timeline-header">
+                                            Enrolled in <a href="{{ enrollment.program.get_absolute_url }}">
+                                            {{ enrollment.program }}</a>
+                                        </h3>
+                                        <div class="timeline-body">
+                                            {{ enrollment.comment }}
+                                        </div>
+                                        <div class="timeline-footer">
+                                            <a class="btn btn-primary btn-xs" href="{{ enrollment.get_absolute_url }}">
+                                                View enrollment details</a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% empty %}
+                                <li>
+                                    <i class="fa fa-info bg-aqua"></i>
+
+                                    <div class="timeline-item">
+
+                                        <h3 class="timeline-header no-border">
+                                            This patient is currently not enrolled in any program.
+                                        </h3>
+                                    </div>
+                                </li>
+                            {% endfor %}
+
+                            <li>
+                                <i class="fa fa-clock-o bg-gray"></i>
+                            </li>
+                        </ul>
 
                     </div>
                     <div class="tab-pane" id="sessions">
