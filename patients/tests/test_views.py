@@ -2,7 +2,8 @@ from django.core.urlresolvers import reverse
 
 from communique.tests import ViewsTestCase
 
-from patients.models import Patient
+from patients.models import Patient, Enrollment
+from programs.models import Program
 
 
 class PatientListViewTestCase(ViewsTestCase):
@@ -87,3 +88,44 @@ class EnrollmentCreateViewTestCase(ViewsTestCase):
 
     def test_active_user_access(self):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
+
+
+class EnrollmentDetailViewTestCase(ViewsTestCase):
+    """
+    Test cases for the enrollment detail view.
+    """
+    view_name = 'patients_enrollment_detail'
+    view_template_name = 'patients/enrollment_view.html'
+
+    def test_active_user_access(self):
+        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
+        program = Program.objects.create(name='Sample', description='sample text')
+        enrollment = Enrollment.objects.create(patient=patient, program=program, comment='No comment')
+        self.only_active_user_access_test(enrollment.get_absolute_url(), self.view_template_name)
+
+
+class EnrollmentUpdateViewTestCase(ViewsTestCase):
+    """
+    Test cases for the enrollment update view.
+    """
+    view_name = 'patients_enrollment_update'
+    view_template_name = 'patients/enrollment_update_form.html'
+
+    def test_active_user_access(self):
+        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
+        program = Program.objects.create(name='Sample', description='sample text')
+        enrollment = Enrollment.objects.create(patient=patient, program=program, comment='No comment')
+        self.only_active_user_access_test(enrollment.get_update_url(), self.view_template_name)
+
+
+class PatientEnrollmentCreateViewTestCase(ViewsTestCase):
+    """
+    Test cases for the view to create an enrollment for a specific patient.
+    """
+    view_name = 'patients_patient_enroll_create'
+    view_template_name = 'patients/patient_enrollment_form.html'
+
+    def test_active_user_access(self):
+        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
+        view_url = reverse(self.view_name, kwargs={'patient_pk':patient.pk})
+        self.only_active_user_access_test(view_url, self.view_template_name)

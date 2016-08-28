@@ -163,8 +163,83 @@ class EnrollmentCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
     def test_func(self):
         """
-        Checks whether the user is an active user/
+        Checks whether the user is an active user
         :return: True if user is active, false otherwise
         """
         return self.request.user.is_active
 
+
+class EnrollmentDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    """
+    A view to display details of an enrollment. This view is only available to logged in and active registered users of
+    the system.
+
+    If the user fails any of the criteria, this view will redirect them to the login page.
+    """
+    model = Enrollment
+    template_name = 'patients/enrollment_view.html'
+    context_object_name = 'enrollment'
+
+    def test_func(self):
+        """
+        Checks whether the user is an active user.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class EnrollmentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """
+    A view to handle updating an enrollment. This view is only available to logged in and active users of the system.
+
+    If the user fails any of the criteria, this view will redirect them to the login page.
+    """
+    model = Enrollment
+    fields = ['is_active']
+    template_name = 'patients/enrollment_update_form.html'
+    context_object_name = 'enrollment'
+
+    def test_func(self):
+        """
+        Checks whether the user is an active user.
+        :return: True is user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class PatientEnrollmentCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """
+    A view to create an enrollment for a defined patient. This view is only available to logged in  and active
+     registered users of the system.
+
+     If the user fails any of the criteria, this view will redirect them to the login page.
+    """
+    model = Enrollment
+    fields = ['program', 'comment']
+    template_name = 'patients/patient_enrollment_form.html'
+
+    def get_success_url(self):
+        # on enrolling the patient, redirect to their details view
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        return patient.get_absolute_url()
+
+    def get_context_data(self, **kwargs):
+        context = super(PatientEnrollmentCreateView, self).get_context_data(**kwargs)
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        context['patient'] = patient
+        return context
+
+    def form_valid(self, form):
+        # set the user thats made the enrollment and the patient whom it is for
+        form.instance.enrolled_by = self.request.user
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        form.instance.patient = patient
+
+        return super(PatientEnrollmentCreateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is an active user
+        :return: True if user is active, false otherwise
+        """
+        return self.request.user.is_active
