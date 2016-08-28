@@ -35,7 +35,7 @@ class CounsellingSession(models.Model):
     A model representing a session i.e an interaction between a patient and facilitator.
     """
     counselling_session_type = models.ForeignKey(CounsellingSessionType, verbose_name='Counselling session type',
-                                                 on_delete=models.SET_NULL, related_name='counselling_sessions',
+                                                 on_delete=models.CASCADE, related_name='counselling_sessions',
                                                  related_query_name='counselling_session',
                                                  help_text='The category which this counselling session falls into')
     patient = models.ForeignKey(Patient, verbose_name='Patient', on_delete=models.CASCADE,
