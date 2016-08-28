@@ -32,10 +32,11 @@ class Session(models.Model):
     A model representing a session i.e an interaction between a patient and facilitator.
     """
     session_type = models.ForeignKey(SessionType, verbose_name='Session type', on_delete=models.SET_NULL,
-                                     related_name='sessions', related_query_name='session',
+                                     related_name='session_type_sessions', related_query_name='session_type_session',
                                      help_text='The category which this session falls into')
-    patient = models.ForeignKey(Patient, verbose_name='Patient', on_delete=models.CASCADE, related_name='sessions',
-                                related_query_name='session', help_text='The patient for whom the session is for')
+    patient = models.ForeignKey(Patient, verbose_name='Patient', on_delete=models.CASCADE,
+                                related_name='patient_sessions', related_query_name='patient_session',
+                                help_text='The patient for whom the session is for')
     notes = models.TextField(verbose_name='Notes', blank=True, null=True,
                              help_text='Any additional notes on the session')
     created_by = models.ForeignKey(User, verbose_name='Administered by', on_delete=models.SET_NULL, blank=True,
@@ -49,7 +50,7 @@ class Session(models.Model):
                                          help_text='The user to last modify the session')
     date_last_modified = models.DateTimeField(verbose_name='Date last modified', auto_now=True,
                                               help_text='The date on which the session was last modified')
-    
+
     def __str__(self):
         return "A {0} session for {1}".format(self.session_type, self.patient)
 
