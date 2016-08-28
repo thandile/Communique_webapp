@@ -19,7 +19,7 @@
                 </a>
             </li>
             <li>
-                <a href="#">
+                <a href="{% url 'patients_enrollment_create' %}">
                     <i class="fa fa-circle-o text-aqua"></i> Register Enrollment
                 </a>
             </li>
@@ -56,12 +56,12 @@
 {% block table_content %}
     {% for enrollment in enrollment_list %}
         <tr>
-            <td><a>{{ enrollment.patient }}</a></td>
-            <td><a>{{ enrollment.program }}</a></td>
-            <td><a>{{ enrollment.date_enrolled }}</a></td>
-            <td><a>{{ enrollment.enrolled_by.get_full_name }}</a></td>
+            <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.patient }}</a></td>
+            <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.program }}</a></td>
+            <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.date_enrolled }}</a></td>
+            <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.enrolled_by.get_full_name }}</a></td>
             <td>
-                <a>
+                <a href="{{ enrollment.get_absolute_url }}">
                     {% if enrollment.is_active %}
                         <span class="label label-success">Open</span>
                     {% else %}

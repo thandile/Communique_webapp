@@ -1,41 +1,17 @@
-{% extends parent_template|default:"base.html" %}
+{% extends parent_template|default:"patients/base_patients.html" %}
 {% load staticfiles %}
 {% load widget_tweaks %}
 
 {% block title %}
-    {{ block.super }} | Enroll Patient
+    {{ block.super }} |Enroll Patient
 {% endblock %}
 
 {% block head %}
     <link rel="stylesheet" href="{% static "plugins/select2/select2.min.css" %}">
 {% endblock %}
 
-
-{% block enrollments_menu %}
-    <li class="treeview active">
-        <a href="#">
-            <i class="fa fa-support"></i> <span>Enrollments</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>
-                <a href="{% url 'patients_enrollment_list' %}">
-                    <i class="fa fa-circle-o text-aqua"></i> Enrollment List
-                </a>
-            </li>
-            <li class="active">
-                <a href="{% url 'patients_enrollment_create' %}">
-                    <i class="fa fa-circle-o text-red"></i> Register Enrollment
-                </a>
-            </li>
-        </ul>
-    </li>
-{% endblock %}
-
 {% block page_heading %}
-    Enroll Patient Into Program
+    Enroll {{ patient }} Into Program
 {% endblock %}
 
 {% block page_subheading %}
@@ -44,8 +20,8 @@
 
 {% block page_breadcrumb %}
     <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-    <li><a href="{% url 'patients_enrollment_list' %}"><i class="fa fa-support"></i> Enrollments</a></li>
-    <li class="active"><i class="fa fa-edit"></i> Enroll Patient</li>
+    <li><a href="{% url 'patients_patient_list' %}"><i class="fa fa-heartbeat"></i> Patients</a></li>
+    <li class="active"><i class="fa fa-support"></i> Enroll Patient</li>
 {% endblock %}
 
 {% block page_content %}
@@ -57,15 +33,15 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Enrollment Details</h3>
                 </div>
-                <form role="form" action="{% url 'patients_enrollment_create' %}" method="post">
+                <form role="form" action="{% url 'patients_patient_enroll_create' patient_pk=patient.pk %}" method="post">
                     {% csrf_token %}
                     <div class="box-body">
                         {% for field in form %}
                             <div class="{% if field.errors %}form-group has-error{% else %}form-group{% endif %}">
                                 {{ field.label_tag }}
 
-                                {% if field.label == 'Patient' or field.label == 'Program' %}
-                                    {{ field|add_class:"form-control select2"|append_attr:"style:width: 100%;" }}
+                                {% if field.label == 'Program' %}
+                                    {{ field|add_class:"form-control select2" }}
                                 {% else %}
                                     {{ field|add_class:'form-control' }}
                                 {% endif %}
@@ -85,7 +61,7 @@
                         {% endfor %}
                     </div>
                     <div class="box-footer">
-                        <button type="reset" class="btn btn-warning">Reset</button>
+                        <a href="{{ patient.get_absolute_url }}" class="btn btn-warning">Cancel</a>
                         <button type="submit" class="btn btn-success">Submit</button>
                     </div>
                 </form>
