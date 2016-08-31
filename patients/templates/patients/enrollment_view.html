@@ -41,6 +41,19 @@
 {% endblock %}
 
 {% block page_content %}
+    {% if not enrollment.is_active %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-info"></i> Alert!</h4>
+                    This enrollment has been marked as no longer active. The patient is therefore no longer enrolled in
+                    the program.
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="row">
         <div class="col-md-4">
             <div class="box box-primary">
