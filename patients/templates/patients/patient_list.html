@@ -1,7 +1,13 @@
-{% extends parent_template|default:"patients/base_patients_data_table.html" %}
+{% extends parent_template|default:"patients/base_patients.html" %}
+{% load staticfiles %}
 
 {% block title %}
     {{ block.super }} | Patients
+{% endblock %}
+
+{% block head %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
 {% endblock %}
 
 {% block patients_list_menu %}
@@ -26,37 +32,70 @@
     <li class="active">List</li>
 {% endblock %}
 
-{% block table_title %}
-    Registered Patients
+{% block page_content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Registered patients</h3>
+                </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Identifier</th>
+                            <th>Date Added</th>
+                            <th>Added By</th>
+                            <th>Last Modified Date</th>
+                            <th>Last Modified By</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for patient in patient_list %}
+                            <tr>
+                                <td><a href="{{ patient.get_absolute_url }}">{{ patient }}</a></td>
+                                <td><a href="{{ patient.get_absolute_url }}"></a>{{ patient.identifier }}</td>
+                                <td><a href="{{ patient.get_absolute_url }}">{{ patient.date_created }}</a></td>
+                                <td><a href="{{ patient.get_absolute_url }}">{{ patient.created_by.get_full_name }}</a></td>
+                                <td><a href="{{ patient.get_absolute_url }}">{{ patient.date_last_modified }}</a></td>
+                                <td><a href="{{ patient.get_absolute_url }}">{{ patient.last_modified_by.get_full_name }}</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Name</th>
+                            <th>Identifier</th>
+                            <th>Date Added</th>
+                            <th>Added By</th>
+                            <th>Last Modified Date</th>
+                            <th>Last Modified By</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
-{% block table_columns %}
-    <th>Name</th>
-    <th>Identifier</th>
-    <th>Date Added</th>
-    <th>Added By</th>
-    <th>Last Modified Date</th>
-    <th>Last Modified By</th>
-{% endblock %}
-
-{% block table_content %}
-    {% for patient in patient_list %}
-        <tr>
-            <td><a href="{{ patient.get_absolute_url }}">{{ patient }}</a></td>
-            <td><a href="{{ patient.get_absolute_url }}"></a>{{ patient.identifier }}</td>
-            <td><a href="{{ patient.get_absolute_url }}">{{ patient.date_created }}</a></td>
-            <td><a href="{{ patient.get_absolute_url }}">{{ patient.created_by.get_full_name }}</a></td>
-            <td><a href="{{ patient.get_absolute_url }}">{{ patient.date_last_modified }}</a></td>
-            <td><a href="{{ patient.get_absolute_url }}">{{ patient.last_modified_by.get_full_name }}</a></td>
-        </tr>
-    {% endfor %}
-{% endblock %}
-
-{% block table_footer %}
-    <th>Name</th>
-    <th>Identifier</th>
-    <th>Date Added</th>
-    <th>Added By</th>
-    <th>Last Modified Date</th>
-    <th>Last Modified By</th>
+{% block scripts %}
+    <!-- DataTables -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
+        });
+    </script>
 {% endblock %}
