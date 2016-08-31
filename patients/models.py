@@ -35,8 +35,8 @@ class Patient(models.Model):
                                          related_name='modified_patients', related_query_name='modified_patient',
                                          help_text="The last user to modify the patient's information.")
 
-    date_created = models.DateTimeField(auto_now_add=True, help_text='The date/time the patient was created.')
-    date_last_modified = models.DateTimeField(auto_now=True,
+    date_created = models.DateField(auto_now_add=True, help_text='The date/time the patient was created.')
+    date_last_modified = models.DateField(auto_now=True,
                                               help_text="The last date/time the patient's information was modified.")
     enrolled_programs = models.ManyToManyField(Program, through='Enrollment', related_name='enrolled_patients',
                                                related_query_name='enrolled_patient')

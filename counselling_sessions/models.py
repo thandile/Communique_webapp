@@ -47,14 +47,14 @@ class CounsellingSession(models.Model):
                                    null=True, related_name='created_counselling_sessions',
                                    related_query_name='created_counselling_session',
                                    help_text='The user that administered the counselling session')
-    date_created = models.DateTimeField(verbose_name='Date created', auto_now_add=True,
-                                        help_text='The date on which the counselling session was created')
+    date_created = models.DateField(verbose_name='Date created', auto_now_add=True,
+                                    help_text='The date on which the counselling session was created')
     last_modified_by = models.ForeignKey(User, verbose_name='Last modified by', on_delete=models.SET_NULL, blank=True,
                                          null=True, related_name='modified_counselling_sessions',
                                          related_query_name='modified_counselling_session',
                                          help_text='The user to last modify the counselling session')
-    date_last_modified = models.DateTimeField(verbose_name='Date last modified', auto_now=True,
-                                              help_text='The date on which the counselling session was last modified')
+    date_last_modified = models.DateField(verbose_name='Date last modified', auto_now=True,
+                                          help_text='The date on which the counselling session was last modified')
 
     def __str__(self):
         return "A {0} session for {1}".format(self.session_type, self.patient)
