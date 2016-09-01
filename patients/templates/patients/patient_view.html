@@ -122,16 +122,13 @@
                 <div class="tab-content">
                     <div class="active tab-pane" id="registrations">
                         <ul class="timeline timeline-inverse">
+                            <!-- add enrollment link -->
                             <li>
-                                <i class="fa fa-plus bg-green"></i>
-                                    <div class="timeline-item">
-                                        <h3 class="timeline-header no-border">
-                                            <a href="{% url 'patients_patient_enroll_create' patient_pk=patient.pk %}">
-                                                Enroll patient in new program
-                                            </a>
-                                        </h3>
-                                    </div>
+                                <a class="btn btn-warning" href="{% url 'patients_patient_enroll_create' patient_pk=patient.pk %}">
+                                    <b>Enroll patient in new program</b>
+                                </a>
                             </li>
+                            <!-- list of enrollments -->
                             {% for enrollment in patient.enrollments.all %}
                                 <li>
                                     <i class="fa fa-support bg-blue"></i>
