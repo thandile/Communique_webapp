@@ -52,14 +52,19 @@ class UserActivity(models.Model):
         (ACTIVATE, 'Activated'),
         (DEACTIVATE, 'Deactivated'),
     )
-    action = models.CharField(max_length=2, choices=ACTION_CHOICES)
+    action = models.CharField(max_length=2, choices=ACTION_CHOICES,
+                              help_text='The category of the action taken by the user')
     actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_activities',
-                              related_query_name='user_activity')
-    date_time = models.DateTimeField(auto_now_add=True)
-    object_name = models.CharField(max_length=100, default='Model')
-    object_url = models.CharField(max_length=100, blank=True, null=True)
-    object_identifier = models.CharField(max_length=100, blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
+                              related_query_name='user_activity',
+                              help_text='The user whom the action is attributed to')
+    date_time = models.DateTimeField(auto_now_add=True, help_text='The time and date the activity took place')
+    object_name = models.CharField(max_length=100, default='Model',
+                                   help_text='The model with which the user was interacting')
+    object_url = models.CharField(max_length=100, blank=True, null=True,
+                                  help_text='The url to the model that the user interacted with')
+    object_identifier = models.CharField(max_length=100, blank=True, null=True,
+                                         help_text='The unique identifier for the model the user interacted with')
+    description = models.TextField(blank=True, null=True, help_text='A summary of the interaction that took place')
 
     class Meta:
         ordering = ['-date_time']

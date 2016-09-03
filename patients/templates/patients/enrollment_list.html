@@ -1,29 +1,20 @@
-{% extends parent_template|default:"base_data_table.html" %}
+{% extends parent_template|default:"patients/base_enrollments.html" %}
+{% load staticfiles %}
 
 {% block title %}
     {{ block.super }} | Enrollments
 {% endblock %}
 
-{% block enrollments_menu %}
-    <li class="treeview active">
-        <a href="#">
-            <i class="fa fa-support"></i> <span>Enrollments</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
+{% block head %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
+{% endblock %}
+
+{% block enrollments_list_menu %}
+    <li class="active">
+        <a href="{% url 'patients_enrollment_list' %}">
+            <i class="fa fa-circle-o text-red"></i> Enrollment List
         </a>
-        <ul class="treeview-menu">
-            <li class="active">
-                <a href="{% url 'patients_enrollment_list' %}">
-                    <i class="fa fa-circle-o text-red"></i> Enrollment List
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'patients_enrollment_create' %}">
-                    <i class="fa fa-circle-o text-aqua"></i> Register Enrollment
-                </a>
-            </li>
-        </ul>
     </li>
 {% endblock %}
 
@@ -41,42 +32,75 @@
     <li class="active">List</li>
 {% endblock %}
 
-{% block table_title %}
-    Registered Enrollments
+{% block page_content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Registered enrollments</h3>
+                </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Patient</th>
+                            <th>Program</th>
+                            <th>Date Enrolled</th>
+                            <th>Enrolled By</th>
+                            <th>Enrollment Status</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for enrollment in enrollment_list %}
+                                <tr>
+                                    <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.patient }}</a></td>
+                                    <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.program }}</a></td>
+                                    <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.date_enrolled }}</a></td>
+                                    <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.enrolled_by.get_full_name }}</a></td>
+                                    <td>
+                                        <a href="{{ enrollment.get_absolute_url }}">
+                                            {% if enrollment.is_active %}
+                                                <span class="label label-success">Open</span>
+                                            {% else %}
+                                                <span class="label label-danger">Closed</span>
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>Patient</th>
+                            <th>Program</th>
+                            <th>Date Enrolled</th>
+                            <th>Enrolled By</th>
+                            <th>Enrollment Status</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
-{% block table_columns %}
-    <th>Patient</th>
-    <th>Program</th>
-    <th>Date Enrolled</th>
-    <th>Enrolled By</th>
-    <th>Enrollment Status</th>
-{% endblock %}
-
-{% block table_content %}
-    {% for enrollment in enrollment_list %}
-        <tr>
-            <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.patient }}</a></td>
-            <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.program }}</a></td>
-            <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.date_enrolled }}</a></td>
-            <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.enrolled_by.get_full_name }}</a></td>
-            <td>
-                <a href="{{ enrollment.get_absolute_url }}">
-                    {% if enrollment.is_active %}
-                        <span class="label label-success">Open</span>
-                    {% else %}
-                        <span class="label label-danger">Closed</span>
-                    {% endif %}
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
-{% endblock %}
-
-{% block table_footer %}
-    <th>Patient</th>
-    <th>Program</th>
-    <th>Date Enrolled</th>
-    <th>Enrolled By</th>
-    <th>Enrollment Status</th>
+{% block scripts %}
+    <!-- DataTables -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
+        });
+    </script>
 {% endblock %}

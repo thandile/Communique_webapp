@@ -2,105 +2,104 @@
 {% load staticfiles %}
 
 {% block title %}
-  {{ block.super }} | User Profile
+    {{ block.super }} | User Profile
 {% endblock %}
 
 {% block head %}
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
 {% endblock %}
 
 {% block page_heading %}
-  User Profile
+    User Profile
 {% endblock %}
 
 {% block page_subheading %}
 {% endblock %}
 
 {% block page_breadcrumb %}
-  <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-  <li><a href="{% url 'user_communique_user_list' %}"><i class="fa fa-user"></i> Communiqué Users</a></li>
-  <li class="active"><i class="fa fa-user"></i> User Profile</li>
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'user_communique_user_list' %}"><i class="fa fa-user"></i> Communiqué Users</a></li>
+    <li class="active"><i class="fa fa-user"></i> User Profile</li>
 {% endblock %}
 
 {% block page_content %}
-  <div class="row">
-    <div class="col-md-3">
-      <div class="box box-primary">
-        <div class="box-body box-profile">
-          <img class="profile-user-img img-responsive img-circle" src="{% static "dist/img/user4-128x128.jpg" %}" alt="User profile picture">
-
-          <h3 class="profile-username text-center">{{ communique_user.get_full_name }}</h3>
-
-          <ul class="list-group list-group-unbordered">
-            <li class="list-group-item">
-              <b>Username</b> <a class="pull-right">{{ communique_user.username }}</a>
-            </li>
-            <li class="list-group-item">
-              <b>First name</b> <a class="pull-right">{{ communique_user.first_name }}</a>
-            </li>
-            <li class="list-group-item">
-              <b>Last name</b> <a class="pull-right">{{ communique_user.last_name }}</a>
-            </li>
-            <li class="list-group-item">
-              <b>Email</b> <a class="pull-right">{{ communique_user.email }}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-3">
-      <div class="box box-primary">
-        <div class="box-body">
-          <h3 class="text-center">System Information</h3>
-          <ul class="list-group list-group-unbordered">
-            <li class="list-group-item">
-              <b>Last login</b> <a class="pull-right">{{ communique_user.last_login }}</a>
-            </li>
-            <li class="list-group-item">
-              <b>Date added</b> <a class="pull-right">{{ communique_user.date_joined }}</a>
-            </li>
-            <li class="list-group-item">
-              <b>Account status</b>
-              {% if communique_user.is_active %}
-                <span class="label label-success pull-right">Activated</span>
-              {% else %}
-                <span class="label label-danger pull-right">Deactivated</span>
-              {% endif %}
-            </li>
-            <li class="list-group-item">
-              <b>Position</b>
-              {% if communique_user.is_superuser %}
-                <span class="label label-warning pull-right">Superuser</span>
-              {% else %}
-                <span class="label label-success pull-right">Staff</span>
-              {% endif %}
-            </li>
-          </ul>
-          <a href="{{ communique_user.get_update_url }}" class="btn btn-primary btn-block"><b>Edit</b></a>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="col-md-6">
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">User Activities</h3>
+    {% if not communique_user.is_active %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-info"></i> Alert!</h4>
+                    This user's account has been deactivated and therefore cannot access the system.
+                </div>
             </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-body box-profile">
 
-            <div class="box-body">
-                <table id="example1" class="table table-bordered table-striped">
-                    <thead>
+                    <h3 class="profile-username text-center">{{ communique_user.get_full_name }}</h3>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Username</b> <a class="pull-right">{{ communique_user.username }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>First name</b> <a class="pull-right">{{ communique_user.first_name }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Last name</b> <a class="pull-right">{{ communique_user.last_name }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Email</b> <a class="pull-right">{{ communique_user.email }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Last login</b> <a class="pull-right">{{ communique_user.last_login }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Date added</b> <a class="pull-right">{{ communique_user.date_joined }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Account status</b>
+                            {% if communique_user.is_active %}
+                                <span class="label label-success pull-right">Activated</span>
+                            {% else %}
+                                <span class="label label-danger pull-right">Deactivated</span>
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">
+                            <b>Position</b>
+                            {% if communique_user.is_superuser %}
+                                <span class="label label-warning pull-right">Superuser</span>
+                            {% else %}
+                                <span class="label label-success pull-right">Staff</span>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <a href="{{ communique_user.get_update_url }}" class="btn btn-primary btn-block"><b>Edit</b></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">User Activities</h3>
+                </div>
+
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
                         <tr>
                             <th>Action</th>
                             <th>Item</th>
                             <th>Item Identifier</th>
                             <th>Date/Time</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         {% for user_activity in communique_user.user_activities.all %}
                             <tr>
                                 <td>
@@ -125,38 +124,38 @@
                                 <td>{{ user_activity.date_time }}</td>
                             </tr>
                         {% endfor %}
-                    </tbody>
-                    <tfoot>
+                        </tbody>
+                        <tfoot>
                         <tr>
                             <th>Action</th>
                             <th>Item</th>
                             <th>Item Identifier</th>
                             <th>Date/Item</th>
                         </tr>
-                    </tfoot>
-                </table>
+                        </tfoot>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-  </div>
 {% endblock %}
 
 {% block scripts %}
-  <!-- DataTables -->
-  <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
-  <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
-  <!-- page script -->
-  <script>
-    $(function () {
-      $("#example1").DataTable();
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false
-      });
-    });
-  </script>
+    <!-- DataTables -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
+        });
+    </script>
 {% endblock %}

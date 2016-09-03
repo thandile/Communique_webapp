@@ -1,7 +1,21 @@
-{% extends parent_template|default:"programs/base_programs_data_table.html" %}
+{% extends parent_template|default:"programs/base_programs.html" %}
+{% load staticfiles %}
 
 {% block title %}
     {{ block.super }} | Pilot Programs
+{% endblock %}
+
+{% block head %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
+{% endblock %}
+
+{% block programs_list_menu %}
+    <li class="active">
+        <a href="{% url 'programs_program_list' %}">
+            <i class="fa fa-circle-o text-red"></i> Pilot Programs List
+        </a>
+    </li>
 {% endblock %}
 
 {% block page_heading %}
@@ -18,44 +32,77 @@
     <li class="active">List</li>
 {% endblock %}
 
-{% block table_title %}
-    Existing Pilot Programs
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Existing pilot programs</h3>
+                </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Date Created</th>
+                                <th>Created By</th>
+                                <th>Date Last Modified</th>
+                                <th>Last Modified By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for program in program_list %}
+                                <tr>
+                                    <td><a href="{{ program.get_absolute_url }}">{{ program }}</a></td>
+                                    <td>
+                                        {% if program.is_open %}
+                                            <span class="label label-success">Open</span>
+                                        {% else %}
+                                            <span class="label label-danger">Closed</span>
+                                        {% endif %}
+                                    </td>
+                                    <td><a href="{{ program.get_absolute_url }}">{{ program.date_created }}</a></td>
+                                    <td>{{ program.created_by.get_full_name }}</td>
+                                    <td><a href="{{ program.get_absolute_url }}">{{ program.date_last_modified }}</a></td>
+                                    <td>{{ program.last_modified_by.get_full_name }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Date Created</th>
+                                <th>Created By</th>
+                                <th>Date Last Modified</th>
+                                <th>Last Modified By</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
-{% block table_columns %}
-    <th>Name</th>
-    <th>Status</th>
-    <th>Date Created</th>
-    <th>Created By</th>
-    <th>Date Last Modified</th>
-    <th>Last Modified By</th>
-
-{% endblock %}
-
-{% block table_content %}
-    {% for program in program_list %}
-        <tr>
-            <td><a href="{{ program.get_absolute_url }}">{{ program }}</a></td>
-            <td>
-                {% if program.is_open %}
-                    <span class="label label-success">Open</span>
-                {% else %}
-                    <span class="label label-danger">Closed</span>
-                {% endif %}
-            </td>
-            <td><a href="{{ program.get_absolute_url }}">{{ program.date_created }}</a></td>
-            <td>{{ program.created_by.get_full_name }}</td>
-            <td><a href="{{ program.get_absolute_url }}">{{ program.date_last_modified }}</a></td>
-            <td>{{ program.last_modified_by.get_full_name }}</td>
-        </tr>
-    {% endfor %}
-{% endblock %}
-
-{% block table_footer %}
-    <th>Name</th>
-    <th>Status</th>
-    <th>Date Created</th>
-    <th>Created By</th>
-    <th>Date Modified</th>
-    <th>Last Modified By</th>
+{% block scripts %}
+    <!-- DataTables -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
+        });
+    </script>
 {% endblock %}

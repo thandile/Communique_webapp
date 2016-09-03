@@ -1,4 +1,4 @@
-{% extends parent_template|default:"base.html" %}
+{% extends parent_template|default:"patients/base_enrollments.html" %}
 
 {% block title %}
     {{ block.super }} | Enrollment
@@ -17,30 +17,20 @@
     <li class="active"> Enrollment</li>
 {% endblock %}
 
-{% block enrollments_menu %}
-    <li class="treeview active">
-        <a href="#">
-            <i class="fa fa-support"></i> <span>Enrollments</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>
-                <a href="{% url 'patients_enrollment_list' %}">
-                    <i class="fa fa-circle-o text-aqua"></i> Enrollment List
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'patients_enrollment_create' %}">
-                    <i class="fa fa-circle-o text-aqua"></i> Register Enrollment
-                </a>
-            </li>
-        </ul>
-    </li>
-{% endblock %}
-
 {% block page_content %}
+    {% if not enrollment.is_active %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-info"></i> Alert!</h4>
+                    This enrollment has been marked as no longer active. The patient is therefore no longer enrolled in
+                    the program.
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
     <div class="row">
         <div class="col-md-4">
             <div class="box box-primary">
