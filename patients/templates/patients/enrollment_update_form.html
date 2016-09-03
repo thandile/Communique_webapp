@@ -1,31 +1,8 @@
-{% extends parent_template|default:"base.html" %}
+{% extends parent_template|default:"patients/base_enrollments.html" %}
 {% load widget_tweaks %}
 
 {% block title %}
     {{ block.super }} | Close Enrollment
-{% endblock %}
-
-{% block enrollments_menu %}
-    <li class="treeview active">
-        <a href="#">
-            <i class="fa fa-support"></i> <span>Enrollments</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
-        </a>
-        <ul class="treeview-menu">
-            <li>
-                <a href="{% url 'patients_enrollment_list' %}">
-                    <i class="fa fa-circle-o text-aqua"></i> Enrollment List
-                </a>
-            </li>
-            <li>
-                <a href="{% url 'patients_enrollment_create' %}">
-                    <i class="fa fa-circle-o text-aqua"></i> Register Enrollment
-                </a>
-            </li>
-        </ul>
-    </li>
 {% endblock %}
 
 {% block page_heading %}

@@ -3,22 +3,15 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-from rest_framework import viewsets
-from rest_framework import permissions
-
 from .forms import *
 from .models import *
 
-"""
-Views for the Web App
-"""
+
 class CommuniqueUserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     """
-    A view to list all users of the system. This is only available to logged in
-    superusers of the system.
+    A view to list all users of the system. This is only available to logged in, active superusers of the system.
 
-    If the user is logged in but is not a superuser, he/she will be redirected
-    to the login page.
+    If any of the criteria is failed, the user will be redirected to the login page.
     """
     model = CommuniqueUser
     template_name = 'user/communique_user_list.html'
@@ -26,19 +19,17 @@ class CommuniqueUserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 
     def test_func(self):
         """
-        Returns whether the user making the request is a superuser.
+        Returns whether the user making the request is a superuser and is active.
         """
-        return self.request.user.is_superuser
+        current_user = self.request.user
+        return current_user.is_superuser and current_user.is_active
 
 
-class CommuniqueUserCreateView(LoginRequiredMixin, UserPassesTestMixin,
-    CreateView):
+class CommuniqueUserCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     """
-    A view to create a Communique user. This is only available to logged in
-    superusers of the system.
+    A view to create a Communique user. This is only available to logged in active superusers of the system.
 
-    Should the user not be logged in or not a superuser, he/she will be
-    redirected to the login page.
+    If the criteria fails, the user will be redirected to the login page.
     """
     form_class = CommuniqueUserCreationForm
     model = CommuniqueUser
@@ -46,18 +37,17 @@ class CommuniqueUserCreateView(LoginRequiredMixin, UserPassesTestMixin,
 
     def test_func(self):
         """
-        Returns whether the user making the request is a superuser.
+        Returns whether the user making the request is an active superuser.
         """
-        return self.request.user.is_superuser
+        current_user = self.request.user
+        return current_user.is_superuser and current_user.is_active
 
-class CommuniqueUserDetailView(LoginRequiredMixin, UserPassesTestMixin,
-    DetailView):
+
+class CommuniqueUserDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     """
-    A view to display information of a user. This is only availabel to logged in
-    superusers of the system.
+    A view to display information of a user. This is only available to logged in active superusers of the system.
 
-    Should the user not be logged in or not a superuser, he/she will be
-    redirected to the login page.
+    If the criteria fails, the user will be redirected to the login page.
     """
     model = CommuniqueUser
     template_name = 'user/communique_user_view.html'
@@ -65,19 +55,17 @@ class CommuniqueUserDetailView(LoginRequiredMixin, UserPassesTestMixin,
 
     def test_func(self):
         """
-        Returns whether the user making the request is a superuser.
+        Returns whether the user making the request is an active superuser.
         """
-        return self.request.user.is_superuser
+        current_user = self.request.user
+        return current_user.is_active and current_user.is_superuser
 
 
-class CommuniqueUserUpdateView(LoginRequiredMixin, UserPassesTestMixin,
-    UpdateView):
+class CommuniqueUserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """
-    A view to update the information for a user. This is only available to
-    logged in superusers of the system.
+    A view to update the information for a user. This is only available to active logged in superusers of the system.
 
-    Should the user not be logged in or not a superuser, he/she will be
-    redirected to the login page.
+    If the criteria fails, the user will be redirected to the login page.
     """
     form_class = CommuniqueUserUpdateForm
     model = CommuniqueUser
@@ -90,13 +78,13 @@ class CommuniqueUserUpdateView(LoginRequiredMixin, UserPassesTestMixin,
         """
         return self.request.user.is_superuser
 
+
 class ProfileDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     """
-    A view to display the details of a user. This is only available to a logged
-    in user who is trying to access his/her own details.
+    A view to display the details of a user. This is only available to an active logged in user who is trying to access
+    his/her own details.
 
-    Should the user not be logged in or trying to access a profile that is not
-    his/hers, he/she will be redirected to the login page.
+    If the criteria fails, the user will be redirected to the login page.
     """
     model = Profile
     template_name = 'user/profile_view.html'
@@ -104,17 +92,18 @@ class ProfileDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
 
     def test_func(self):
         """
-        Returns whether the user is making request to view his/her profile.
+        Returns whether the user is making request to view his/her profile and is an active user.
         """
-        return str(self.request.user.pk) == str(self.kwargs['pk'])
+
+        return (str(self.request.user.pk) == str(self.kwargs['pk'])) and self.request.user.is_active
+
 
 class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """
-    A view to update a user's profile. This is only available to a logged in
-    user that is trying to update his/her own profile.
+    A view to update a user's profile. This is only available to an active logged in user that is trying to update
+    his/her own profile.
 
-    Should the user not be logged in or trying to update a profile that is not
-    his/hers, he/she will be redirected to the login page.
+    If the criteria fails, the user will be redirected to the login page.
     """
     form_class = ProfileUpdateForm
     model = Profile
@@ -123,7 +112,7 @@ class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
     def test_func(self):
         """
-        Returns whether the user making requests to his/her own profiles.
+        Returns whether the user making requests to his/her own profiles and is an active user.
         """
-        return str(self.request.user.pk) == str(self.kwargs['pk'])
+        return (str(self.request.user.pk) == str(self.kwargs['pk'])) and self.request.user.is_active
 

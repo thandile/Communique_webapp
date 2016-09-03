@@ -1,7 +1,13 @@
-{% extends parent_template|default:"user/base_user_data_table.html" %}
+{% extends parent_template|default:"user/base_user.html" %}
+{% load staticfiles %}
 
 {% block title %}
     {{ block.super }} | Users
+{% endblock %}
+
+{% block head %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
 {% endblock %}
 
 {% block user_list_menu %}
@@ -26,62 +32,95 @@
     <li class="active">List</li>
 {% endblock %}
 
-{% block table_title %}
-    Registered Users
+{% block page_content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Registered users</h3>
+                </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             {% for communique_user in communique_user_list %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ communique_user.get_absolute_url }}">
+                                            {{ communique_user.get_full_name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ communique_user.get_absolute_url }}">
+                                            {{ communique_user.username }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ communique_user.get_absolute_url }}">
+                                            {{ communique_user.email }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ communique_user.get_absolute_url }}">
+                                            {% if communique_user.is_active %}
+                                                Activated
+                                            {% else %}
+                                                Deactivated
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ communique_user.get_absolute_url }}">
+                                            {% if communique_user.is_superuser %}
+                                                Superuser
+                                            {% else %}
+                                                Staff
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Position</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
-{% block table_columns %}
-    <th>Name</th>
-    <th>Username</th>
-    <th>Email</th>
-    <th>Status</th>
-    <th>Position</th>
-{% endblock %}
-
-{% block table_content %}
-    {% for communique_user in communique_user_list %}
-        <tr>
-            <td>
-                <a href="{{ communique_user.get_absolute_url }}">
-                    {{ communique_user.get_full_name }}
-                </a>
-            </td>
-            <td>
-                <a href="{{ communique_user.get_absolute_url }}">
-                    {{ communique_user.username }}
-                </a>
-            </td>
-            <td>
-                <a href="{{ communique_user.get_absolute_url }}">
-                    {{ communique_user.email }}
-                </a>
-            </td>
-            <td>
-                <a href="{{ communique_user.get_absolute_url }}">
-                    {% if communique_user.is_active %}
-                        Activated
-                    {% else %}
-                        Deactivated
-                    {% endif %}
-                </a>
-            </td>
-            <td>
-                <a href="{{ communique_user.get_absolute_url }}">
-                    {% if communique_user.is_superuser %}
-                        Superuser
-                    {% else %}
-                        Staff
-                    {% endif %}
-                </a>
-            </td>
-        </tr>
-    {% endfor %}
-{% endblock %}
-
-{% block table_footer %}
-    <th>Name</th>
-    <th>Username</th>
-    <th>Email</th>
-    <th>Status</th>
-    <th>Position</th>
+{% block scripts %}
+    <!-- DataTables -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
+        });
+    </script>
 {% endblock %}

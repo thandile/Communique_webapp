@@ -1,4 +1,4 @@
-{% extends parent_template|default:"base.html" %}
+{% extends parent_template|default:"patients/base_enrollments.html" %}
 {% load staticfiles %}
 {% load widget_tweaks %}
 
@@ -10,27 +10,11 @@
     <link rel="stylesheet" href="{% static "plugins/select2/select2.min.css" %}">
 {% endblock %}
 
-
-{% block enrollments_menu %}
-    <li class="treeview active">
-        <a href="#">
-            <i class="fa fa-support"></i> <span>Enrollments</span>
-            <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-            </span>
+{% block enrollments_create_menu %}
+    <li class="active">
+        <a href="{% url 'patients_enrollment_create' %}">
+            <i class="fa fa-circle-o text-red"></i> Register Enrollment
         </a>
-        <ul class="treeview-menu">
-            <li>
-                <a href="{% url 'patients_enrollment_list' %}">
-                    <i class="fa fa-circle-o text-aqua"></i> Enrollment List
-                </a>
-            </li>
-            <li class="active">
-                <a href="{% url 'patients_enrollment_create' %}">
-                    <i class="fa fa-circle-o text-red"></i> Register Enrollment
-                </a>
-            </li>
-        </ul>
     </li>
 {% endblock %}
 
