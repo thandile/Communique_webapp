@@ -35,6 +35,9 @@ class CounsellingSessionType(models.Model):
     def get_update_url(self):
         return reverse('counselling_sessions_type_update', kwargs={'pk':self.pk})
 
+    def get_delete_url(self):
+        return reverse('counselling_sessions_type_delete', kwargs={'pk':self.pk})
+
 
 class CounsellingSession(models.Model):
     """

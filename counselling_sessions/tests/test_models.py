@@ -13,24 +13,32 @@ class CounsellingSessionTypeTestCase(TestCase):
         """
         A test case for the __str__ method of the model.
         """
-        counselling_session_type = CounsellingSessionType.objects.create(name='dummy type')
-        self.assertEqual(counselling_session_type.__str__(), 'Dummy Type')
+        session_type = CounsellingSessionType.objects.create(name='dummy type')
+        self.assertEqual(session_type.__str__(), 'Dummy Type')
 
     def test_get_absolute_url(self):
         """
         A test case for the get_absolute_url method for the model.
         """
-        counselling_session_type = CounsellingSessionType.objects.create(name='dummy type')
-        self.assertEqual(counselling_session_type.get_absolute_url(), reverse('counselling_sessions_type_detail',
-                                                                              kwargs={'pk':counselling_session_type.pk}))
+        session_type = CounsellingSessionType.objects.create(name='dummy type')
+        self.assertEqual(session_type.get_absolute_url(), reverse('counselling_sessions_type_detail',
+                                                                              kwargs={'pk':session_type.pk}))
 
     def test_get_update_url(self):
         """
         A test case for the get_update_url method for the model.
         """
-        counselling_session_type = CounsellingSessionType.objects.create(name='dummy type')
-        self.assertEqual(counselling_session_type.get_update_url(), reverse('counselling_sessions_type_update',
-                                                                            kwargs={'pk':counselling_session_type.pk}))
+        session_type = CounsellingSessionType.objects.create(name='dummy type')
+        self.assertEqual(session_type.get_update_url(), reverse('counselling_sessions_type_update',
+                                                                            kwargs={'pk':session_type.pk}))
+
+    def test_get_delete_url(self):
+        """
+        A test case for the get_delete_url method for the model.
+        """
+        session_type = CounsellingSessionType.objects.create(name='dummy Type')
+        self.assertEqual(session_type.get_delete_url(), reverse('counselling_sessions_type_delete',
+                                                                kwargs={'pk':session_type.pk}))
 
 
 class CounsellingSessionTestCase(TestCase):
