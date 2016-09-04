@@ -1,6 +1,6 @@
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import *
@@ -59,6 +59,32 @@ class CounsellingSessionTypeDetailView(LoginRequiredMixin, UserPassesTestMixin, 
     model = CounsellingSessionType
     template_name = 'counselling_sessions/counselling_session_type_view.html'
     context_object_name = 'counselling_session_type'
+
+    def test_func(self):
+        """
+        Checks whether the user is marked as active.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class CounsellingSessionTypeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """
+    A view that handles updating of a session type.
+
+    This view is only available to users that are logged in and are marked as active in the system.
+    """
+    model = CounsellingSessionType
+    fields = ['name', 'description']
+    template_name = 'counselling_sessions/counselling_session_type_update_form.html'
+    context_object_name = 'counselling_session_type'
+
+    def form_valid(self, form):
+        session_type = form.save(commit=False)
+        # update the last modified field
+        session_type.last_modified_by = self.request.user
+
+        return super(CounsellingSessionTypeUpdateView, self).form_valid(form)
 
     def test_func(self):
         """
