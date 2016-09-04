@@ -52,11 +52,27 @@
                         <tbody>
                             {% for session_type in counselling_session_type_list %}
                                 <tr>
-                                    <td><a href="#">{{ session_type }}</a></td>
-                                    <td><a href="#">{{ session_type.date_created }}</a></td>
-                                    <td><a href="#">{{ session_type.created_by }}</a></td>
-                                    <td><a href="#">{{ session_type.date_last_modified }}</a></td>
-                                    <td><a href="#">{{ session_type.last_modified_by }}</a></td>
+                                    <td><a href="{{ session_type.get_absolute_url }}">{{ session_type }}</a></td>
+                                    <td>
+                                        <a href="{{ session_type.get_absolute_url }}">
+                                            {{ session_type.date_created }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ session_type.get_absolute_url }}">
+                                            {{ session_type.created_by.get_full_name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ session_type.get_absolute_url }}">
+                                            {{ session_type.date_last_modified }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ session_type.get_absolute_url }}">
+                                            {{ session_type.last_modified_by.get_full_name }}
+                                        </a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
