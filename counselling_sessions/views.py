@@ -1,7 +1,8 @@
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.urlresolvers import reverse_lazy
 
 from .models import *
 
@@ -90,6 +91,25 @@ class CounsellingSessionTypeUpdateView(LoginRequiredMixin, UserPassesTestMixin, 
         """
         Checks whether the user is marked as active.
         :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class CounsellingSessionTypeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """
+    A view that handles the deletion of a session type.
+
+    This view is only available to users that are logged in and marked as active in the system.
+    """
+    model = CounsellingSessionType
+    success_url = reverse_lazy('counselling_sessions_type_list')
+    context_object_name = 'counselling_session_type'
+    template_name = 'counselling_sessions/counselling_session_type_confirm_delete.html'
+
+    def test_func(self):
+        """
+        Checks whether the user is marked as active.
+        :return: True if user is active, false otherwise
         """
         return self.request.user.is_active
 
