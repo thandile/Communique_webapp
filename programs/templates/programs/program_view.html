@@ -102,20 +102,20 @@
                         <tbody>
                             {% for enrollment in program.enrollments.all %}
                                 <tr>
-                                    <th>
+                                    <td>
                                         <a href="{{ enrollment.patient.get_absolute_url }}">{{ enrollment.patient }}</a>
-                                    </th>
-                                    <th>
+                                    </td>
+                                    <td>
                                         <a href="{{ enrollment.patient.get_absolute_url }}">
                                             {{ enrollment.patient.identifier }}
                                         </a>
-                                    </th>
-                                    <th>
+                                    </td>
+                                    <td>
                                         <a href="{{ enrollment.patient.get_absolute_url }}">
                                             {{ enrollment.date_enrolled }}
                                         </a>
-                                    </th>
-                                    <th>
+                                    </td>
+                                    <td>
                                         <a href="{{ enrollment.patient.get_absolute_url }}">
                                             {% if enrollment.is_active %}
                                                 <span class="label label-success">Open</span>
@@ -123,7 +123,7 @@
                                                 <span class="label label-danger">Closed</span>
                                             {% endif %}
                                         </a>
-                                    </th>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>

@@ -1,0 +1,126 @@
+{% extends parent_template|default:'counselling_sessions/base_counselling_sessions.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} | Session Type
+{% endblock %}
+
+{% block head %}
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
+{% endblock %}
+
+{% block page_heading %}
+    Session Type
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'counselling_sessions_type_list' %}"><i class="fa fa-plus-square"></i></a> Session Types</li>
+    <li class="active"><i class="fa fa-plus-square"></i> Session Type</li>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-3">
+           <div class="box box-primary">
+               <div class="box-body">
+                   <h3 class="text-center">{{ counselling_session_type }}</h3>
+                   <ul class="list-group list-group-unbordered">
+                      <li class="list-group-item">
+                          <b>Date added</b> <a class="pull-right">{{ counselling_session_type.date_created }}</a>
+                      </li>
+                       <li class="list-group-item">
+                           <b>Added by</b>
+                           <a class="pull-right">{{ counselling_session_type.created_by.get_full_name }}</a>
+                       </li>
+                       <li class="list-group-item">
+                           <b>Last modified</b>
+                           <a class="pull-right">{{ counselling_session_type.date_last_modified }}</a>
+                       </li>
+                       <li class="list-group-item">
+                           <b>Last modified by</b>
+                           <a class="pull-right">{{ counselling_session_type.last_modified_by.get_full_name }}</a>
+                       </li>
+                   </ul>
+                   <a href="#" class="btn btn-primary btn-block"><b>Edit</b></a>
+               </div>
+           </div>
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">About Session Type</h3>
+                </div>
+                <div class="box-body">
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Description</strong>
+
+                    <p>
+                        {% if counselling_session_type.description %}
+                            {{ counselling_session_type.description }}
+                        {% else %}
+                            This session currently doesn't have a description.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Existing Sessions</h3>
+                </div>
+
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Created By</th>
+                                <th>Date Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for counselling_session in counselling_session_type.counselling_sessions.all %}
+                                <tr>
+                                    <td><a href="#">{{ counselling_session.patient }}</a></td>
+                                    <td><a href="#">{{ counselling_session.created_by }}</a></td>
+                                    <td><a href="#">{{ counselling_session.date_created }}</a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Created By</th>
+                                <th>Date Created</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+  <!-- DataTables -->
+  <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+  <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+  <!-- page script -->
+  <script>
+    $(function () {
+      $("#example1").DataTable();
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false
+      });
+    });
+  </script>
+{% endblock %}
