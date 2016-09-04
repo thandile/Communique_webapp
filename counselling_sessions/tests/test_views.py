@@ -8,7 +8,7 @@ class CounsellingSessionTypeListViewTestCase(ViewsTestCase):
     Test cases for the view that lists counselling session types.
     """
     view_name = 'counselling_sessions_type_list'
-    view_template_name = 'counselling_sessions/counselling_session_list.html'
+    view_template_name = 'counselling_sessions/counselling_session_type_list.html'
     view_url = reverse(view_name)
 
     def test_active_user_access(self):

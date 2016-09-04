@@ -11,8 +11,8 @@ class CounsellingSessionTypeListView(LoginRequiredMixin, UserPassesTestMixin, Li
     This view is only available to users that are logged in and are marked as active in the system.
     """
     model = CounsellingSessionType
-    template_name = 'counselling_sessions/counselling_session_list.html'
-    context_object_name = 'counselling_session_list'
+    template_name = 'counselling_sessions/counselling_session_type_list.html'
+    context_object_name = 'counselling_session_type_list'
 
     def test_func(self):
         """
