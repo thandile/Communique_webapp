@@ -39,3 +39,15 @@ class CounsellingSessionTypeDetailViewTestCase(ViewsTestCase):
     def test_active_user_access(self):
         session_type = CounsellingSessionType.objects.create(name='Dummy Type')
         self.only_active_user_access_test(session_type.get_absolute_url(), self.view_template_name)
+
+
+class CounsellingSessionTypeUpdateViewTestCase(ViewsTestCase):
+    """
+    Test cases for the view to update a session type.
+    """
+    view_name = 'counselling_sessions_type_update'
+    view_template_name = 'counselling_sessions/counselling_session_type_update_form.html'
+
+    def test_active_user_access(self):
+        session_type = CounsellingSessionType.objects.create(name='Dummy type')
+        self.only_active_user_access_test(session_type.get_update_url(), self.view_template_name)
