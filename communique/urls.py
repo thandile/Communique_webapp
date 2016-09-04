@@ -17,6 +17,6 @@ urlpatterns = [
     url(r'^programs/', include(programs_urls)),
     url(r'^patients/', include(patients_urls)),
     url(r'^enrollments/', include(enrollment_urls)),
-    url(r'^counselling-sessions/', include(counselling_session_urls)),
+    url(r'^counselling/', include(counselling_session_urls)),
     url(r'^api/', include(api_urls)),
 ]

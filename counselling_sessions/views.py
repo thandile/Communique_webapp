@@ -1,4 +1,5 @@
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -40,6 +41,24 @@ class CounsellingSessionTypeCreateView(LoginRequiredMixin, UserPassesTestMixin, 
         counselling_session_type.last_modified_by = self.request.user
 
         return super(CounsellingSessionTypeCreateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is marked as active.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class CounsellingSessionTypeDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    """
+    A view that handles displaying details of a session type.
+
+    This view is only available to users that are logged in and are marked as active in the system.
+    """
+    model = CounsellingSessionType
+    template_name = 'counselling_sessions/counselling_session_type_view.html'
+    context_object_name = 'counselling_session_type'
 
     def test_func(self):
         """
