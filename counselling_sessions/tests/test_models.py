@@ -1,5 +1,7 @@
 from django.test import TestCase
 
+from django.core.urlresolvers import reverse
+
 from counselling_sessions.models import *
 
 
@@ -13,6 +15,14 @@ class CounsellingSessionTypeTestCase(TestCase):
         """
         counselling_session_type = CounsellingSessionType.objects.create(name='dummy type')
         self.assertEqual(counselling_session_type.__str__(), 'Dummy Type')
+
+    def test_get_absolute_url(self):
+        """
+        A test case for the get_absolute_url method for the model.
+        """
+        counselling_session_type = CounsellingSessionType.objects.create(name='dummy type')
+        self.assertEqual(counselling_session_type.get_absolute_url(), reverse('counselling_sessions_type_detail',
+                                                                              kwargs={'pk':counselling_session_type.pk}))
 
 
 class CounsellingSessionTestCase(TestCase):

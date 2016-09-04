@@ -29,6 +29,9 @@ class CounsellingSessionType(models.Model):
     def __str__(self):
         return self.name.title()
 
+    def get_absolute_url(self):
+        return reverse('counselling_sessions_type_detail', kwargs={'pk':self.pk})
+
 
 class CounsellingSession(models.Model):
     """
