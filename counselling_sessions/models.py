@@ -32,6 +32,9 @@ class CounsellingSessionType(models.Model):
     def get_absolute_url(self):
         return reverse('counselling_sessions_type_detail', kwargs={'pk':self.pk})
 
+    def get_update_url(self):
+        return reverse('counselling_sessions_type_update', kwargs={'pk':self.pk})
+
 
 class CounsellingSession(models.Model):
     """

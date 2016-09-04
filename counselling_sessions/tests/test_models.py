@@ -24,6 +24,14 @@ class CounsellingSessionTypeTestCase(TestCase):
         self.assertEqual(counselling_session_type.get_absolute_url(), reverse('counselling_sessions_type_detail',
                                                                               kwargs={'pk':counselling_session_type.pk}))
 
+    def test_get_update_url(self):
+        """
+        A test case for the get_update_url method for the model.
+        """
+        counselling_session_type = CounsellingSessionType.objects.create(name='dummy type')
+        self.assertEqual(counselling_session_type.get_update_url(), reverse('counselling_sessions_type_update',
+                                                                            kwargs={'pk':counselling_session_type.pk}))
+
 
 class CounsellingSessionTestCase(TestCase):
     """
