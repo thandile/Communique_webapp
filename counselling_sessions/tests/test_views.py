@@ -2,6 +2,8 @@ from django.core.urlresolvers import reverse
 
 from communique.tests import ViewsTestCase
 
+from counselling_sessions.models import CounsellingSessionType
+
 
 class CounsellingSessionTypeListViewTestCase(ViewsTestCase):
     """
@@ -25,3 +27,15 @@ class CounsellingSessionTypeCreateViewTestCase(ViewsTestCase):
 
     def test_active_user_access(self):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
+
+
+class CounsellingSessionTypeDetailViewTestCase(ViewsTestCase):
+    """
+    Test cases for the view to display session type information.
+    """
+    view_name = 'counselling_sessions_type_detail'
+    view_template_name = 'counselling_sessions/counselling_session_type_view.html'
+
+    def test_active_user_access(self):
+        session_type = CounsellingSessionType.objects.create(name='Dummy Type')
+        self.only_active_user_access_test(session_type.get_absolute_url(), self.view_template_name)
