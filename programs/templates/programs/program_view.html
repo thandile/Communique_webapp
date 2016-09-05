@@ -64,7 +64,7 @@
                             </a>
                         </li>
                         <li class="list-group-item">
-                            <b>Registered patients</b> <a class="pull-right">10</a>
+                            <b>Registered patients</b> <a class="pull-right">{{ program.enrolled_patients.count }}</a>
                         </li>
                     </ul>
                     <a href="{{ program.get_update_url }}" class="btn btn-primary btn-block"><b>Edit</b></a>
