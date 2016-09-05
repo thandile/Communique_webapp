@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse_lazy
 
 from .models import Patient, Enrollment
 
+from counselling_sessions.models import CounsellingSession
 """
 Views for the web app.
 """
@@ -219,7 +220,7 @@ class PatientEnrollmentCreateView(LoginRequiredMixin, UserPassesTestMixin, Creat
     template_name = 'patients/patient_enrollment_form.html'
 
     def get_success_url(self):
-        # on enrolling the patient, redirect to their details view
+        # on enrolling the patient, redirect to the patient details view
         patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
         return patient.get_absolute_url()
 
@@ -241,5 +242,42 @@ class PatientEnrollmentCreateView(LoginRequiredMixin, UserPassesTestMixin, Creat
         """
         Checks whether the user is an active user
         :return: True if user is active, false otherwise
+        """
+        return self.request.user.is_active
+
+
+class PatientSessionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """
+    A view that handles creation of a session for a specific patient.
+
+    This view is only available to users that are logged in and marked as active in the system.
+    """
+    model = CounsellingSession
+    fields = ['counselling_session_type', 'notes']
+    template_name = 'patients/patient_session_form.html'
+
+    def get_success_url(self):
+        # on adding the session, redirect to the patient details view
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        return patient.get_absolute_url()
+
+    def get_context_data(self, **kwargs):
+        context = super(PatientSessionCreateView, self).get_context_data(**kwargs)
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        context['patient'] = patient
+        return context
+
+    def form_valid(self, form):
+        # set the user adding the session and the patient whom it is for
+        form.instance.created_by = self.request.user
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        form.instance.patient = patient
+
+        return super(PatientSessionCreateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is marked as active.
+        :return: True if user is active, false otherwise.
         """
         return self.request.user.is_active
