@@ -143,7 +143,7 @@ class CounsellingSessionCreateView(LoginRequiredMixin, UserPassesTestMixin, Crea
     fields = ['counselling_session_type', 'patient', 'notes']
 
     def form_valid(self, form):
-        counselling_session = form(commit=False)
+        counselling_session = form.save(commit=False)
         # update the created by and last modified by fields
         counselling_session.created_by = self.request.user
         counselling_session.last_modified_by = self.request.user

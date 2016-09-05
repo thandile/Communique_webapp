@@ -52,11 +52,31 @@
                         <tbody>
                             {% for counselling_session in counselling_session_list %}
                                 <tr>
-                                    <td><a href="#">{{ counselling_session.patient }}</a></td>
-                                    <td><a href="#">{{ counselling_session.patient.identifier }}</a></td>
-                                    <td><a href="#">{{ counselling_session.counselling_session_type }}</a></td>
-                                    <td><a href="#">{{ counselling_session.created_by.get_full_name }}</a></td>
-                                    <td><a href="#">{{ counselling_session.date_created }}</a></td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.patient }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.patient.identifier }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.counselling_session_type }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.created_by.get_full_name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.date_created }}
+                                        </a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>

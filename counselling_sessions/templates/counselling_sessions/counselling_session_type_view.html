@@ -49,7 +49,9 @@
                    <a href="{{ counselling_session_type.get_update_url }}" class="btn btn-primary pull-left">
                        <b>Edit</b>
                    </a>
-                   <a href="{{ counselling_session_type.get_delete_url }}" class="btn btn-danger pull-right"><b>Delete</b></a>
+                   <a href="{{ counselling_session_type.get_delete_url }}" class="btn btn-danger pull-right">
+                       <b>Delete</b>
+                   </a>
                </div>
            </div>
             <div class="box box-primary">
@@ -63,7 +65,7 @@
                         {% if counselling_session_type.description %}
                             {{ counselling_session_type.description }}
                         {% else %}
-                            This session currently doesn't have a description.
+                            This session type currently doesn't have a description.
                         {% endif %}
                     </p>
                 </div>
