@@ -63,3 +63,15 @@ class CounsellingSessionTypeDeleteViewTestCase(ViewsTestCase):
     def test_active_user_access(self):
         session_type = CounsellingSessionType.objects.create(name='Dummy type')
         self.only_active_user_access_test(session_type.get_delete_url(), self.view_template_name)
+
+
+class CounsellingSessionListViewTestCase(ViewsTestCase):
+    """
+    Test cases for the view that lists counselling sessions.
+    """
+    view_name = 'counselling_sessions_session_list'
+    view_template_name = 'counselling_sessions/counselling_session_list.html'
+    view_url = reverse(view_name)
+
+    def test_active_user_access(self):
+        self.only_active_user_access_test(self.view_url, self.view_template_name)
