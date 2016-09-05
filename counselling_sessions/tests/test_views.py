@@ -2,7 +2,8 @@ from django.core.urlresolvers import reverse
 
 from communique.tests import ViewsTestCase
 
-from counselling_sessions.models import CounsellingSessionType
+from counselling_sessions.models import CounsellingSessionType, CounsellingSession
+from patients.models import Patient
 
 
 class CounsellingSessionTypeListViewTestCase(ViewsTestCase):
@@ -33,7 +34,6 @@ class CounsellingSessionTypeDetailViewTestCase(ViewsTestCase):
     """
     Test cases for the view to display session type information.
     """
-    view_name = 'counselling_sessions_type_detail'
     view_template_name = 'counselling_sessions/counselling_session_type_view.html'
 
     def test_active_user_access(self):
@@ -45,7 +45,6 @@ class CounsellingSessionTypeUpdateViewTestCase(ViewsTestCase):
     """
     Test cases for the view to update a session type.
     """
-    view_name = 'counselling_sessions_type_update'
     view_template_name = 'counselling_sessions/counselling_session_type_update_form.html'
 
     def test_active_user_access(self):
@@ -57,7 +56,6 @@ class CounsellingSessionTypeDeleteViewTestCase(ViewsTestCase):
     """
     Test cases for the view to delete a session type.
     """
-    view_name = 'counselling_sessions_type_delete'
     view_template_name = 'counselling_sessions/counselling_session_type_confirm_delete.html'
 
     def test_active_user_access(self):
@@ -87,3 +85,16 @@ class CounsellingSessionCreateViewTestCase(ViewsTestCase):
 
     def test_active_user_access(self):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
+
+
+class CounsellingSessionDetailViewTestCase(ViewsTestCase):
+    """
+    Test cases for the view to display a session.
+    """
+    view_template_name = 'counselling_sessions/counselling_session_view.html'
+
+    def test_active_user_access(self):
+        session_type = CounsellingSessionType.objects.create(name='dummy type')
+        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
+        counselling_session = CounsellingSession.objects.create(patient=patient, counselling_session_type=session_type)
+        self.only_active_user_access_test(counselling_session.get_absolute_url(), self.view_template_name)
