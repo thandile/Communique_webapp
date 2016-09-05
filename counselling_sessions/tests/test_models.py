@@ -2,7 +2,8 @@ from django.test import TestCase
 
 from django.core.urlresolvers import reverse
 
-from counselling_sessions.models import *
+from counselling_sessions.models import CounsellingSession, CounsellingSessionType
+from patients.models import Patient
 
 
 class CounsellingSessionTypeTestCase(TestCase):
