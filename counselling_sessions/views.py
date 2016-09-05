@@ -131,3 +131,28 @@ class CounsellingSessionListView(LoginRequiredMixin, UserPassesTestMixin, ListVi
         """
         return self.request.user.is_active
 
+
+class CounsellingSessionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """
+    A view that handles creation of a session.
+
+    This view is only available to users that are logged in and are marked as active in the system.
+    """
+    model = CounsellingSession
+    template_name = 'counselling_sessions/counselling_session_form.html'
+    fields = ['counselling_session_type', 'patient', 'notes']
+
+    def form_valid(self, form):
+        counselling_session = form(commit=False)
+        # update the created by and last modified by fields
+        counselling_session.created_by = self.request.user
+        counselling_session.last_modified_by = self.request.user
+
+        return super(CounsellingSessionCreateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is marked as active.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
