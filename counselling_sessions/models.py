@@ -68,5 +68,14 @@ class CounsellingSession(models.Model):
     def __str__(self):
         return "A {0} session for {1}".format(self.counselling_session_type, self.patient)
 
+    def get_absolute_url(self):
+        return reverse('counselling_sessions_session_detail', kwargs={'pk':self.pk})
+
+    def get_update_url(self):
+        pass
+
+    def get_delete_url(self):
+        pass
+
 
 
