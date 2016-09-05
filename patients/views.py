@@ -270,6 +270,7 @@ class PatientSessionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateVi
     def form_valid(self, form):
         # set the user adding the session and the patient whom it is for
         form.instance.created_by = self.request.user
+        form.instance.last_modified_by = self.request.user
         patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
         form.instance.patient = patient
 

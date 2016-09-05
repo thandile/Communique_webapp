@@ -215,7 +215,9 @@
                             </tr>
                             </tfoot>
                         </table>
-                        <a class="btn btn-primary">Add session</a>
+                        <a class="btn btn-primary" href="{% url 'patients_patient_session_create' patient_pk=patient.pk %}">
+                            Add session
+                        </a>
                     </div>
 
                     <div class="tab-pane" id="medication">
