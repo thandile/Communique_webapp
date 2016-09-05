@@ -174,3 +174,29 @@ class CounsellingSessionDetailView(LoginRequiredMixin, UserPassesTestMixin, Deta
         :return: True if user is active, false otherwise.
         """
         return self.request.user.is_active
+
+
+class CounsellingSessionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """
+    A view that handles updating a session.
+
+    This view is only available to users that are logged in and are marked as active in the system.
+    """
+    model = CounsellingSession
+    fields = ['notes']
+    template_name = 'counselling_sessions/counselling_session_update_form.html'
+    context_object_name = 'counselling_session'
+
+    def form_valid(self, form):
+        counselling_session = form.save(commit=False)
+        # update the last modified field
+        counselling_session.last_modified_by = self.request.user
+
+        return super(CounsellingSessionUpdateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is marked as active.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
