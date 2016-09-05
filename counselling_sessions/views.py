@@ -114,3 +114,20 @@ class CounsellingSessionTypeDeleteView(LoginRequiredMixin, UserPassesTestMixin, 
         return self.request.user.is_active
 
 
+class CounsellingSessionListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    """
+    A view that retrieves all available sessions.
+
+    This view is only available to users that are logged in and are marked as active in the system.
+    """
+    model = CounsellingSession
+    template_name = 'counselling_sessions/counselling_session_list.html'
+    context_object_name = 'counselling_session_list'
+
+    def test_func(self):
+        """
+        Checks whether the user is marked as active.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+

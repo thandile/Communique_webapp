@@ -13,4 +13,5 @@ urlpatterns = [
         name='counselling_sessions_type_update'),
     url(r'^session-types/(?P<pk>[0-9]+)/delete/$', CounsellingSessionTypeDeleteView.as_view(),
         name='counselling_sessions_type_delete'),
+    url(r'^sessions/$', CounsellingSessionListView.as_view(), name='counselling_sessions_list'),
 ]
