@@ -75,3 +75,15 @@ class CounsellingSessionListViewTestCase(ViewsTestCase):
 
     def test_active_user_access(self):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
+
+
+class CounsellingSessionCreateViewTestCase(ViewsTestCase):
+    """
+    Test cases for the view to add a session.
+    """
+    view_name = 'counselling_sessions_session_create'
+    view_template_name = 'counselling_sessions/counselling_session_form.html'
+    view_url = reverse(view_name)
+
+    def test_active_user_access(self):
+        self.only_active_user_access_test(self.view_url, self.view_template_name)
