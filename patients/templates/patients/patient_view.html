@@ -150,11 +150,16 @@
                                             {{ enrollment.program }}</a>
                                         </h3>
                                         <div class="timeline-body">
-                                            {{ enrollment.comment }}
+                                            {% if enrollment.comment %}
+                                                {{ enrollment.comment }}
+                                            {% else %}
+                                                There currently isn't a comment on this enrollment.
+                                            {% endif %}
                                         </div>
                                         <div class="timeline-footer">
                                             <a class="btn btn-primary btn-xs" href="{{ enrollment.get_absolute_url }}">
-                                                View enrollment details</a>
+                                                View enrollment details
+                                            </a>
                                         </div>
                                     </div>
                                 </li>

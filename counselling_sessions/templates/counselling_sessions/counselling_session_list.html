@@ -59,7 +59,11 @@
                                     </td>
                                     <td>
                                         <a href="{{ counselling_session.get_absolute_url }}">
-                                            {{ counselling_session.patient.identifier }}
+                                            {% if counselling_session.patient.identifier %}
+                                                {{ counselling_session.patient.identifier }}
+                                            {% else %}
+                                                Unavailable
+                                            {% endif %}
                                         </a>
                                     </td>
                                     <td>

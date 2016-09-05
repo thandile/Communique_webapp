@@ -78,7 +78,13 @@
                 <div class="box-body">
                     <strong><i class="fa fa-file-text-o margin-r-5"></i> Description</strong>
 
-                    <p>{{ program.description }}</p>
+                    <p>
+                        {% if program.description %}
+                            {{ program.description }}
+                        {% else %}
+                            This program currently doesn't have a description.
+                        {% endif %}
+                    </p>
                 </div>
             </div>
         </div>
@@ -107,7 +113,11 @@
                                     </td>
                                     <td>
                                         <a href="{{ enrollment.patient.get_absolute_url }}">
-                                            {{ enrollment.patient.identifier }}
+                                            {% if enrollment.patient.identifier %}
+                                                {{ enrollment.patient.identifier }}
+                                            {% else %}
+                                                Unavailable
+                                            {% endif %}
                                         </a>
                                     </td>
                                     <td>
