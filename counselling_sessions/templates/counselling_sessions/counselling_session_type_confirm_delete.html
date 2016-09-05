@@ -27,7 +27,7 @@
                 <form role="form" action="{{ counselling_session_type.get_delete_url }}" method="post">
                     {% csrf_token %}
                     <div class="box-body">
-                        Are you sure you want to delete the session type named: {{ counselling_session_type }}
+                        Are you sure you want to delete the session type named: {{ counselling_session_type }}?
                     </div>
                     <div class="box-footer">
                         <a href="{{ counselling_session_type.get_absolute_url }}" class="btn btn-success">Cancel</a>
