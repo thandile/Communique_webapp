@@ -77,3 +77,11 @@ class CounsellingSessionTestCase(TestCase):
         counselling_session = CounsellingSession.objects.get(id=1)
         self.assertEqual(counselling_session.get_update_url(), reverse('counselling_sessions_session_update',
                                                                        kwargs={'pk':counselling_session.pk}))
+
+    def test_get_delete_url(self):
+        """
+        A test case for the get_delete_url method of the model.
+        """
+        counselling_session = CounsellingSession.objects.get(id=1)
+        self.assertEqual(counselling_session.get_delete_url(), reverse('counselling_sessions_session_delete',
+                                                                       kwargs={'pk':counselling_session.pk}))
