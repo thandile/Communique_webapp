@@ -200,3 +200,22 @@ class CounsellingSessionUpdateView(LoginRequiredMixin, UserPassesTestMixin, Upda
         :return: True if user is active, false otherwise.
         """
         return self.request.user.is_active
+
+
+class CounsellingSessionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """
+    A view that handles the deletion of a session.
+
+    This view is only available to users that are logged in and marked as active in the system.
+    """
+    model = CounsellingSession
+    success_url = reverse_lazy('counselling_sessions_session_list')
+    context_object_name = 'counselling_session'
+    template_name = 'counselling_sessions/counselling_session_confirm_delete.html'
+
+    def test_func(self):
+        """
+        Checks whether the user is marked as active.
+        :return: True if user is active, false otherwise
+        """
+        return self.request.user.is_active
