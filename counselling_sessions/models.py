@@ -72,7 +72,7 @@ class CounsellingSession(models.Model):
         return reverse('counselling_sessions_session_detail', kwargs={'pk':self.pk})
 
     def get_update_url(self):
-        pass
+        return reverse('counselling_sessions_session_update', kwargs={'pk':self.pk})
 
     def get_delete_url(self):
         pass
