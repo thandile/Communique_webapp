@@ -1,7 +1,14 @@
 {% extends parent_template|default:"patients/base_patients.html" %}
+{% load staticfiles %}
+
 
 {% block title %}
-    {{ block.super }} | Patient
+    {{ block.super }} | Patient Details
+{% endblock %}
+
+{% block head %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
 {% endblock %}
 
 {% block page_heading %}
@@ -143,11 +150,16 @@
                                             {{ enrollment.program }}</a>
                                         </h3>
                                         <div class="timeline-body">
-                                            {{ enrollment.comment }}
+                                            {% if enrollment.comment %}
+                                                {{ enrollment.comment }}
+                                            {% else %}
+                                                There currently isn't a comment on this enrollment.
+                                            {% endif %}
                                         </div>
                                         <div class="timeline-footer">
                                             <a class="btn btn-primary btn-xs" href="{{ enrollment.get_absolute_url }}">
-                                                View enrollment details</a>
+                                                View enrollment details
+                                            </a>
                                         </div>
                                     </div>
                                 </li>
@@ -171,7 +183,46 @@
 
                     </div>
                     <div class="tab-pane" id="sessions">
-
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Session Type</th>
+                                <th>Created By</th>
+                                <th>Date Created</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for counselling_session in patient.counselling_sessions.all %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.counselling_session_type }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.created_by.get_full_name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.date_created }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <th>Session Type</th>
+                                <th>Created By</th>
+                                <th>Date Created</th>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <a class="btn btn-primary" href="{% url 'patients_patient_session_create' patient_pk=patient.pk %}">
+                            Add session
+                        </a>
                     </div>
 
                     <div class="tab-pane" id="medication">
@@ -181,4 +232,24 @@
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- DataTables -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
+        });
+    </script>
 {% endblock %}

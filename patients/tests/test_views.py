@@ -129,3 +129,16 @@ class PatientEnrollmentCreateViewTestCase(ViewsTestCase):
         patient = Patient.objects.create(first_name='Jon', last_name='Snow')
         view_url = reverse(self.view_name, kwargs={'patient_pk':patient.pk})
         self.only_active_user_access_test(view_url, self.view_template_name)
+
+
+class PatientSessionCreateViewTestCase(ViewsTestCase):
+    """
+    Test cases for the view to create a session for a specific patient.
+    """
+    view_name = 'patients_patient_session_create'
+    view_template_name = 'patients/patient_session_form.html'
+
+    def test_active_user_access(self):
+        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
+        view_url = reverse(self.view_name, kwargs={'patient_pk':patient.pk})
+        self.only_active_user_access_test(view_url, self.view_template_name)

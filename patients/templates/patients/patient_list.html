@@ -55,7 +55,15 @@
                         {% for patient in patient_list %}
                             <tr>
                                 <td><a href="{{ patient.get_absolute_url }}">{{ patient }}</a></td>
-                                <td><a href="{{ patient.get_absolute_url }}"></a>{{ patient.identifier }}</td>
+                                <td>
+                                    <a href="{{ patient.get_absolute_url }}">
+                                        {% if patient.identifier %}
+                                            {{ patient.identifier }}
+                                        {% else %}
+                                            Unavailable
+                                        {% endif %}
+                                    </a>
+                                </td>
                                 <td><a href="{{ patient.get_absolute_url }}">{{ patient.date_created }}</a></td>
                                 <td><a href="{{ patient.get_absolute_url }}">{{ patient.created_by.get_full_name }}</a></td>
                                 <td><a href="{{ patient.get_absolute_url }}">{{ patient.date_last_modified }}</a></td>
