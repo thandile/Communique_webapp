@@ -29,6 +29,15 @@ class CounsellingSessionType(models.Model):
     def __str__(self):
         return self.name.title()
 
+    def get_absolute_url(self):
+        return reverse('counselling_sessions_type_detail', kwargs={'pk':self.pk})
+
+    def get_update_url(self):
+        return reverse('counselling_sessions_type_update', kwargs={'pk':self.pk})
+
+    def get_delete_url(self):
+        return reverse('counselling_sessions_type_delete', kwargs={'pk':self.pk})
+
 
 class CounsellingSession(models.Model):
     """
@@ -57,7 +66,16 @@ class CounsellingSession(models.Model):
                                           help_text='The date on which the counselling session was last modified')
 
     def __str__(self):
-        return "A {0} session for {1}".format(self.session_type, self.patient)
+        return "A {0} session for {1}".format(self.counselling_session_type, self.patient)
+
+    def get_absolute_url(self):
+        return reverse('counselling_sessions_session_detail', kwargs={'pk':self.pk})
+
+    def get_update_url(self):
+        return reverse('counselling_sessions_session_update', kwargs={'pk':self.pk})
+
+    def get_delete_url(self):
+        return reverse('counselling_sessions_session_delete', kwargs={'pk':self.pk})
 
 
 

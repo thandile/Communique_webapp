@@ -64,7 +64,7 @@
                             </a>
                         </li>
                         <li class="list-group-item">
-                            <b>Registered patients</b> <a class="pull-right">10</a>
+                            <b>Registered patients</b> <a class="pull-right">{{ program.enrolled_patients.count }}</a>
                         </li>
                     </ul>
                     <a href="{{ program.get_update_url }}" class="btn btn-primary btn-block"><b>Edit</b></a>
@@ -78,7 +78,13 @@
                 <div class="box-body">
                     <strong><i class="fa fa-file-text-o margin-r-5"></i> Description</strong>
 
-                    <p>{{ program.description }}</p>
+                    <p>
+                        {% if program.description %}
+                            {{ program.description }}
+                        {% else %}
+                            This program currently doesn't have a description.
+                        {% endif %}
+                    </p>
                 </div>
             </div>
         </div>
@@ -102,20 +108,24 @@
                         <tbody>
                             {% for enrollment in program.enrollments.all %}
                                 <tr>
-                                    <th>
+                                    <td>
                                         <a href="{{ enrollment.patient.get_absolute_url }}">{{ enrollment.patient }}</a>
-                                    </th>
-                                    <th>
+                                    </td>
+                                    <td>
                                         <a href="{{ enrollment.patient.get_absolute_url }}">
-                                            {{ enrollment.patient.identifier }}
+                                            {% if enrollment.patient.identifier %}
+                                                {{ enrollment.patient.identifier }}
+                                            {% else %}
+                                                Unavailable
+                                            {% endif %}
                                         </a>
-                                    </th>
-                                    <th>
+                                    </td>
+                                    <td>
                                         <a href="{{ enrollment.patient.get_absolute_url }}">
                                             {{ enrollment.date_enrolled }}
                                         </a>
-                                    </th>
-                                    <th>
+                                    </td>
+                                    <td>
                                         <a href="{{ enrollment.patient.get_absolute_url }}">
                                             {% if enrollment.is_active %}
                                                 <span class="label label-success">Open</span>
@@ -123,7 +133,7 @@
                                                 <span class="label label-danger">Closed</span>
                                             {% endif %}
                                         </a>
-                                    </th>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
