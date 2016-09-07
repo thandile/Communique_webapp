@@ -34,8 +34,8 @@ class Appointment(models.Model):
                                           help_text='The date on which the appointment was last modified')
 
     def __str__(self):
-        return self.title.title()
-    
+        return self.title.capitalize()
+
     def get_absolute_url(self):
         pass
 
