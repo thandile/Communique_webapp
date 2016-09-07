@@ -1,9 +1,8 @@
 from django.views.generic.edit import CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-import datetime
-
 from .models import Appointment
+from .forms import AppointmentForm
 
 
 class AppointmentCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -13,8 +12,8 @@ class AppointmentCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView)
     This view is only available to users that are logged in and are marked as active in the system.
     """
     model = Appointment
+    form_class = AppointmentForm
     template_name = 'appointments/appointment_form.html'
-    fields = ['title', 'patient', 'owner', 'appointment_date', 'start_time', 'notes']
 
     def form_valid(self, form):
         # the creator and last modified fields
@@ -25,8 +24,11 @@ class AppointmentCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView)
         if not form.instance.owner:
             form.instance.owner = self.request.user
 
-        # if the start time is not set in form, set it to the current time
-        if not form.instance.start_time:
-            form.instance.start_time = datetime.datetime.now().time()
-
         return super(AppointmentCreateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is marked active.
+        :return: True if user is active, false otherwise
+        """
+        return self.request.user.is_active
