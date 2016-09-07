@@ -19,9 +19,8 @@ class Appointment(models.Model):
                               help_text='The user that is to meet with the patient. If not supplied, this is set as the user creating the appointment')
     appointment_date = models.DateField(verbose_name='Appointment date', help_text='The date the appointment is to take place')
     start_time = models.TimeField(verbose_name='Appointment start time',
-                                  help_text='The time the appointment is scheduled to start. If not supplied, this is automatically set to the current time')
-    end_time = models.TimeField(verbose_name='Appointment end time',
-                                help_text='The time the appointment is scheduled to end. If not supplied, this is automatically set to an hour after start time')
+                                  help_text='The time the appointment is scheduled to start')
+    end_time = models.TimeField(verbose_name='Appointment end time', help_text='The time the appointment is scheduled to end')
     created_by = models.ForeignKey(User, verbose_name='Created by', on_delete=models.SET_NULL, null=True, blank=True,
                                    related_name='created_appointments', related_query_name='created_appointment',
                                    help_text='The user that created the appointment')
