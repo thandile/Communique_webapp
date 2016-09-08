@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 from patients.models import Patient
 
@@ -36,7 +37,7 @@ class Appointment(models.Model):
         return self.title.capitalize()
 
     def get_absolute_url(self):
-        pass
+        return reverse('appointments_appointment_detail', kwargs={'pk':self.pk})
 
     def get_update_url(self):
         pass

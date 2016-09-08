@@ -1,5 +1,6 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 import datetime
 
@@ -25,3 +26,11 @@ class AppointmentTestCase(TestCase):
         """
         appointment = Appointment.objects.get(id=1)
         self.assertEqual(appointment.__str__(), 'A dummy appointment')
+
+    def test_get_absolute_url(self):
+        """
+        A test case for the get_absolute_url method of the model.
+        """
+        appointment = Appointment.objects.get(id=1)
+        self.assertEqual(appointment.get_absolute_url(), reverse('appointments_appointment_detail',
+                                                                 kwargs={'pk':appointment.pk}))
