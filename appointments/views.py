@@ -35,7 +35,7 @@ class AppointmentCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView)
         return self.request.user.is_active
 
 
-class AppointmentDetailView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class AppointmentDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     """
     A view that handles displaying appointment details.
 
