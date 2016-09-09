@@ -1,42 +1,37 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from appointments.forms import AppointmentForm
-
-from patients.models import Patient
-
 import datetime
 
+from patients.forms import PatientAppointmentForm
 
-class AppointmentFormTestCase(TestCase):
-    """
-    Test cases for the appointment form.
-    """
 
+class PatientAppointmentFormTestCase(TestCase):
+    """
+    Test cases for the patient appointment form.
+    """
     def setUp(self):
         User.objects.create_superuser('jon_snow', 'jonsnow@gmail.com', 'p@55words')
-        Patient.objects.create(first_name='Jon', last_name='Snow')
 
     def test_time_validation(self):
         """
         Tests that the clean method invalidates submissions where start time is greater or equal to end time.
         """
-
         appointment_date = datetime.date.today()
         start_time = datetime.time(1)
-        end_time = datetime.time(start_time.hour + 1)
+        end_time = datetime.time(2)
         title = 'A dummy title'
 
-        form = AppointmentForm()
+        form = PatientAppointmentForm()
         self.assertFalse(form.is_bound)
         self.assertFalse(form.is_valid())
 
-        # data when start time < endtime
-        data = {'title':title, 'appointment_date':appointment_date, 'start_time':start_time, 'patient':1,
-                'owner':1, 'end_time':end_time}
+        data = {'title':title, 'appointment_date':appointment_date, 'start_time':start_time, 'end_time':end_time,
+                'owner':1}
+
         self.assertTrue(data['start_time'] < data['end_time'])
 
-        form = AppointmentForm(data)
+        form = PatientAppointmentForm(data)
         self.assertTrue(form.is_bound)
         self.assertTrue(form.is_valid())
 
@@ -46,32 +41,30 @@ class AppointmentFormTestCase(TestCase):
 
         self.assertTrue(data['start_time'] > data['end_time'])
 
-        form = AppointmentForm(data)
+        form = PatientAppointmentForm(data)
         self.assertTrue(form.is_bound)
         self.assertFalse(form.is_valid())
 
     def test_date_validation(self):
         """
-        Tests that the provided appointment date is not set in the past.
+        Tests that the provided appointment date is not set in the past
         """
-
         appointment_date = datetime.date.today()
         start_time = datetime.time(1)
-        end_time = datetime.time(start_time.hour + 1)
+        end_time = datetime.time(2)
         title = 'A dummy title'
 
-        form = AppointmentForm()
+        form = PatientAppointmentForm()
         self.assertFalse(form.is_bound)
         self.assertFalse(form.is_valid())
 
-        data = {'title':title, 'appointment_date':appointment_date, 'start_time':start_time, 'patient':1, 'owner':1,
-                'end_time':end_time}
-
-        current_date  = datetime.date.today()
+        data = {'title':title, 'appointment_date':appointment_date, 'start_time':start_time, 'end_time':end_time,
+                'owner':1}
+        current_date = datetime.date.today()
 
         self.assertFalse(data['appointment_date'] < current_date)
 
-        form = AppointmentForm(data)
+        form = PatientAppointmentForm(data)
         self.assertTrue(form.is_bound)
         self.assertTrue(form.is_valid())
 
@@ -82,7 +75,7 @@ class AppointmentFormTestCase(TestCase):
         data['appointment_date'] = tomorrow
 
         self.assertFalse(data['appointment_date'] < current_date)
-        form = AppointmentForm(data)
+        form = PatientAppointmentForm(data)
         self.assertTrue(form.is_bound)
         self.assertTrue(form.is_valid())
 
@@ -91,9 +84,6 @@ class AppointmentFormTestCase(TestCase):
         data['appointment_date'] = yesterday
 
         self.assertTrue(data['appointment_date'] < current_date)
-        form = AppointmentForm(data)
+        form = PatientAppointmentForm(data)
         self.assertTrue(form.is_bound)
         self.assertFalse(form.is_valid())
-
-
-
