@@ -40,7 +40,7 @@ class Appointment(models.Model):
         return reverse('appointments_appointment_detail', kwargs={'pk':self.pk})
 
     def get_update_url(self):
-        pass
+        return reverse('appointments_appointment_update', kwargs={'pk':self.pk})
 
     def get_delete_url(self):
         pass

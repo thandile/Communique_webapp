@@ -34,3 +34,11 @@ class AppointmentTestCase(TestCase):
         appointment = Appointment.objects.get(id=1)
         self.assertEqual(appointment.get_absolute_url(), reverse('appointments_appointment_detail',
                                                                  kwargs={'pk':appointment.pk}))
+
+    def test_get_update_url(self):
+        """
+        A test case for the get_update_url method of the model.
+        """
+        appointment = Appointment.objects.get(id=1)
+        self.assertEqual(appointment.get_update_url(), reverse('appointments_appointment_update',
+                                                               kwargs={'pk':appointment.pk}))
