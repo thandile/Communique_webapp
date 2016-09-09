@@ -19,6 +19,18 @@ class AppointmentCreateViewTestCase(ViewsTestCase):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
 
 
+class AppointmentListViewTestCase(ViewsTestCase):
+    """
+    Test cases for the view to list appointments.
+    """
+    view_name = 'appointments_appointment_list'
+    view_template_name = 'appointments/appointment_list.html'
+    view_url = reverse(view_name)
+
+    def test_active_user_access(self):
+        self.only_active_user_access_test(self.view_url, self.view_template_name)
+
+
 class ExistingAppointmentViewTestCase(ViewsTestCase):
     """
     Test cases for a view that requires an existing appointment for testing.
