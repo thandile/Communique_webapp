@@ -1,0 +1,132 @@
+{% extends parent_template|default:'appointments/base_appointments.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} | Appointments
+{% endblock %}
+
+{% block head %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
+{% endblock %}
+
+{% block appointments_list_menu %}
+    <li class="active">
+        <a href="{% url 'appointments_appointment_list' %}">
+            <i class="fa fa-circle-o text-red"></i> Appointments List
+        </a>
+    </li>
+{% endblock %}
+
+{% block page_heading %}
+    Appointments
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'appointments_appointment_list' %}"><i class="fa fa-calendar"></i> Appointments</a></li>
+    <li class="active">List</li>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Scheduled Appointments</h3>
+                </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Patient</th>
+                                <th>Identifier</th>
+                                <th>Owner</th>
+                                <th>Date</th>
+                                <th>Starts</th>
+                                <th>Ends</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for appointment in appointment_list %}
+                            <tr>
+                                <td><a href="{{ appointment.get_absolute_url }}">{{ appointment }}</a></td>
+                                <td>
+                                    <a href="{{ appointment.get_absolute_url }}">
+                                        {% if appointment.patient %}
+                                            {{ appointment.patient }}
+                                        {% else %}
+                                            Unavailable
+                                        {% endif %}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ appointment.get_absolute_url }}">
+                                        {% if appointment.patient.identifier %}
+                                            {{ appointment.patient.identifier }}
+                                        {% else %}
+                                            Unavailable
+                                        {% endif %}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ appointment.get_absolute_url }}">
+                                        {% if appointment.owner %}
+                                            {{ appointment.owner.get_full_name }}
+                                        {% else %}
+                                            Unavailable
+                                        {% endif %}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{{ appointment.get_absolute_url }}">{{ appointment.appointment_date }}</a>
+                                </td>
+                                <td><a href="{{ appointment.get_absolute_url }}">{{ appointment.start_time }}</a></td>
+                                <td><a href="{{ appointment.get_absolute_url }}">{{ appointment.end_time }}</a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Title</th>
+                                <th>Patient</th>
+                                <th>Identifier</th>
+                                <th>Owner</th>
+                                <th>Date</th>
+                                <th>Starts</th>
+                                <th>Ends</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{% url 'appointments_appointment_create' %}">Add Appointment</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- DataTables -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
+        });
+    </script>
+{% endblock %}
