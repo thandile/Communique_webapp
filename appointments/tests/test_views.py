@@ -72,3 +72,14 @@ class AppointmentUpdateViewTestCase(ExistingAppointmentViewTestCase):
         self.only_active_user_access_test(appointment.get_update_url(), self.view_template_name)
 
 
+class AppointmentDeleteViewTestCase(ExistingAppointmentViewTestCase):
+    """
+    Test cases for the view that handles appointment deletion.
+    """
+    view_template_name = 'appointments/appointment_confirm_delete.html'
+
+    def test_active_user_access(self):
+        appointment = Appointment.objects.get(id=1)
+        self.only_active_user_access_test(appointment.get_delete_url(), self.view_template_name)
+
+
