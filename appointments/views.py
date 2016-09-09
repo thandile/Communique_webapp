@@ -1,5 +1,6 @@
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Appointment
@@ -56,6 +57,8 @@ class AppointmentDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView)
 class AppointmentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     """
     A view that handles updating an appointment.
+
+    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = Appointment
     form_class = AppointmentForm
@@ -71,6 +74,24 @@ class AppointmentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
             form.instance.owner = self.request.owner
 
         return super(AppointmentUpdateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is an active user.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class AppointmentListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    """
+    A view that lists available appointments.
+
+    This view is only  available  to users that are logged in and are marked as active in the system.
+    """
+    model = Appointment
+    template_name = 'appointments/appointment_list.html'
+    context_object_name = 'appointment_list'
 
     def test_func(self):
         """
