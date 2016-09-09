@@ -42,3 +42,11 @@ class AppointmentTestCase(TestCase):
         appointment = Appointment.objects.get(id=1)
         self.assertEqual(appointment.get_update_url(), reverse('appointments_appointment_update',
                                                                kwargs={'pk':appointment.pk}))
+
+    def test_delete_url(self):
+        """
+        A test case for the get_delete_url method of the model.
+        """
+        appointment = Appointment.objects.get(id=1)
+        self.assertEqual(appointment.get_delete_url(), reverse('appointments_appointment_delete',
+                                                               kwargs={'pk':appointment.pk}))
