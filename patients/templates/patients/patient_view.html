@@ -124,6 +124,7 @@
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="#registrations" data-toggle="tab">Program Enrollments</a></li>
                     <li><a href="#sessions" data-toggle="tab">Recent Sessions</a></li>
+                    <li><a href="#appointments" data-toggle="tab">Appointments</a></li>
                     <li><a href="#medication" data-toggle="tab">Medication</a></li>
                 </ul>
                 <div class="tab-content">
@@ -183,7 +184,7 @@
 
                     </div>
                     <div class="tab-pane" id="sessions">
-                        <table id="example1" class="table table-bordered table-striped">
+                        <table class="table table-bordered table-striped list-table">
                             <thead>
                             <tr>
                                 <th>Session Type</th>
@@ -224,6 +225,62 @@
                             Add session
                         </a>
                     </div>
+                    <div class="tab-pane" id="appointments">
+                        <table class="table table-bordered table-striped list-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Owner</th>
+                                    <th>Date</th>
+                                    <th>Starts</th>
+                                    <th>Ends</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for appointment in patient.appointments.all %}
+                                    <tr>
+                                        <td><a href="{{ appointment.get_absolute_url }}">{{ appointment }}</a></td>
+                                        <td>
+                                            <a href="{{ appointment.get_absolute_url }}">
+                                                {% if appointment.owner %}
+                                                    {{ appointment.owner.get_full_name }}
+                                                {% else %}
+                                                    Unavailable
+                                                {% endif %}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ appointment.get_absolute_url }}">
+                                                {{ appointment.appointment_date }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ appointment.get_absolute_url }}">
+                                                {{ appointment.start_time }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ appointment.get_absolute_url }}">
+                                                {{ appointment.end_time }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Owner</th>
+                                    <th>Date</th>
+                                    <th>Starts</th>
+                                    <th>Ends</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <a class="btn btn-primary" href="#">
+                            Add Appointment
+                        </a>
+                    </div>
 
                     <div class="tab-pane" id="medication">
 
@@ -241,15 +298,7 @@
     <!-- page script -->
     <script>
         $(function () {
-            $("#example1").DataTable();
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false
-            });
+            $(".list-table").DataTable();
         });
     </script>
 {% endblock %}
