@@ -1,7 +1,8 @@
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.urlresolvers import reverse_lazy
 
 from .models import Appointment
 from .forms import AppointmentForm
@@ -97,5 +98,22 @@ class AppointmentListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         """
         Checks whether the user is an active user.
         :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class AppointmentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+    """
+    A view that handles deletion of an appointment.
+    """
+    model = Appointment
+    success_url = reverse_lazy('appointments_appointment_list')
+    context_object_name = 'appointment'
+    template_name = 'appointments/appointment_confirm_delete.html'
+
+    def test_func(self):
+        """
+        Checks whether the user is an active user.
+        :return: True is user is active, false otherwise.
         """
         return self.request.user.is_active
