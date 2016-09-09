@@ -11,7 +11,7 @@ class PatientAppointmentForm(forms.ModelForm):
     """
     class Meta:
         model = Appointment
-        fields = ['title', 'owner', 'patient', 'appointment_date', 'start_time', 'end_time', 'notes']
+        fields = ['title', 'owner', 'appointment_date', 'start_time', 'end_time', 'notes']
 
     def clean_appointment_date(self):
         # check that the provided appointment date is not in the past
