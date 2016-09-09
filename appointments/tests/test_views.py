@@ -49,4 +49,14 @@ class AppointmentDetailViewTestCase(ExistingAppointmentViewTestCase):
         self.only_active_user_access_test(appointment.get_absolute_url(), self.view_template_name)
 
 
+class AppointmentUpdateViewTestCase(ExistingAppointmentViewTestCase):
+    """
+    Test cases for the view that handles updating an appointment.
+    """
+    view_template_name = 'appointments/appointment_update_form.html'
+
+    def test_active_user_access(self):
+        appointment = Appointment.objects.get(id=1)
+        self.only_active_user_access_test(appointment.get_update_url(), self.view_template_name)
+
 
