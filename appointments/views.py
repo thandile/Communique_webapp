@@ -60,6 +60,7 @@ class AppointmentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView)
     model = Appointment
     form_class = AppointmentForm
     template_name = 'appointments/appointment_update_form.html'
+    context_object_name = 'appointment'
 
     def form_valid(self, form):
         # set the last modified by field and owner if necessary
