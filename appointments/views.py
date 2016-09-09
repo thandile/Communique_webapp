@@ -1,4 +1,4 @@
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
@@ -49,5 +49,31 @@ class AppointmentDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView)
         """
         Checks whether the user is marked active.
         :return: True if user is active, false otherwise
+        """
+        return self.request.user.is_active
+
+
+class AppointmentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    """
+    A view that handles updating an appointment.
+    """
+    model = Appointment
+    form_class = AppointmentForm
+    template_name = 'appointments/appointment_update_form.html'
+
+    def form_valid(self, form):
+        # set the last modified by field and owner if necessary
+        form.instance.last_modified_by = self.request.user
+
+        # set the owner as currently logged in user if none chosen in form
+        if not form.instance.owner:
+            form.instance.owner = self.request.owner
+
+        return super(AppointmentUpdateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is an active user.
+        :return: True if user is active, false otherwise.
         """
         return self.request.user.is_active
