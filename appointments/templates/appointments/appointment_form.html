@@ -7,7 +7,10 @@
 {% endblock %}
 
 {% block head %}
+    <!-- select2 css -->
     <link rel="stylesheet" href="{% static "plugins/select2/select2.min.css" %}">
+    <!-- bootstrap datepicker css -->
+    <link rel="stylesheet" href="{% static "plugins/datepicker/datepicker3.css" %}">
 {% endblock %}
 
 {% block appointments_add_menu %}
@@ -49,6 +52,8 @@
 
                                 {% if field.label == 'Patient' or field.label == 'Appointment owner' %}
                                     {{ field|add_class:'form-control select2'|append_attr:'style:width: 100%;' }}
+                                {% elif field.label == 'Appointment date' %}
+                                    {{ field|attr:"placeholder:DD/MM/YYYY"|add_class:"form-control" }}
                                 {% else %}
                                     {{ field|add_class:'form-control' }}
                                 {% endif %}
@@ -78,10 +83,17 @@
 {% endblock %}
 
 {% block scripts %}
+    <!-- select2 js -->
     <script src="{% static "plugins/select2/select2.full.min.js" %}"></script>
+    <!-- datepicker js -->
+    <script src="{% static "plugins/datepicker/bootstrap-datepicker.js" %}"></script>
     <script>
         $(function () {
             $(".select2").select2();
+            $("#id_appointment_date").datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy'
+            });
         });
     </script>
 {% endblock %}
