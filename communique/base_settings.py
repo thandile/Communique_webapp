@@ -104,6 +104,13 @@ REST_FRAMEWORK = {
     'DATE_INPUT_FORMATS':["%d/%m/%Y","%d-%m-%Y"]
 }
 
+# set time input formats
+# https://docs.djangoproject.com/en/1.9/ref/settings/#std:setting-TIME_INPUT_FORMATS
+TIME_INPUT_FORMATS = [
+    '%I:%M %p',
+    '%H:%M',
+]
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
