@@ -105,6 +105,8 @@ class AppointmentListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
 class AppointmentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     """
     A view that handles deletion of an appointment.
+
+    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = Appointment
     success_url = reverse_lazy('appointments_appointment_list')
