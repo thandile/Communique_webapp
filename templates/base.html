@@ -139,6 +139,28 @@
                                 </li>
                             {% endblock %}
                         {% endif %}
+                        {% block appointments_menu %}
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-calendar"></i> <span>Appointments</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{% url 'appointments_appointment_list' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Appointments List
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'appointments_appointment_create' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Add Appointment
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endblock %}
                         {% block programs_menu %}
                             <li class="treeview">
                                 <a href="#">

@@ -5,11 +5,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.urlresolvers import reverse_lazy
 
 from .models import Patient, Enrollment
-
 from counselling_sessions.models import CounsellingSession
-"""
-Views for the web app.
-"""
+from appointments.models import Appointment
+from .forms import PatientAppointmentForm
 
 
 class PatientListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -275,6 +273,48 @@ class PatientSessionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateVi
         form.instance.patient = patient
 
         return super(PatientSessionCreateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is marked as active.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class PatientAppointmentCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """
+    A view that handles creation of an appointment for a specific patient.
+
+    This view is only available to users that are logged in and marked as active in the system.
+    """
+    model = Appointment
+    form_class = PatientAppointmentForm
+    template_name = 'patients/patient_appointment_form.html'
+
+    def get_success_url(self):
+        # on adding the appointment, redirect to the patient details view
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        return patient.get_absolute_url()
+
+    def get_context_data(self, **kwargs):
+        context = super(PatientAppointmentCreateView, self).get_context_data(**kwargs)
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        context['patient'] = patient
+        return context
+
+    def form_valid(self, form):
+        # set the user adding the appointment and the patient whom it is for
+        form.instance.created_by = self.request.user
+        form.instance.last_modified_by = self.request.user
+
+        if not form.instance.owner:
+            form.instance.owner = self.request.user
+
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        form.instance.patient = patient
+
+        return super(PatientAppointmentCreateView, self).form_valid(form)
 
     def test_func(self):
         """
