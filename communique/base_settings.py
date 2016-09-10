@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'counselling_sessions',
     'appointments',
     'occasions',
+    'medical',
 ]
 
 MIDDLEWARE_CLASSES = [
