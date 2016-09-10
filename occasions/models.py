@@ -29,10 +29,10 @@ class Event(models.Model):
         return self.name.capitalize()
 
     def get_absolute_url(self):
-        pass
+        return reverse('occasions_event_detail', kwargs={'pk':self.pk})
 
     def get_update_url(self):
-        pass
+        return reverse('occasions_event_update', kwargs={'pk':self.pk})
 
     def get_delete_url(self):
-        pass
+        return reverse('occasions_event_delete', kwargs={'pk':self.pk})
