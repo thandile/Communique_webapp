@@ -32,7 +32,7 @@ class MedicalReportTypeCreateView(LoginRequiredMixin, UserPassesTestMixin, Creat
     This view is only available to users that are logged in and are marked as active in the system.
     """
     model = MedicalReportType
-    template_name = 'medical/medical_report_form.html'
+    template_name = 'medical/medical_report_type_form.html'
     fields = ['name', 'description']
 
     def form_valid(self, form):
@@ -102,7 +102,7 @@ class MedicalReportTypeDeleteView(LoginRequiredMixin, UserPassesTestMixin, Delet
     model = MedicalReportType
     success_url = reverse_lazy('medical_report_type_list')
     context_object_name = 'medical_report_type'
-    template_name = 'medical/medical_report_confirm_delete.html'
+    template_name = 'medical/medical_report_type_confirm_delete.html'
 
     def test_func(self):
         """
