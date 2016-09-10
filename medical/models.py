@@ -26,7 +26,7 @@ class MedicalReportType(models.Model):
                                            help_text='The date on which details of this medical report type were last modified')
 
     def __str__(self):
-        return self.name.title()
+        return self.name.capitalize()
 
     def get_absolute_url(self):
         pass
@@ -65,7 +65,7 @@ class MedicalReport(models.Model):
                                          help_text='The user that last modified this medical report')
 
     def __str__(self):
-        temp_str = "{0} report: {1}".format(self.report_type, self.title.title())
+        temp_str = "{0} report: {1}".format(self.report_type, self.title.capitalize())
         return temp_str
 
     def get_absolute_url(self):
