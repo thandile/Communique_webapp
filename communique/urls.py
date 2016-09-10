@@ -7,6 +7,7 @@ from programs import urls as programs_urls
 from counselling_sessions import urls as counselling_session_urls
 from appointments import urls as appointment_urls
 from occasions import urls as occasion_urls
+from medical import urls as medical_urls
 from patients.urls import patient_urls as patients_urls
 from patients.urls import enrollment_urls as enrollment_urls
 
@@ -22,5 +23,6 @@ urlpatterns = [
     url(r'^counselling/', include(counselling_session_urls)),
     url(r'^appointments/', include(appointment_urls)),
     url(r'^events/', include(occasion_urls)),
+    url(r'^medical/', include(medical_urls)),
     url(r'^api/', include(api_urls)),
 ]
