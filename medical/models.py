@@ -29,13 +29,13 @@ class MedicalReportType(models.Model):
         return self.name.capitalize()
 
     def get_absolute_url(self):
-        pass
+        return reverse('medical_report_type_detail', kwargs={'pk':self.pk})
 
     def get_update_url(self):
-        pass
+        return reverse('medical_report_type_update', kwargs={'pk':self.pk})
 
     def get_delete_url(self):
-        pass
+        return reverse('medical_report_type_delete', kwargs={'pk':self.pk})
 
 
 class MedicalReport(models.Model):
@@ -69,10 +69,10 @@ class MedicalReport(models.Model):
         return temp_str
 
     def get_absolute_url(self):
-        pass
+        return reverse('medical_report_detail', kwargs={'pk':self.pk})
 
     def get_update_url(self):
-        pass
+        return reverse('medical_report_update', kwargs={'pk':self.pk})
 
     def get_delete_url(self):
-        pass
+        return reverse('medical_report_delete', kwargs={'pk':self.pk})
