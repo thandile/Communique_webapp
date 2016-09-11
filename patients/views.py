@@ -9,6 +9,8 @@ from counselling_sessions.models import CounsellingSession
 from appointments.models import Appointment
 from medical.models import MedicalReport
 from .forms import PatientAppointmentForm
+from admissions.models import Admission
+from admissions.forms import AdmissionUpdateForm
 
 
 class PatientListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -354,6 +356,45 @@ class PatientAppointmentCreateView(LoginRequiredMixin, UserPassesTestMixin, Crea
         form.instance.patient = patient
 
         return super(PatientAppointmentCreateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is marked as active.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class PatientAdmissionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """
+    A view that handles admission for a specific patient.
+
+    This view is only available to users that are logged in and marked as active in the system.
+    """
+    model = Admission
+    form_class = AdmissionUpdateForm
+    template_name = 'patients/patient_admission_form.html'
+
+    def get_success_url(self):
+        # on finalising the admission, redirect to the patient details view
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        return patient.get_absolute_url()
+
+    def get_context_data(self, **kwargs):
+        context = super(PatientAdmissionCreateView, self).get_context_data(**kwargs)
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        context['patient'] = patient
+        return context
+
+    def form_valid(self, form):
+        # set the created by and last modified by fields
+        form.instance.created_by = self.request.user
+        form.instance.last_modified_by = self.request.user
+
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        form.instance.patient = patient
+
+        return super(PatientAdmissionCreateView, self).form_valid(form)
 
     def test_func(self):
         """

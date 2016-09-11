@@ -25,7 +25,7 @@ class AdmissionCreateForm(forms.ModelForm):
 
 class AdmissionUpdateForm(AdmissionCreateForm):
     """
-    A form user to update the information of an admission
+    A form used to update the information of an admission
     """
     class Meta(AdmissionCreateForm.Meta):
         model = Admission
