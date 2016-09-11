@@ -9,7 +9,7 @@ class MedicalReportType(models.Model):
     """
     A model representing the type of a medical report.
     """
-    name = models.CharField(verbose_name='Medical report type', unique=True, max_length=100,
+    name = models.CharField(verbose_name='Medical report type name', unique=True, max_length=100,
                             help_text='The name to give to this medical report type')
     description = models.TextField(verbose_name='Description', blank=True, null=True,
                                    help_text='The purpose of this medical report type. This field is optional')

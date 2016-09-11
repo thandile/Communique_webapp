@@ -25,7 +25,7 @@
 
 {% block page_content %}
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
            <div class="box box-primary">
                <div class="box-body">
                    <h3 class="text-center">{{ counselling_session_type }}</h3>
@@ -46,10 +46,10 @@
                            <a class="pull-right">{{ counselling_session_type.last_modified_by.get_full_name }}</a>
                        </li>
                    </ul>
-                   <a href="{{ counselling_session_type.get_update_url }}" class="btn btn-primary pull-left">
+                   <a href="{{ counselling_session_type.get_update_url }}" class="btn btn-primary">
                        <b>Edit</b>
                    </a>
-                   <a href="{{ counselling_session_type.get_delete_url }}" class="btn btn-danger pull-right">
+                   <a href="{{ counselling_session_type.get_delete_url }}" class="btn btn-danger">
                        <b>Delete</b>
                    </a>
                </div>
@@ -72,14 +72,14 @@
             </div>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-md-8">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Existing Sessions</h3>
                 </div>
 
                 <div class="box-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="table1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Patient</th>
@@ -90,9 +90,21 @@
                         <tbody>
                             {% for counselling_session in counselling_session_type.counselling_sessions.all %}
                                 <tr>
-                                    <td><a href="#">{{ counselling_session.patient }}</a></td>
-                                    <td><a href="#">{{ counselling_session.created_by }}</a></td>
-                                    <td><a href="#">{{ counselling_session.date_created }}</a></td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.patient }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.created_by }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.date_created }}
+                                        </a>
+                                    </td>
                                 </tr>
                             {% endfor %}
                         </tbody>
@@ -117,15 +129,7 @@
   <!-- page script -->
   <script>
     $(function () {
-      $("#example1").DataTable();
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false
-      });
+      $("#table1").DataTable();
     });
   </script>
 {% endblock %}

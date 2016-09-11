@@ -182,6 +182,7 @@ class MedicalReportUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
     model = MedicalReport
     template_name = 'medical/medical_report_update_form.html'
     fields = ['title', 'report_type', 'notes']
+    context_object_name = 'medical_report'
 
     def form_valid(self, form):
         # set the modified fields

@@ -28,7 +28,7 @@
 {% block page_breadcrumb %}
     <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
     <li><a href="{% url 'counselling_sessions_type_list' %}"><i class="fa fa-plus-square"></i> Session Types</a></li>
-    <li class="active">List</li>
+    <li class="active"><i class="fa fa-table"></i> List</li>
 {% endblock %}
 
 {% block page_content %}
@@ -39,7 +39,7 @@
                     <h3 class="box-title">Existing Session Types</h3>
                 </div>
                 <div class="box-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="table1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -102,15 +102,7 @@
     <!-- page script -->
     <script>
         $(function () {
-            $("#example1").DataTable();
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false
-            });
+            $("#table1").DataTable();
         });
     </script>
 {% endblock %}
