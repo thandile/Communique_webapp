@@ -3,7 +3,7 @@ from django import forms
 from .models import Admission
 
 
-class AdmissionForm(forms.ModelForm):
+class AdmissionCreateForm(forms.ModelForm):
     """
     A form used to create an admission for a patient.
     """
@@ -20,4 +20,13 @@ class AdmissionForm(forms.ModelForm):
             if admission_date > discharge_date:
                 raise forms.ValidationError('The admission date cannot occur after the discharge date', code='invalid')
 
-        return super(AdmissionForm, self).clean()
+        return super(AdmissionCreateForm, self).clean()
+
+
+class AdmissionUpdateForm(AdmissionCreateForm):
+    """
+    A form user to update the information of an admission
+    """
+    class Meta(AdmissionCreateForm.Meta):
+        model = Admission
+        fields = ['health_centre', 'admission_date', 'discharge_date', 'notes']

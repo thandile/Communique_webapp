@@ -1,14 +1,14 @@
 from django.test import TestCase
 
-from admissions.forms import AdmissionForm
+from admissions.forms import AdmissionCreateForm, AdmissionUpdateForm
 from patients.models import Patient
 
 import datetime
 
 
-class AdmissionFormTestCase(TestCase):
+class AdmissionCreateFormTestCase(TestCase):
     """
-    Test cases for the admission form.
+    Test cases for the admission create form.
     """
     def setUp(self):
         Patient.objects.create(first_name='Jon', last_name='Snow')
@@ -17,7 +17,7 @@ class AdmissionFormTestCase(TestCase):
         """
         Tests that the form invalidates submissions where the admission date is greater than discharge date
         """
-        form = AdmissionForm()
+        form = AdmissionCreateForm()
         self.assertFalse(form.is_bound)
         self.assertFalse(form.is_valid())
 
@@ -33,7 +33,7 @@ class AdmissionFormTestCase(TestCase):
         data['discharge_date'] = tomorrow
 
         self.assertTrue(data['admission_date'] < data['discharge_date'])
-        form = AdmissionForm(data)
+        form = AdmissionCreateForm(data)
         self.assertTrue(form.is_bound)
         self.assertTrue(form.is_valid())
 
@@ -41,7 +41,43 @@ class AdmissionFormTestCase(TestCase):
         data['discharge_date'] = current_date
 
         self.assertFalse(data['admission_date'] < data['discharge_date'])
-        form = AdmissionForm(data)
+        form = AdmissionCreateForm(data)
         self.assertTrue(form.is_bound)
         self.assertFalse(form.is_valid())
 
+
+class AdmissionUpdateFormTestCase(TestCase):
+    """
+    Test cases for the admission update form.
+    """
+
+    def test_date_validation(self):
+        """
+        Tests that the form invalidates submissions where the admission date is greater than discharge date
+        """
+        form = AdmissionUpdateForm()
+        self.assertFalse(form.is_bound)
+        self.assertFalse(form.is_valid())
+
+        current_date = datetime.date.today()
+        one_day = datetime.timedelta(days=1)
+        tomorrow = current_date + one_day
+
+        data = {}
+        data['health_centre'] = "St.Michael's hospital"
+        data['notes'] = 'dummy notes'
+        data['admission_date'] = current_date
+        data['discharge_date'] = tomorrow
+
+        self.assertTrue(data['admission_date'] < data['discharge_date'])
+        form = AdmissionUpdateForm(data)
+        self.assertTrue(form.is_bound)
+        self.assertTrue(form.is_valid())
+
+        data['admission_date'] = tomorrow
+        data['discharge_date'] = current_date
+
+        self.assertFalse(data['admission_date'] < data['discharge_date'])
+        form = AdmissionUpdateForm(data)
+        self.assertTrue(form.is_bound)
+        self.assertFalse(form.is_valid())

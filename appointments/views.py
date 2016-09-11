@@ -116,6 +116,6 @@ class AppointmentDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView)
     def test_func(self):
         """
         Checks whether the user is an active user.
-        :return: True is user is active, false otherwise.
+        :return: True if user is active, false otherwise.
         """
         return self.request.user.is_active
