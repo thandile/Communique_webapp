@@ -125,6 +125,7 @@
                     <li class="active"><a href="#registrations" data-toggle="tab">Program Enrollments</a></li>
                     <li><a href="#sessions" data-toggle="tab">Recent Sessions</a></li>
                     <li><a href="#appointments" data-toggle="tab">Appointments</a></li>
+                    <li><a href="#admissions" data-toggle="tab">Admissions</a></li>
                     <li><a href="#medication" data-toggle="tab">Medication</a></li>
                     <li><a href="#reports" data-toggle="tab">Medical Reports</a></li>
                 </ul>
@@ -280,6 +281,67 @@
                         </table>
                         <a class="btn btn-primary" href="{% url 'patients_patient_appointment_create' patient_pk=patient.pk %}">
                             Add Appointment
+                        </a>
+                    </div>
+
+                    <div class="tab-pane" id="admissions">
+                        <table class="table table-bordered table-striped list-table">
+                            <thead>
+                                <tr>
+                                    <th>Admission Date</th>
+                                    <th>Discharge Date</th>
+                                    <th>Health Facility</th>
+                                    <th>Created By</th>
+                                    <th>Date Created</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for admission in patient.admissions.all %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ admission.get_absolute_url }}">
+                                                {{ admission.admission_date }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ admission.get_absolute_url }}">
+                                                {{ admission.discharge_date }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ admission.get_absolute_url }}">
+                                                {{ admission.health_centre }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ admission.get_absolute_url }}">
+                                                {% if admission.created_by %}
+                                                    {{ admission.created_by.get_full_name }}
+                                                {% else %}
+                                                    Unavailable
+                                                {% endif %}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ admission.get_absolute_url }}">
+                                                {{ admission.date_created }}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Admission Date</th>
+                                    <th>Discharge Date</th>
+                                    <th>Health Facility</th>
+                                    <th>Created By</th>
+                                    <th>Date Created</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <a class="btn btn-primary" href="{% url 'patients_patient_admission_create' patient_pk=patient.pk %}">
+                            Add Admission
                         </a>
                     </div>
 
