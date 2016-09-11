@@ -10,7 +10,7 @@ class Admission(models.Model):
     A model representing an admission of an patient into a hospital/health centre
     """
     patient = models.ForeignKey(Patient, verbose_name='Patient', related_name='admissions',
-                                related_query_name='admission',
+                                related_query_name='admission', on_delete=models.CASCADE,
                                 help_text='The patient who has been admitted to a health centre')
     admission_date = models.DateField(verbose_name='Admission date',
                                       help_text='The date the patient was admitted to the health centre')
