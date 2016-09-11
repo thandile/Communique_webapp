@@ -126,6 +126,7 @@
                     <li><a href="#sessions" data-toggle="tab">Recent Sessions</a></li>
                     <li><a href="#appointments" data-toggle="tab">Appointments</a></li>
                     <li><a href="#medication" data-toggle="tab">Medication</a></li>
+                    <li><a href="#reports" data-toggle="tab">Medical Reports</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="active tab-pane" id="registrations">
@@ -284,6 +285,59 @@
 
                     <div class="tab-pane" id="medication">
 
+                    </div>
+                    <div class="tab-pane" id="reports">
+                        <table class="table table-bordered table-striped list-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Report Type</th>
+                                    <th>Date Created</th>
+                                    <th>Created By</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for medical_report in patient.medical_reports.all %}
+                                    <tr>
+                                        <td>
+                                            <a href="{{ medical_report.get_absolute_url }}">
+                                                {{ medical_report.title|capfirst }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ medical_report.get_absolute_url }}">
+                                                {{ medical_report.report_type }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ medical_report.get_absolute_url }}">
+                                                {{ medical_report.date_created }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="{{ medical_report.get_absolute_url }}">
+                                                {% if medical_report.created_by %}
+                                                    {{ medical_report.created_by.get_full_name }}
+                                                {% else %}
+                                                    Unavailable
+                                                {% endif %}
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Report Type</th>
+                                    <th>Date Created</th>
+                                    <th>Created By</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <a class="btn btn-primary" href="{% url 'patients_patient_medical_report_create' patient_pk=patient.pk %}">
+                            Add Medical Report
+                        </a>
                     </div>
                 </div>
             </div>

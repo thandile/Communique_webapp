@@ -7,6 +7,7 @@ from django.core.urlresolvers import reverse_lazy
 from .models import Patient, Enrollment
 from counselling_sessions.models import CounsellingSession
 from appointments.models import Appointment
+from medical.models import MedicalReport
 from .forms import PatientAppointmentForm
 
 
@@ -278,6 +279,44 @@ class PatientSessionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateVi
         """
         Checks whether the user is marked as active.
         :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
+
+
+class PatientMedicalReportCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    """
+    A view that handles creation of a medical report for a specific patient.
+
+    This view is only available to users that are logged in and marked as active in the system.
+    """
+    model = MedicalReport
+    fields = ['title', 'report_type', 'notes']
+    template_name = 'patients/patient_medical_report_form.html'
+
+    def get_success_url(self):
+        # on adding the medical report, redirect to the patient details view
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        return patient.get_absolute_url()
+
+    def get_context_data(self, **kwargs):
+        context = super(PatientMedicalReportCreateView, self).get_context_data(**kwargs)
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        context['patient'] = patient
+        return context
+
+    def form_valid(self, form):
+        # set the user adding the medical report and the patient whom it is for
+        form.instance.created_by = self.request.user
+        form.instance.last_modified_by = self.request.user
+        patient = Patient.objects.get(pk=int(self.kwargs['patient_pk']))
+        form.instance.patient = patient
+
+        return super(PatientMedicalReportCreateView, self).form_valid(form)
+
+    def test_func(self):
+        """
+        Checks whether the user is marked as active.
+        :return: True is user is active, false otherwise.
         """
         return self.request.user.is_active
 
