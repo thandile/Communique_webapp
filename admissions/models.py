@@ -14,7 +14,7 @@ class Admission(models.Model):
                                 help_text='The patient who has been admitted to a health centre')
     admission_date = models.DateField(verbose_name='Admission date',
                                       help_text='The date the patient was admitted to the health centre')
-    discharge_date = models.DateField(verbose_name='Discharge date',
+    discharge_date = models.DateField(verbose_name='Discharge date', blank=True, null=True,
                                       help_text='The date the patient was discharged from the health centre')
     health_centre = models.CharField(verbose_name='Health centre', max_length=100,
                                      help_text='The health centre where the patient has been admitted')
