@@ -35,10 +35,10 @@ class Admission(models.Model):
                                           help_text='The date on which the details of this admission were last updated')
 
     def get_absolute_url(self):
-        pass
+        return reverse('admissions_admission_detail', kwargs={'pk':self.pk})
 
     def get_update_url(self):
-        pass
+        return reverse('admissions_admission_update', kwargs={'pk':self.pk})
 
     def get_delete_url(self):
-        pass
+        return reverse('admissions_admission_delete', kwargs={'pk':self.pk})
