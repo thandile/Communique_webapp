@@ -30,3 +30,6 @@ class Program(models.Model):
 
     def get_update_url(self):
         return reverse('programs_program_update', kwargs={'pk':self.pk})
+
+    def get_delete_url(self):
+        return reverse('programs_program_delete', kwargs={'pk':self.pk})

@@ -31,3 +31,10 @@ class ProgramTestCase(TestCase):
         """
         program = Program.objects.get(id=1)
         self.assertEqual(program.get_update_url(), reverse('programs_program_update', kwargs={'pk':program.pk}))
+
+    def test_get_delete_url(self):
+        """
+        A test case for the get_delete_url method of the Program model.
+        """
+        program = Program.objects.get(id=1)
+        self.assertEqual(program.get_delete_url(), reverse('programs_program_delete', kwargs={'pk':program.pk}))

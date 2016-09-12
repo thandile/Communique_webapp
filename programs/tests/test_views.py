@@ -62,3 +62,14 @@ class ProgramUpdateViewTestCase(ExistingProgramViewsTestCase):
         program = Program.objects.get(id=1)
         self.only_active_user_access_test(program.get_update_url(), self.view_template_name)
 
+
+class ProgramDeleteViewTestCase(ExistingProgramViewsTestCase):
+    """
+    Test cases for view to delete a program.
+    """
+    view_template_name = 'programs/program_confirm_delete.html'
+
+    def test_active_user_access(self):
+        program = Program.objects.get(id=1)
+        self.only_active_user_access_test(program.get_delete_url(), self.view_template_name)
+

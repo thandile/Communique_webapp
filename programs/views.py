@@ -1,3 +1,5 @@
+from django.core.urlresolvers import reverse_lazy
+
 from .models import Program
 from communique.views import (CommuniqueDeleteView, CommuniqueListView, CommuniqueDetailView, CommuniqueUpdateView,
                               CommuniqueCreateView)
@@ -53,3 +55,13 @@ class ProgramUpdateView(CommuniqueUpdateView):
         program.last_modified_by = self.request.user
 
         return super(ProgramUpdateView, self).form_valid(form)
+
+
+class ProgramDeleteView(CommuniqueDeleteView):
+    """
+    A view to handle deletion of a program.
+    """
+    model = Program
+    success_url = reverse_lazy('programs_program_list')
+    context_object_name = 'program'
+    template_name = 'programs/program_confirm_delete.html'
