@@ -32,26 +32,33 @@ class ProgramCreateViewTestCase(ViewsTestCase):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
 
 
-class ProgramDetailViewTestCase(ViewsTestCase):
+class ExistingProgramViewsTestCase(ViewsTestCase):
+    """
+    Test cases for views that require an existing program
+    """
+    def setUp(self):
+        super(ExistingProgramViewsTestCase, self).setUp()
+        Program.objects.create(name='Sample Program', description='Sample Description')
+
+
+class ProgramDetailViewTestCase(ExistingProgramViewsTestCase):
     """
     Test cases for view to show the details of a program.
     """
-    view_name = 'programs_program_detail'
     view_template_name = 'programs/program_view.html'
 
     def test_active_user_access(self):
-        program = Program.objects.create(name='Sample Program', description='Sample Description')
+        program = Program.objects.get(id=1)
         self.only_active_user_access_test(program.get_absolute_url(), self.view_template_name)
 
 
-class ProgramUpdateViewTestCase(ViewsTestCase):
+class ProgramUpdateViewTestCase(ExistingProgramViewsTestCase):
     """
     Test cases for view to update the details of a program.
     """
-    view_name = 'programs_program_update'
     view_template_name = 'programs/program_update_form.html'
 
     def test_active_user_access(self):
-        program = Program.objects.create(name='Sample Program', description='Sample Description')
+        program = Program.objects.get(id=1)
         self.only_active_user_access_test(program.get_update_url(), self.view_template_name)
 

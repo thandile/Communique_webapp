@@ -1,5 +1,4 @@
 from .models import Program
-from .forms import ProgramForm
 from communique.views import (CommuniqueDeleteView, CommuniqueListView, CommuniqueDetailView, CommuniqueUpdateView,
                               CommuniqueCreateView)
 
@@ -17,8 +16,8 @@ class ProgramCreateView(CommuniqueCreateView):
     """
     A view to handle creation of a Program by displaying the form and handling the post request.
     """
-    form_class = ProgramForm
     model = Program
+    fields = ['name', 'description', 'is_open']
     template_name = 'programs/program_form.html'
 
     def form_valid(self, form):
@@ -43,8 +42,8 @@ class ProgramUpdateView(CommuniqueUpdateView):
     """
     A view to update the details of a Program.
     """
-    form_class = ProgramForm
     model = Program
+    fields = ['name', 'description', 'is_open']
     template_name = 'programs/program_update_form.html'
     context_object_name = 'program'
 
