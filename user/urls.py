@@ -3,7 +3,8 @@ from django.contrib.auth import views as auth_views
 from django.views.generic import RedirectView
 
 
-from .views import *
+from .views import (CommuniqueUserListView, CommuniqueUserCreateView, CommuniqueUserDetailView, CommuniqueUserUpdateView,
+                    ProfileDetailView, ProfileUpdateView, CalendarView)
 
 urlpatterns = [
     # urls for logging in and out
@@ -37,4 +38,6 @@ urlpatterns = [
         name='password_change'),
     url(r'^profile/password-change-done/$', auth_views.password_change_done,
         {'template_name':'user/password_change_done.html'}, name='password_change_done'),
+    # urls to handle a profile's calendar
+    url(r'^profile/(?P<pk>[0-9]+)/calendar/$', CalendarView.as_view(), name='user_profile_calendar_view'),
 ]

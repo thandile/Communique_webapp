@@ -5,11 +5,18 @@ from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 
-class DashboardTemplateView(LoginRequiredMixin, TemplateView):
+class CommuniqueTemplateView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     """
-    A view to display the dashboard home template.
+    A view to display a template.
+
+    This view is only available to users that are logged in and are marked as active in the system.
     """
-    template_name = 'dashboard_view.html'
+    def test_func(self):
+        """
+        Checks whether the user is marked active.
+        :return: True if user is active, false otherwise.
+        """
+        return self.request.user.is_active
 
 
 class CommuniqueCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):

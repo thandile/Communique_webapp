@@ -1,7 +1,10 @@
-from communique.views import (CommuniqueDeleteView, CommuniqueListView, CommuniqueDetailView, CommuniqueUpdateView,
-                              CommuniqueCreateView)
-from .forms import *
-from .models import *
+from django.contrib.auth.models import User
+
+from communique.views import (CommuniqueListView, CommuniqueDetailView, CommuniqueUpdateView, CommuniqueCreateView,
+                              CommuniqueTemplateView)
+from .forms import CommuniqueUserCreationForm, CommuniqueUserUpdateForm, ProfileUpdateForm
+from .models import CommuniqueUser, Profile
+from occasions.models import Event
 
 
 class CommuniqueUserListView(CommuniqueListView):
@@ -98,3 +101,24 @@ class ProfileUpdateView(CommuniqueUpdateView):
         """
         return (str(self.request.user.pk) == str(self.kwargs['pk'])) and self.request.user.is_active
 
+
+class CalendarView(CommuniqueTemplateView):
+    """
+    A view that displays a user's calendar.
+    """
+    template_name = 'user/profile_calendar_view.html'
+
+    def get_context_data(self, **kwargs):
+        # add the events and the appointments of the user
+        context = super(CalendarView, self).get_context_data(**kwargs)
+        context['event_list'] = Event.objects.all()
+        user = User.objects.get(pk=int(self.kwargs['pk']))
+        context['appointment_list'] = user.owned_appointments.all()
+        return context
+
+    def test_func(self):
+        """
+        Checks whether the user making the request is the owner of the appointments/events
+        :return: True is user is owner, false otherwise.
+        """
+        return (str(self.request.user.pk) == str(self.kwargs['pk'])) and self.request.user.is_active

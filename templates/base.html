@@ -115,6 +115,11 @@
                                 <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="{% url 'user_profile_calendar_view' pk=user.pk %}">
+                                <i class="fa fa-calendar"></i> <span>Calendar</span>
+                            </a>
+                        </li>
                         {% if user.is_superuser %}
                             {% block user_menu %}
                                 <li class="treeview">
