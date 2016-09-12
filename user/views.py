@@ -1,17 +1,12 @@
-from django.views.generic.list import ListView
-from django.views.generic.edit import CreateView, UpdateView
-from django.views.generic.detail import DetailView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-
+from communique.views import (CommuniqueDeleteView, CommuniqueListView, CommuniqueDetailView, CommuniqueUpdateView,
+                              CommuniqueCreateView)
 from .forms import *
 from .models import *
 
 
-class CommuniqueUserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+class CommuniqueUserListView(CommuniqueListView):
     """
-    A view to list all users of the system. This is only available to logged in, active superusers of the system.
-
-    If any of the criteria is failed, the user will be redirected to the login page.
+    A view to list all users of the system.
     """
     model = CommuniqueUser
     template_name = 'user/communique_user_list.html'
@@ -25,11 +20,9 @@ class CommuniqueUserListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
         return current_user.is_superuser and current_user.is_active
 
 
-class CommuniqueUserCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class CommuniqueUserCreateView(CommuniqueCreateView):
     """
-    A view to create a Communique user. This is only available to logged in active superusers of the system.
-
-    If the criteria fails, the user will be redirected to the login page.
+    A view to create a Communique user.
     """
     form_class = CommuniqueUserCreationForm
     model = CommuniqueUser
@@ -43,11 +36,9 @@ class CommuniqueUserCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateVi
         return current_user.is_superuser and current_user.is_active
 
 
-class CommuniqueUserDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class CommuniqueUserDetailView(CommuniqueDetailView):
     """
-    A view to display information of a user. This is only available to logged in active superusers of the system.
-
-    If the criteria fails, the user will be redirected to the login page.
+    A view to display information of a user.
     """
     model = CommuniqueUser
     template_name = 'user/communique_user_view.html'
@@ -61,11 +52,9 @@ class CommuniqueUserDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailVi
         return current_user.is_active and current_user.is_superuser
 
 
-class CommuniqueUserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class CommuniqueUserUpdateView(CommuniqueUpdateView):
     """
-    A view to update the information for a user. This is only available to active logged in superusers of the system.
-
-    If the criteria fails, the user will be redirected to the login page.
+    A view to update the information for a user.
     """
     form_class = CommuniqueUserUpdateForm
     model = CommuniqueUser
@@ -79,12 +68,9 @@ class CommuniqueUserUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVi
         return self.request.user.is_superuser
 
 
-class ProfileDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class ProfileDetailView(CommuniqueDetailView):
     """
-    A view to display the details of a user. This is only available to an active logged in user who is trying to access
-    his/her own details.
-
-    If the criteria fails, the user will be redirected to the login page.
+    A view to display the details of a user.
     """
     model = Profile
     template_name = 'user/profile_view.html'
@@ -94,16 +80,12 @@ class ProfileDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
         """
         Returns whether the user is making request to view his/her profile and is an active user.
         """
-
         return (str(self.request.user.pk) == str(self.kwargs['pk'])) and self.request.user.is_active
 
 
-class ProfileUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class ProfileUpdateView(CommuniqueUpdateView):
     """
-    A view to update a user's profile. This is only available to an active logged in user that is trying to update
-    his/her own profile.
-
-    If the criteria fails, the user will be redirected to the login page.
+    A view to update a user's profile.
     """
     form_class = ProfileUpdateForm
     model = Profile

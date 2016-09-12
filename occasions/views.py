@@ -1,18 +1,14 @@
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic.detail import DetailView
-from django.views.generic.list import ListView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.urlresolvers import reverse_lazy
 
 from .models import Event
+from communique.views import (CommuniqueDeleteView, CommuniqueListView, CommuniqueDetailView, CommuniqueUpdateView,
+                              CommuniqueCreateView)
 from .forms import EventForm
 
 
-class EventCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class EventCreateView(CommuniqueCreateView):
     """
     A view that handles creation of an event.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = Event
     form_class = EventForm
@@ -25,37 +21,19 @@ class EventCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
 
         return super(EventCreateView, self).form_valid(form)
 
-    def test_func(self):
-        """
-        Checks whether the user is marked active
-        :return: True if user is active, false otherwise
-        """
-        return self.request.user.is_active
 
-
-class EventDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class EventDetailView(CommuniqueDetailView):
     """
     A view that handles displaying event details.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = Event
     template_name = 'occasions/event_view.html'
     context_object_name = 'event'
 
-    def test_func(self):
-        """
-        Checks whether the user is marked active
-        :return: True if user is active, false otherwise
-        """
-        return self.request.user.is_active
 
-
-class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class EventUpdateView(CommuniqueUpdateView):
     """
     A view that handles updating an event.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = Event
     form_class = EventForm
@@ -68,46 +46,22 @@ class EventUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
         return super(EventUpdateView, self).form_valid(form)
 
-    def test_func(self):
-        """
-        Checks whether the user is an active user.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class EventListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+class EventListView(CommuniqueListView):
     """
     A view that lists available events.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = Event
     template_name = 'occasions/event_list.html'
     context_object_name = 'event_list'
 
-    def test_func(self):
-        """
-        Checks whether the user is an active user.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class EventDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class EventDeleteView(CommuniqueDeleteView):
     """
     A view that handles event deletion.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = Event
     success_url = reverse_lazy('occasions_event_list')
     context_object_name = 'event'
     template_name = 'occasions/event_confirm_delete.html'
 
-    def test_func(self):
-        """
-        Checks whether the user is an active user.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active

@@ -1,35 +1,22 @@
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.urlresolvers import reverse_lazy
 
 from .models import MedicalReport, MedicalReportType
+from communique.views import (CommuniqueDeleteView, CommuniqueListView, CommuniqueDetailView, CommuniqueUpdateView,
+                              CommuniqueCreateView)
 
 
-class MedicalReportTypeListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+class MedicalReportTypeListView(CommuniqueListView):
     """
     A view that retrieves all available medical report types.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = MedicalReportType
     template_name = 'medical/medical_report_type_list.html'
     context_object_name = 'medical_report_type_list'
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active
-        :return: True is user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class MedicalReportTypeCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class MedicalReportTypeCreateView(CommuniqueCreateView):
     """
     A view that handles creation of a report type.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = MedicalReportType
     template_name = 'medical/medical_report_type_form.html'
@@ -42,37 +29,19 @@ class MedicalReportTypeCreateView(LoginRequiredMixin, UserPassesTestMixin, Creat
 
         return super(MedicalReportTypeCreateView, self).form_valid(form)
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class MedicalReportTypeDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class MedicalReportTypeDetailView(CommuniqueDetailView):
     """
     A view that handles displaying details of a report type.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = MedicalReportType
     template_name = 'medical/medical_report_type_view.html'
     context_object_name = 'medical_report_type'
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class MedicalReportTypeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class MedicalReportTypeUpdateView(CommuniqueUpdateView):
     """
     A view that handles updating the details of a report type.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = MedicalReportType
     fields = ['name', 'description']
@@ -85,56 +54,29 @@ class MedicalReportTypeUpdateView(LoginRequiredMixin, UserPassesTestMixin, Updat
 
         return super(MedicalReportTypeUpdateView, self).form_valid(form)
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active
-        :return: True is user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class MedicalReportTypeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class MedicalReportTypeDeleteView(CommuniqueDeleteView):
     """
     This view handles the deletion of a report type.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = MedicalReportType
     success_url = reverse_lazy('medical_report_type_list')
     context_object_name = 'medical_report_type'
     template_name = 'medical/medical_report_type_confirm_delete.html'
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active
-        :return: True is user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class MedicalReportListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+class MedicalReportListView(CommuniqueListView):
     """
     A view that retrieves all available medical reports.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = MedicalReport
     template_name = 'medical/medical_report_list.html'
     context_object_name = 'medical_report_list'
 
-    def test_func(self):
-        """
-        Checks whether the user is marked active
-        :return: True is user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class MedicalReportCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class MedicalReportCreateView(CommuniqueCreateView):
     """
     A view that handles the creation of a medical report.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = MedicalReport
     template_name = 'medical/medical_report_form.html'
@@ -147,37 +89,19 @@ class MedicalReportCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateVie
 
         return super(MedicalReportCreateView, self).form_valid(form)
 
-    def test_func(self):
-        """
-        Checks whether the user is marked active
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class MedicalReportDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class MedicalReportDetailView(CommuniqueDetailView):
     """
     A view that handles displaying details of a medical report.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = MedicalReport
     template_name = 'medical/medical_report_view.html'
     context_object_name = 'medical_report'
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class MedicalReportUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class MedicalReportUpdateView(CommuniqueUpdateView):
     """
     A view that handles updating a medical report.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = MedicalReport
     template_name = 'medical/medical_report_update_form.html'
@@ -190,28 +114,12 @@ class MedicalReportUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateVie
 
         return super(MedicalReportUpdateView, self).form_valid(form)
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True is user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class MedicalReportDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class MedicalReportDeleteView(CommuniqueDeleteView):
     """
     A view that handles the deletion of a medical report.
-
-    This view is only available to users that are logged in and marked as active in the system.
     """
     model = MedicalReport
     success_url = reverse_lazy('medical_report_list')
     context_object_name = 'medical_report'
     template_name = 'medical/medical_report_confirm_delete.html'
-
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise
-        """
-        return self.request.user.is_active
