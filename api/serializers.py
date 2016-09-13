@@ -1,5 +1,6 @@
 from rest_framework import serializers
 
+from counselling_sessions.models import CounsellingSession, CounsellingSessionType
 from programs.models import Program
 from patients.models import Patient, Enrollment
 from user.models import CommuniqueUser, Profile
@@ -66,3 +67,25 @@ class ProfileSerializer(serializers.ModelSerializer):
         fields = ('id', 'first_name', 'last_name', 'email', 'last_login', 'date_joined', 'username', 'is_staff',
                   'is_active', 'is_superuser')
         read_only_fields = ('last_login', 'date_joined', 'username', 'is_staff', 'is_active', 'is_superuser',)
+
+
+class CounsellingSessionSerializer(serializers.ModelSerializer):
+    """
+    A serializer for the CounsellingSession model.
+    """
+    class Meta:
+        model = CounsellingSession
+        fields = ('id', 'counselling_session_type', 'patient', 'notes', 'created_by', 'date_created',
+                  'last_modified_by', 'date_last_modified')
+        read_only_fields = ('date_created', 'date_last_modified')
+
+
+class CounsellingSessionTypeSerializer(serializers.ModelSerializer):
+    """
+    A serializer for the CounsellingSessionType model.
+    """
+    class Meta:
+        model = CounsellingSessionType
+        fields = ('id', 'name', 'description', 'created_by', 'date_created',
+                  'last_modified_by', 'date_last_modified')
+        read_only_fields = ('date_created', 'date_last_modified')

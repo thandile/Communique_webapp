@@ -6,6 +6,7 @@ from rest_framework import permissions
 from .serializers import *
 from .permissions import IsActiveUser, IsSuperUser, IsProfileOrReadOnly
 
+from counselling_sessions.models import CounsellingSession
 from programs.models import Program
 from patients.models import Patient, Enrollment
 from user.models import CommuniqueUser, Profile
@@ -57,6 +58,10 @@ class EnrollmentViewSet(viewsets.ModelViewSet):
         # save the user that is enrolling the patient
         serializer.save(enrolled_by=self.request.user)
 
+    def perform_update(self, serializer):
+        # save the user that has made the modification
+        serializer.save(last_modified_by=self.request.user)
+
 
 class CommuniqueUserViewSet(viewsets.ModelViewSet):
     """
@@ -87,3 +92,37 @@ class ProfileLoginView(generics.RetrieveAPIView):
     lookup_field = 'username'
     lookup_url_kwarg = 'username'
     permission_classes = (permissions.IsAuthenticated,)
+
+
+class CounsellingSessionViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint provides calls to CRUD CounsellingSession models.
+    """
+    queryset = CounsellingSession.objects.all()
+    serializer_class = CounsellingSessionSerializer
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
+
+    def perform_create(self, serializer):
+        # save the user that is enrolling the patient
+        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
+
+    def perform_update(self, serializer):
+        # save the user that has made the modification
+        serializer.save(last_modified_by=self.request.user)
+
+
+class CounsellingSessionTypeViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint provides calls to CRUD CounsellingSessionType models.
+    """
+    queryset = CounsellingSessionType.objects.all()
+    serializer_class = CounsellingSessionTypeSerializer
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
+
+    def perform_create(self, serializer):
+        # save the user that is enrolling the patient
+        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
+
+    def perform_update(self, serializer):
+        # save the user that has made the modification
+        serializer.save(last_modified_by=self.request.user)
