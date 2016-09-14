@@ -13,8 +13,8 @@
 
 {% block page_breadcrumb %}
     <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-    <li><a href="{% url 'appointments_appointment_list' %}"><i class="fa fa-calendar"></i> Appointments</a></li>
-    <li class="active"><i class="fa fa-calendar"></i> Appointment</li>
+    <li><a href="{% url 'appointments_appointment_list' %}"><i class="fa fa-calendar-plus-o"></i> Appointments</a></li>
+    <li class="active"><i class="fa fa-calendar-plus-o"></i> Appointment</li>
 {% endblock %}
 
 {% block page_content %}
@@ -153,7 +153,7 @@
                             <b>More patient details</b>
                         </a>
                     {% else %}
-                        <p>This appointment currently doesn't have an patient assigned to it.</p>
+                        <p>This appointment currently doesn't have a patient assigned to it.</p>
                     {% endif %}
                 </div>
             </div>

@@ -29,6 +29,9 @@ INSTALLED_APPS = [
     'patients',
     'counselling_sessions',
     'appointments',
+    'occasions',
+    'medical',
+    'admissions',
 ]
 
 MIDDLEWARE_CLASSES = [

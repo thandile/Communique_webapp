@@ -1,7 +1,8 @@
 from django.conf.urls import url
 
 from patients.views import (PatientListView, PatientCreateView, PatientDetailView, PatientUpdateView, PatientDeleteView,
-                            PatientEnrollmentCreateView, PatientSessionCreateView, PatientAppointmentCreateView)
+                            PatientEnrollmentCreateView, PatientSessionCreateView, PatientAppointmentCreateView,
+                            PatientMedicalReportCreateView, PatientAdmissionCreateView)
 
 urlpatterns = [
     url(r'^$', PatientListView.as_view(), name='patients_patient_list'),
@@ -15,4 +16,8 @@ urlpatterns = [
         name='patients_patient_session_create'),
     url(r'^(?P<patient_pk>[0-9]+)/add-appointment/$', PatientAppointmentCreateView.as_view(),
         name='patients_patient_appointment_create'),
+    url(r'^(?P<patient_pk>[0-9]+)/add-medical-report/$', PatientMedicalReportCreateView.as_view(),
+        name='patients_patient_medical_report_create'),
+    url(r'^(?P<patient_pk>[0-9]+)/add-admission/$', PatientAdmissionCreateView.as_view(),
+        name='patients_patient_admission_create'),
 ]

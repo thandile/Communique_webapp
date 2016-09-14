@@ -1,0 +1,164 @@
+{% extends parentemplate|default:'medical/base_medical.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} | Medical Report Type
+{% endblock %}
+
+{% block head %}
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
+{% endblock %}
+
+{% block page_heading %}
+    Medical Report Type
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'medical_report_type_list' %}"><i class="fa fa-medkit"></i> Medical Report Types</a></li>
+    <li class="active"><i class="fa fa-medkit"></i> Medical Report Type</li>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <h3 class="text-center">{{ medical_report_type }}</h3>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Date added</b> <a class="pull-right">{{ medical_report_type.date_created }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Added by</b>
+                            <a class="pull-right">
+                                {% if medical_report_type.created_by %}
+                                    {{ medical_report_type.created_by.get_full_name }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Last modified</b><a class="pull-right">{{ medical_report_type.date_last_modified }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Last modified by</b>
+                            <a class="pull-right">
+                                {% if medical_report_type.last_modified_by %}
+                                    {{ medical_report_type.last_modified_by.get_full_name }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="{{ medical_report_type.get_update_url }}" class="btn btn-primary"><b>Edit</b></a>
+                    <a href="{{ medical_report_type.get_delete_url }}" class="btn btn-danger"><b>Delete</b></a>
+                </div>
+            </div>
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">About Medical Report Type</h3>
+                </div>
+                <div class="box-body">
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Description</strong>
+
+                    <p>
+                        {% if medical_report_type.description %}
+                            {{ medical_report_type.description }}
+                        {% else %}
+                            This report type currently doesn't have a description.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Existing Medical Reports</h3>
+                </div>
+
+                <div class="box-body">
+                    <table id="table1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Patient</th>
+                                <th>Identifier</th>
+                                <th>Created By</th>
+                                <th>Date Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for medical_report in medical_report_type.medical_reports.all %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ medical_report.get_absolute_url }}">
+                                            {{ medical_report.title|capfirst }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ medical_report.get_absolute_url }}">
+                                            {{ medical_report.patient }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ medical_report.get_absolute_url }}">
+                                            {% if medical_report.patient.identifier %}
+                                                {{ medical_report.patient.identifier }}
+                                            {% else %}
+                                                Unavailable
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ medical_report.get_absolute_url }}">
+                                            {% if medical_report.created_by %}
+                                                {{ medical_report.created_by.get_full_name }}
+                                            {% else %}
+                                                Unavailable
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ medical_report.get_absolute_url }}">
+                                            {{ medical_report.date_created }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Title</th>
+                                <th>Patient</th>
+                                <th>Identifier</th>
+                                <th>Created By</th>
+                                <th>Date Created</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+  <!-- DataTables -->
+  <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+  <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+  <!-- page script -->
+  <script>
+    $(function () {
+      $("#table1").DataTable();
+    });
+  </script>
+{% endblock %}
