@@ -14,7 +14,8 @@ from django.core.urlresolvers import reverse_lazy
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Application definition
-
+# the notifications app should appear after any app that will make use of it
+# https://github.com/django-notifications/django-notifications
 INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -32,6 +33,7 @@ INSTALLED_APPS = [
     'occasions',
     'medical',
     'admissions',
+    'notifications',
 ]
 
 MIDDLEWARE_CLASSES = [
