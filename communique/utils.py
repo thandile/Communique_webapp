@@ -4,7 +4,7 @@ from django.test import TestCase
 from notifications.signals import notify
 
 
-def send_notification(actor, action_object, target, activity, description, level='success', all_users=True,
+def send_notification(actor, action_object, target, activity, description, model, level='success', all_users=True,
                       user_list=None):
     """
     A function to send a notification
@@ -13,6 +13,7 @@ def send_notification(actor, action_object, target, activity, description, level
     :param target: The object to which the activity was performed
     :param activity: The action taken by the actor
     :param description: The description of the notification
+    :param model: The class name of model the user interacted with
     :param level: The status of the notification
     :param all_users: Whether all users need be notified
     :param user_list: The list of users to be notified if not all users are to be notified
@@ -26,7 +27,7 @@ def send_notification(actor, action_object, target, activity, description, level
         # only notify active users
         if notified_user.is_active:
             notify.send(actor, recipient=notified_user, verb=activity, action_object=action_object, level=level,
-                        description=description, target=target)
+                        description=description, target=target, model=model)
 
 
 class ViewsTestCase(TestCase):

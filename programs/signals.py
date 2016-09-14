@@ -1,8 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-from notifications.signals import notify
-
+from communique.utils import send_notification
 from .models import Program
 
 
@@ -26,5 +25,5 @@ def post_program_save_callback(sender, **kwargs):
 
         description = program.description
 
-        notify.send(program.last_modified_by, recipient=program.last_modified_by, verb=summary, action_object=program,
-                    level='success', description=description, target=program)
+        send_notification(actor=program.last_modified_by, action_object=program, target=program, activity=summary,
+                          description=description, model='Program')
