@@ -1,35 +1,22 @@
-from django.views.generic.list import ListView
-from django.views.generic.detail import DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.urlresolvers import reverse_lazy
 
 from .models import *
+from communique.views import (CommuniqueDeleteView, CommuniqueListView, CommuniqueDetailView, CommuniqueUpdateView,
+                              CommuniqueCreateView)
 
 
-class CounsellingSessionTypeListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+class CounsellingSessionTypeListView(CommuniqueListView):
     """
     A view that retrieves all the available session types.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = CounsellingSessionType
     template_name = 'counselling_sessions/counselling_session_type_list.html'
     context_object_name = 'counselling_session_type_list'
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class CounsellingSessionTypeCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class CounsellingSessionTypeCreateView(CommuniqueCreateView):
     """
     A view that handles creation of a session type.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = CounsellingSessionType
     template_name = 'counselling_sessions/counselling_session_type_form.html'
@@ -43,37 +30,19 @@ class CounsellingSessionTypeCreateView(LoginRequiredMixin, UserPassesTestMixin, 
 
         return super(CounsellingSessionTypeCreateView, self).form_valid(form)
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class CounsellingSessionTypeDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class CounsellingSessionTypeDetailView(CommuniqueDetailView):
     """
     A view that handles displaying details of a session type.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = CounsellingSessionType
     template_name = 'counselling_sessions/counselling_session_type_view.html'
     context_object_name = 'counselling_session_type'
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class CounsellingSessionTypeUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class CounsellingSessionTypeUpdateView(CommuniqueUpdateView):
     """
     A view that handles updating of a session type.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = CounsellingSessionType
     fields = ['name', 'description']
@@ -87,56 +56,29 @@ class CounsellingSessionTypeUpdateView(LoginRequiredMixin, UserPassesTestMixin, 
 
         return super(CounsellingSessionTypeUpdateView, self).form_valid(form)
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class CounsellingSessionTypeDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class CounsellingSessionTypeDeleteView(CommuniqueDeleteView):
     """
     A view that handles the deletion of a session type.
-
-    This view is only available to users that are logged in and marked as active in the system.
     """
     model = CounsellingSessionType
     success_url = reverse_lazy('counselling_sessions_type_list')
     context_object_name = 'counselling_session_type'
     template_name = 'counselling_sessions/counselling_session_type_confirm_delete.html'
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise
-        """
-        return self.request.user.is_active
 
-
-class CounsellingSessionListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+class CounsellingSessionListView(CommuniqueListView):
     """
     A view that retrieves all available sessions.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = CounsellingSession
     template_name = 'counselling_sessions/counselling_session_list.html'
     context_object_name = 'counselling_session_list'
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class CounsellingSessionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+class CounsellingSessionCreateView(CommuniqueCreateView):
     """
     A view that handles creation of a session.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = CounsellingSession
     template_name = 'counselling_sessions/counselling_session_form.html'
@@ -150,37 +92,19 @@ class CounsellingSessionCreateView(LoginRequiredMixin, UserPassesTestMixin, Crea
 
         return super(CounsellingSessionCreateView, self).form_valid(form)
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class CounsellingSessionDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+class CounsellingSessionDetailView(CommuniqueDetailView):
     """
     A view that handles displaying details of a session.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = CounsellingSession
     template_name = 'counselling_sessions/counselling_session_view.html'
     context_object_name = 'counselling_session'
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class CounsellingSessionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class CounsellingSessionUpdateView(CommuniqueUpdateView):
     """
     A view that handles updating a session.
-
-    This view is only available to users that are logged in and are marked as active in the system.
     """
     model = CounsellingSession
     fields = ['notes']
@@ -194,28 +118,12 @@ class CounsellingSessionUpdateView(LoginRequiredMixin, UserPassesTestMixin, Upda
 
         return super(CounsellingSessionUpdateView, self).form_valid(form)
 
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise.
-        """
-        return self.request.user.is_active
 
-
-class CounsellingSessionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class CounsellingSessionDeleteView(CommuniqueDeleteView):
     """
     A view that handles the deletion of a session.
-
-    This view is only available to users that are logged in and marked as active in the system.
     """
     model = CounsellingSession
     success_url = reverse_lazy('counselling_sessions_session_list')
     context_object_name = 'counselling_session'
     template_name = 'counselling_sessions/counselling_session_confirm_delete.html'
-
-    def test_func(self):
-        """
-        Checks whether the user is marked as active.
-        :return: True if user is active, false otherwise
-        """
-        return self.request.user.is_active

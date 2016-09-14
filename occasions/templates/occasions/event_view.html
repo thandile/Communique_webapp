@@ -1,0 +1,88 @@
+{% extends parent_template|default:'occasions/base_occasions.html' %}
+
+{% block title %}
+    {{ block.super }} | Event
+{% endblock %}
+
+{% block page_heading %}
+    Event
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'occasions_event_list' %}"><i class="fa fa-calendar-o"></i> Events</a></li>
+    <li class="active"><i class="fa fa-calendar-o"></i> Event</li>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-5">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <h3 class="text-center">{{ event }}</h3>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Event Date</b>
+                            <a class="pull-right">{{ event.event_date }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Start Time</b>
+                            <a class="pull-right">{{ event.start_time }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>End Time</b>
+                            <a class="pull-right">{{ event.end_time }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Created By</b>
+                            <a class="pull-right">
+                                {% if event.created_by %}
+                                    {{ event.created_by.get_full_name }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Created On</b>
+                            <a class="pull-right">{{ event.date_created }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Modified By</b>
+                            <a class="pull-right">
+                                {% if event.last_modified_by %}
+                                    {{ event.last_modified_by.get_full_name }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Modified On</b>
+                            <a class="pull-right">{{ event.date_last_modified }}</a>
+                        </li>
+                    </ul>
+                    <a href="{{ event.get_update_url }}" class="btn btn-primary"><b>Edit</b></a>
+                    <a href="{{ event.get_delete_url }}" class="btn btn-danger"><b>Delete</b></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Description</strong>
+                    <p>
+                        {% if event.description %}
+                            {{ event.description }}
+                        {% else %}
+                            This event currently doesn't have a description.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

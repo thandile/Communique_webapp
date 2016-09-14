@@ -1,6 +1,3 @@
-"""
-Contains test cases for the views of the user app.
-"""
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.contrib.auth.models import User
@@ -14,10 +11,8 @@ class UserViewsTestCase(TestCase):
         """
         Creates a super user and a regular user to be used throughout testing.
         """
-        User.objects.create_user('regular_user', 'regularuser@gmail.com',
-            'p@55words')
-        User.objects.create_superuser('super_user', 'superuser@gmail.com',
-            'p@55words')
+        User.objects.create_user('regular_user', 'regularuser@gmail.com', 'p@55words')
+        User.objects.create_superuser('super_user', 'superuser@gmail.com', 'p@55words')
 
     def template_test(self, view_url, template_name):
         """
