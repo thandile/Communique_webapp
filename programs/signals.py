@@ -21,9 +21,9 @@ def post_program_save_callback(sender, **kwargs):
         else:
             verb = 'updated'
 
-        summary = "{0} the program: {1}".format(verb, program)
+        summary = "{0} the program:".format(verb)
 
         description = program.description
 
-        send_notification(actor=program.last_modified_by, action_object=program, target=program, activity=summary,
-                          description=description, model='Program')
+        send_notification(actor=program.last_modified_by, action_object=program, verb=summary, entity_name='program',
+                          description=description)
