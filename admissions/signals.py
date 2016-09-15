@@ -8,7 +8,7 @@ from .models import Admission
 @receiver(post_save, sender=Admission)
 def post_admission_save_callback(sender, **kwargs):
     """
-    Creates a notification informing all users about the patient admission
+    Creates a notification informing all users about creation or editing of admission
     """
     admission = kwargs['instance']
 
