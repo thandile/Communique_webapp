@@ -8,7 +8,7 @@ from .models import Program
 @receiver(post_save, sender=Program)
 def post_program_save_callback(sender, **kwargs):
     """
-    Makes a record of the creation and updating of a Program by a user.
+    Creates a notification informing all users that a program has been added/edited.
     """
     program = kwargs['instance']
 
