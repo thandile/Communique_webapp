@@ -4,7 +4,7 @@ from django.views.generic import RedirectView
 
 
 from .views import (CommuniqueUserListView, CommuniqueUserCreateView, CommuniqueUserDetailView, CommuniqueUserUpdateView,
-                    ProfileDetailView, ProfileUpdateView, CalendarView)
+                    ProfileDetailView, ProfileUpdateView, CalendarView, ProfileNotificationListView)
 
 urlpatterns = [
     # urls for logging in and out
@@ -40,4 +40,7 @@ urlpatterns = [
         {'template_name':'user/password_change_done.html'}, name='password_change_done'),
     # urls to handle a profile's calendar
     url(r'^profile/(?P<pk>[0-9]+)/calendar/$', CalendarView.as_view(), name='user_profile_calendar_view'),
+    # urls for a profile's notifications
+    url(r'^profile/(?P<pk>[0-9]+)/notifications/$', ProfileNotificationListView.as_view(),
+        name='user_profile_notification_list'),
 ]

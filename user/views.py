@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 
+from notifications.models import Notification
+
 from communique.views import (CommuniqueListView, CommuniqueDetailView, CommuniqueUpdateView, CommuniqueCreateView,
                               CommuniqueTemplateView)
 from .forms import CommuniqueUserCreationForm, CommuniqueUserUpdateForm, ProfileUpdateForm
@@ -102,6 +104,29 @@ class ProfileUpdateView(CommuniqueUpdateView):
         return (str(self.request.user.pk) == str(self.kwargs['pk'])) and self.request.user.is_active
 
 
+class ProfileNotificationListView(CommuniqueListView):
+    """
+    A view that lists a user's notifications
+    """
+    model = Notification
+    template_name = 'user/profile_notification_list.html'
+    context_object_name = 'notification_list'
+
+    def get_queryset(self):
+        # get all the unread notifications of the user making the request
+        user = User.objects.get(pk=int(self.kwargs['pk']))
+        unread_notifications = user.notifications.unread()
+        # mark the notifications as read
+        return unread_notifications
+
+    def test_func(self):
+        """
+        Checks whether the user making the request is the owner of the notifications
+        :return: True if user is owner, false otherwise
+        """
+        return (str(self.request.user.pk) == str(self.kwargs['pk'])) and self.request.user.is_active
+
+
 class CalendarView(CommuniqueTemplateView):
     """
     A view that displays a user's calendar.
@@ -119,6 +144,6 @@ class CalendarView(CommuniqueTemplateView):
     def test_func(self):
         """
         Checks whether the user making the request is the owner of the appointments/events
-        :return: True is user is owner, false otherwise.
+        :return: True if user is owner, false otherwise.
         """
         return (str(self.request.user.pk) == str(self.kwargs['pk'])) and self.request.user.is_active
