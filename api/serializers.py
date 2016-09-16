@@ -1,5 +1,7 @@
 from rest_framework import serializers
 
+from admissions.models import Admission
+from appointments.models import Appointment
 from counselling_sessions.models import CounsellingSession, CounsellingSessionType
 from programs.models import Program
 from patients.models import Patient, Enrollment
@@ -88,4 +90,26 @@ class CounsellingSessionTypeSerializer(serializers.ModelSerializer):
         model = CounsellingSessionType
         fields = ('id', 'name', 'description', 'created_by', 'date_created',
                   'last_modified_by', 'date_last_modified')
+        read_only_fields = ('date_created', 'date_last_modified')
+
+
+class AppointmentSerializer(serializers.ModelSerializer):
+    """
+    A serializer for the Appointments model.
+    """
+    class Meta:
+        model = Appointment
+        fields = ('title', 'notes', 'patient', 'owner', 'appointment_date', 'start_time', 'end_time', 'created_by',
+                  'last_modified_by', 'date_created', 'date_last_modified')
+        read_only_fields = ('date_created', 'date_last_modified')
+
+
+class AdmissionSerializer(serializers.ModelSerializer):
+    """
+    A serializer for the Admission model.
+    """
+    class Meta:
+        model = Admission
+        fields = ('patient', 'admission_date', 'discharge_date', 'health_centre', 'notes', 'created_by',
+                  'last_modified_by', 'date_created', 'date_last_modified')
         read_only_fields = ('date_created', 'date_last_modified')

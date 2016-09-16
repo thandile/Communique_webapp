@@ -13,6 +13,8 @@ router.register(r'users', CommuniqueUserViewSet)
 router.register(r'profiles', ProfileViewSet)
 router.register(r'counselling', CounsellingSessionViewSet)
 router.register(r'session', CounsellingSessionTypeViewSet)
+router.register(r'appointments', AppointmentViewSet)
+router.register(r'admissions', AdmissionSerializer)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
