@@ -23,13 +23,12 @@
 {% endblock %}
 
 {% block page_subheading %}
-    List
 {% endblock %}
 
 {% block page_breadcrumb %}
     <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
     <li><a href="{% url 'patients_enrollment_list' %}"><i class="fa fa-support"></i> Enrollments</a></li>
-    <li class="active">List</li>
+    <li class="active"><i class="fa fa-table"></i> List</li>
 {% endblock %}
 
 {% block page_content %}
@@ -40,7 +39,7 @@
                     <h3 class="box-title">Registered enrollments</h3>
                 </div>
                 <div class="box-body">
-                    <table id="example1" class="table table-bordered table-striped">
+                    <table id="table1" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>Patient</th>
@@ -80,6 +79,9 @@
                         </tfoot>
                     </table>
                 </div>
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{% url 'patients_enrollment_create' %}">Add Enrollment</a>
+                </div>
             </div>
         </div>
     </div>
@@ -92,15 +94,7 @@
     <!-- page script -->
     <script>
         $(function () {
-            $("#example1").DataTable();
-            $('#example2').DataTable({
-                "paging": true,
-                "lengthChange": false,
-                "searching": false,
-                "ordering": true,
-                "info": true,
-                "autoWidth": false
-            });
+            $("#table1").DataTable();
         });
     </script>
 {% endblock %}

@@ -30,36 +30,45 @@ class CounsellingSessionTypeCreateViewTestCase(ViewsTestCase):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
 
 
-class CounsellingSessionTypeDetailViewTestCase(ViewsTestCase):
+class ExistingCounsellingSessionTypeViewsTestCase(ViewsTestCase):
+    """
+    Test cases for a view that requires an existing Session Type
+    """
+    def setUp(self):
+        super(ExistingCounsellingSessionTypeViewsTestCase, self).setUp()
+        CounsellingSessionType.objects.create(name='Dummy Type')
+
+
+class CounsellingSessionTypeDetailViewTestCase(ExistingCounsellingSessionTypeViewsTestCase):
     """
     Test cases for the view to display session type information.
     """
     view_template_name = 'counselling_sessions/counselling_session_type_view.html'
 
     def test_active_user_access(self):
-        session_type = CounsellingSessionType.objects.create(name='Dummy Type')
+        session_type = CounsellingSessionType.objects.get(id=1)
         self.only_active_user_access_test(session_type.get_absolute_url(), self.view_template_name)
 
 
-class CounsellingSessionTypeUpdateViewTestCase(ViewsTestCase):
+class CounsellingSessionTypeUpdateViewTestCase(ExistingCounsellingSessionTypeViewsTestCase):
     """
     Test cases for the view to update a session type.
     """
     view_template_name = 'counselling_sessions/counselling_session_type_update_form.html'
 
     def test_active_user_access(self):
-        session_type = CounsellingSessionType.objects.create(name='Dummy type')
+        session_type = CounsellingSessionType.objects.get(id=1)
         self.only_active_user_access_test(session_type.get_update_url(), self.view_template_name)
 
 
-class CounsellingSessionTypeDeleteViewTestCase(ViewsTestCase):
+class CounsellingSessionTypeDeleteViewTestCase(ExistingCounsellingSessionTypeViewsTestCase):
     """
     Test cases for the view to delete a session type.
     """
     view_template_name = 'counselling_sessions/counselling_session_type_confirm_delete.html'
 
     def test_active_user_access(self):
-        session_type = CounsellingSessionType.objects.create(name='Dummy type')
+        session_type = CounsellingSessionType.objects.get(id=1)
         self.only_active_user_access_test(session_type.get_delete_url(), self.view_template_name)
 
 
@@ -87,40 +96,45 @@ class CounsellingSessionCreateViewTestCase(ViewsTestCase):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
 
 
-class CounsellingSessionDetailViewTestCase(ViewsTestCase):
+class ExistingCounsellingSessionViewsTestCase(ViewsTestCase):
+    """
+    Test cases for views that require an existing counselling session
+    """
+    def setUp(self):
+        super(ExistingCounsellingSessionViewsTestCase, self).setUp()
+        session_type = CounsellingSessionType.objects.create(name='dummy type')
+        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
+        CounsellingSession.objects.create(patient=patient, counselling_session_type=session_type)
+
+
+class CounsellingSessionDetailViewTestCase(ExistingCounsellingSessionViewsTestCase):
     """
     Test cases for the view to display a session.
     """
     view_template_name = 'counselling_sessions/counselling_session_view.html'
 
     def test_active_user_access(self):
-        session_type = CounsellingSessionType.objects.create(name='dummy type')
-        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
-        counselling_session = CounsellingSession.objects.create(patient=patient, counselling_session_type=session_type)
+        counselling_session = CounsellingSession.objects.get(id=1)
         self.only_active_user_access_test(counselling_session.get_absolute_url(), self.view_template_name)
 
 
-class CounsellingSessionUpdateViewTestCase(ViewsTestCase):
+class CounsellingSessionUpdateViewTestCase(ExistingCounsellingSessionViewsTestCase):
     """
     Test cases for the view to update a session.
     """
     view_template_name = 'counselling_sessions/counselling_session_update_form.html'
 
     def test_active_user_access(self):
-        session_type = CounsellingSessionType.objects.create(name='dummy type')
-        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
-        counselling_session = CounsellingSession.objects.create(patient=patient, counselling_session_type=session_type)
+        counselling_session = CounsellingSession.objects.get(id=1)
         self.only_active_user_access_test(counselling_session.get_update_url(), self.view_template_name)
 
 
-class CounsellingSessionDeleteViewTestCase(ViewsTestCase):
+class CounsellingSessionDeleteViewTestCase(ExistingCounsellingSessionViewsTestCase):
     """
     Test cases for the view to delete a session.
     """
     view_template_name = 'counselling_sessions/counselling_session_confirm_delete.html'
 
     def test_active_user_access(self):
-        session_type = CounsellingSessionType.objects.create(name='dummy type')
-        patient = Patient.objects.create(first_name='Jon', last_name='Snow')
-        counselling_session = CounsellingSession.objects.create(patient=patient, counselling_session_type=session_type)
+        counselling_session = CounsellingSession.objects.get(id=1)
         self.only_active_user_access_test(counselling_session.get_delete_url(), self.view_template_name)

@@ -3,14 +3,15 @@ from django.forms import ModelForm
 
 from .models import CommuniqueUser, Profile
 
+
 class CommuniqueUserCreationForm(UserCreationForm):
     """
     A form used to register a new Communiqué user.
     """
     class Meta (UserCreationForm.Meta):
         model = CommuniqueUser
-        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name',
-            'is_superuser', 'email',)
+        fields = UserCreationForm.Meta.fields + ('first_name', 'last_name', 'is_superuser', 'email',)
+
 
 class CommuniqueUserUpdateForm(ModelForm):
     """
@@ -19,6 +20,7 @@ class CommuniqueUserUpdateForm(ModelForm):
     class Meta:
         model = CommuniqueUser
         fields = ['is_active', 'is_superuser']
+
 
 class ProfileUpdateForm(ModelForm):
     """

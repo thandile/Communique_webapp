@@ -23,13 +23,12 @@
 {% endblock %}
 
 {% block page_subheading %}
-    List
 {% endblock %}
 
 {% block page_breadcrumb %}
     <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
     <li><a href="{% url 'user_communique_user_list' %}"><i class="fa fa-users"></i> Communiqué Users</a></li>
-    <li class="active">List</li>
+    <li class="active"><i class="fa fa-table"></i> List</li>
 {% endblock %}
 
 {% block page_content %}
@@ -99,6 +98,9 @@
                             </tr>
                         </tfoot>
                     </table>
+                </div>
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{% url 'user_communique_user_create' %}">Add User</a>
                 </div>
             </div>
         </div>

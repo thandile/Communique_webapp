@@ -1,0 +1,125 @@
+{% extends parent_template|default:'occasions/base_occasions.html' %}
+{% load staticfiles %}
+{% load widget_tweaks %}
+
+{% block title %}
+    {{ block.super }} | Add Event
+{% endblock %}
+
+{% block head %}
+    <!-- bootstrap datepicker css -->
+    <link rel="stylesheet" href="{% static "plugins/datepicker/datepicker3.css" %}">
+    <!-- bootstrap timepicker css -->
+    <link rel="stylesheet" href="{% static "plugins/timepicker/bootstrap-timepicker.min.css" %}">
+{% endblock %}
+
+{% block events_add_menu %}
+    <li class="active">
+        <a href="{% url 'occasions_event_create' %}">
+            <i class="fa fa-circle-o text-red"></i> Add Event
+        </a>
+    </li>
+{% endblock %}
+
+{% block page_heading %}
+    Add Event
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'occasions_event_list' %}"><i class="fa fa-calendar-o"></i> Events</a></li>
+    <li class="active"><i class="fa fa-edit"></i> Add Event</li>
+{% endblock %}
+
+{% block page_content %}
+    {% include 'form_errors.html' with class='col-md-12' %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Event Details</h3>
+                </div>
+                <form role="form" action="{% url 'occasions_event_create' %}" method="post">
+                    {% csrf_token %}
+                    <div class="box-body">
+                        {% for field in form %}
+                            {% if field.label == 'Event start time' or field.label == 'Event end time' %}
+                                <div class="bootstrap-timepicker">
+                                    <div class="{% if field.errors %}form-group has-error{% else %}form-group{% endif %}">
+                                        {{ field.label_tag }}
+                                        <div class="input-group">
+                                            {{ field|add_class:'form-control timepicker' }}
+
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-clock-o"></i>
+                                            </div>
+                                        </div>
+                                        {% if field.help_text %}
+                                            <p class="help-block">{{ field.help_text }}</p>
+                                        {% endif %}
+
+                                        {% if field.errors %}
+                                            <ul>
+                                                {% for error in field.errors %}
+                                                    <li><p class="help-block">{{ error|escape }}</p></li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% else %}
+                                 <div class="{% if field.errors %}form-group has-error{% else %}form-group{% endif %}">
+                                    {{ field.label_tag }}
+
+                                    {% if field.label == 'Event date' %}
+                                        {{ field|attr:"placeholder:DD/MM/YYYY"|add_class:"form-control" }}
+                                    {% else %}
+                                        {{ field|add_class:'form-control' }}
+                                    {% endif %}
+
+                                    {% if field.help_text %}
+                                        <p class="help-block">{{ field.help_text }}</p>
+                                    {% endif %}
+
+                                    {% if field.errors %}
+                                        <ul>
+                                            {% for error in field.errors %}
+                                                <li><p class="help-block">{{ error|escape }}</p></li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    <div class="box-footer">
+                        <button type="reset" class="btn btn-warning">Reset</button>
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- datepicker js -->
+    <script src="{% static "plugins/datepicker/bootstrap-datepicker.js" %}"></script>
+    <!-- bootstrap timepicker js -->
+    <script src="{% static "plugins/timepicker/bootstrap-timepicker.min.js" %}"></script>
+    <script>
+        $(function () {
+            $("#id_event_date").datepicker({
+                autoclose: true,
+                format: 'dd/mm/yyyy'
+            });
+            $(".timepicker").timepicker({
+                showInputs: false
+            });
+        });
+    </script>
+{% endblock %}
