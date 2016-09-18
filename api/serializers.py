@@ -99,7 +99,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Appointment
-        fields = ('title', 'notes', 'patient', 'owner', 'appointment_date', 'start_time', 'end_time', 'created_by',
+        fields = ('id', 'title', 'notes', 'patient', 'owner', 'appointment_date', 'start_time', 'end_time', 'created_by',
                   'last_modified_by', 'date_created', 'date_last_modified')
         read_only_fields = ('date_created', 'date_last_modified')
 
@@ -110,6 +110,6 @@ class AdmissionSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Admission
-        fields = ('patient', 'admission_date', 'discharge_date', 'health_centre', 'notes', 'created_by',
+        fields = ('id', 'patient', 'admission_date', 'discharge_date', 'health_centre', 'notes', 'created_by',
                   'last_modified_by', 'date_created', 'date_last_modified')
         read_only_fields = ('date_created', 'date_last_modified')
