@@ -32,7 +32,7 @@ class ProgramViewSet(views.APIView):
     def get(self, request, *args, **kwargs):
         programs = Program.objects.all()
         serializer = ProgramSerializer(programs, many=True)
-        return Response(serializer.data)
+        return Response(programs)
 
 
 
