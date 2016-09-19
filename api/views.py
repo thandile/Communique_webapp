@@ -3,6 +3,12 @@ from rest_framework import viewsets
 from rest_framework import generics
 from rest_framework import permissions
 
+from rest_framework.response import Response
+from rest_framework import views
+from rest_framework_extensions.cache.decorators import (
+    cache_response
+)
+
 from .serializers import *
 from .permissions import IsActiveUser, IsSuperUser, IsProfileOrReadOnly
 
@@ -15,21 +21,19 @@ from user.models import CommuniqueUser, Profile
 
 
 
-class ProgramViewSet(viewsets.ModelViewSet):
+class ProgramViewSet(views.APIView):
     """
     This endpoint provides calls to CRUD Program models.
     """
     queryset = Program.objects.all()
     serializer_class = ProgramSerializer
     permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
+    @cache_response()
+    def get(self, request, *args, **kwargs):
+        programs = Program.objects.all()
+        serializer = ProgramSerializer(programs, many=True)
+        return Response(serializer.data)
 
-    def perform_create(self, serializer):
-        # save the user that has created the Program
-        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
-
-    def perform_update(self, serializer):
-        # save the user that has made the modification
-        serializer.save(last_modified_by=self.request.user)
 
 
 class PatientViewSet(viewsets.ModelViewSet):
