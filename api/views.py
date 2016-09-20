@@ -18,6 +18,21 @@ from user.models import CommuniqueUser, Profile
 from drf_multiple_model.views import MultipleModelAPIView
 
 
+class EnrollmentView(MultipleModelAPIView):
+    queryList = [(Patient.objects.all(), PatientSerializer),
+                 (Enrollment.objects.all(), EnrollmentSerializer)
+                 (Program.objects.all(), ProgramSerializer)
+                 (CommuniqueUser.objects.all(), CommuniqueUserSerializer)]
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
+
+    def perform_create(self, serializer):
+        # save the user that has created the Patient
+        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
+
+    def perform_update(self, serializer):
+        # save the user that has made the modification
+        serializer.save(last_modified_by=self.request.user)
+
 
 class ProgramViewSet(views.APIView):
     """

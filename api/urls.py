@@ -15,6 +15,7 @@ router.register(r'counselling', CounsellingSessionViewSet)
 router.register(r'session', CounsellingSessionTypeViewSet)
 router.register(r'appointments', AppointmentViewSet)
 router.register(r'admissions', AdmissionsViewSet)
+router.register(r'enroll', EnrollmentView)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
