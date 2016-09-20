@@ -86,7 +86,7 @@ class CounsellingSessionTypeSerializer(serializers.ModelSerializer):
     """
     A serializer for the CounsellingSessionType model.
     """
-    types = CounsellingSessionSerializer(read_only=True)
+    types = CounsellingSessionSerializer(many=True, read_only=True)
     class Meta:
         model = CounsellingSessionType
         fields = ('id', 'counselling_sessions', 'name', 'description', 'created_by', 'date_created',
