@@ -14,10 +14,10 @@ class ProgramSerializer(serializers.ModelSerializer):
     """
     created_by = serializers.ReadOnlyField(source='created_by.username')
     last_modified_by = serializers.ReadOnlyField(source='last_modified_by.username')
-    enrollments = serializers.StringRelatedField(many=True)
+
     class Meta:
         model = Program
-        fields = ('id', 'name', 'enrolled_patients', 'description', 'is_open', 'created_by', 'last_modified_by',
+        fields = ('id', 'name', 'description', 'is_open', 'created_by', 'last_modified_by',
                   'date_created', 'date_last_modified')
         read_only_fields = ('date_created', 'date_last_modified',)
 
@@ -86,9 +86,10 @@ class CounsellingSessionTypeSerializer(serializers.ModelSerializer):
     """
     A serializer for the CounsellingSessionType model.
     """
+    types = CounsellingSessionSerializer(read_only=True)
     class Meta:
         model = CounsellingSessionType
-        fields = ('id', 'name', 'description', 'created_by', 'date_created',
+        fields = ('id', 'counselling_sessions', 'name', 'description', 'created_by', 'date_created',
                   'last_modified_by', 'date_last_modified')
         read_only_fields = ('date_created', 'date_last_modified')
 
