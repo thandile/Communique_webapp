@@ -28,12 +28,12 @@ class PatientSerializer(serializers.ModelSerializer):
     """
     created_by = serializers.ReadOnlyField(source='created_by.username')
     last_modified_by = serializers.ReadOnlyField(source='last_modified_by.username')
-    enrollments = serializers.StringRelatedField(many=True)
+    enrollments = serializers.SlugRelatedField(read_only=True, slug_field='program')
     class Meta:
         model = Patient
-        fields = ('id', 'first_name', 'last_name', 'middle_name', 'birth_date', 'identifier', 'location',
-                  'contact_number', 'reference_health_centre', 'enrollments', 'enrolled_programs', 'created_by',
-                  'last_modified_by', 'date_created', 'date_last_modified')
+        fields = ('id', 'first_name','enrollments', 'last_name', 'middle_name', 'birth_date', 'identifier', 'location',
+                  'contact_number', 'reference_health_centre', 'enrollments', 'enrolled_programs', 'created_by', 'last_modified_by',
+                  'date_created', 'date_last_modified')
         read_only_fields = ('date_created', 'date_last_modified',)
 
 
@@ -42,7 +42,6 @@ class EnrollmentSerializer(serializers.ModelSerializer):
     A serializer for the Enrollment model.
     """
     enrolled_by = serializers.ReadOnlyField(source='enrolled_by.username')
-    enrollments = serializers.StringRelatedField(many=True)
     class Meta:
         model = Enrollment
         fields = ('id', 'patient', 'program', 'comment', 'is_active', 'enrolled_by', 'date_enrolled')
@@ -86,10 +85,9 @@ class CounsellingSessionTypeSerializer(serializers.ModelSerializer):
     """
     A serializer for the CounsellingSessionType model.
     """
-    types = CounsellingSessionSerializer(many=True, read_only=True)
     class Meta:
         model = CounsellingSessionType
-        fields = ('id', 'counselling_sessions', 'name', 'description', 'created_by', 'date_created',
+        fields = ('id', 'name', 'description', 'created_by', 'date_created',
                   'last_modified_by', 'date_last_modified')
         read_only_fields = ('date_created', 'date_last_modified')
 
