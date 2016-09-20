@@ -28,7 +28,6 @@ class PatientSerializer(serializers.ModelSerializer):
     """
     created_by = serializers.ReadOnlyField(source='created_by.username')
     last_modified_by = serializers.ReadOnlyField(source='last_modified_by.username')
-    enrollments = serializers.StringRelatedField()
     class Meta:
         model = Patient
         fields = ('id', 'last_name', 'other_names',  'sex', 'birth_date', 'identifier', 'location',
