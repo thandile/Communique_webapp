@@ -28,11 +28,14 @@ class ProgramViewSet(views.APIView):
     queryset = Program.objects.all()
     serializer_class = ProgramSerializer
     permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
-    @cache_response()
-    def get(self, request, *args, **kwargs):
-        programs = Program.objects.all()
-        serializer = ProgramSerializer(programs, many=True)
-        return Response(programs)
+
+    def perform_create(self, serializer):
+        # save the user that has created the Patient
+        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
+
+    def perform_update(self, serializer):
+        # save the user that has made the modification
+        serializer.save(last_modified_by=self.request.user)
 
 
 
