@@ -31,9 +31,10 @@ class PatientSerializer(serializers.ModelSerializer):
     enrollments = serializers.StringRelatedField()
     class Meta:
         model = Patient
-        fields = ('id', 'first_name', 'last_name', 'middle_name', 'birth_date', 'identifier', 'location',
-                  'contact_number', 'reference_health_centre', 'enrollments', 'enrolled_programs', 'created_by', 'last_modified_by',
-                  'date_created', 'date_last_modified')
+        fields = ('id', 'other_names', 'last_name', 'birth_date', 'identifier', 'location',
+                  'contact_number', 'reference_health_centre', 'created_by', 'last_modified_by',
+                  'date_created', 'treatment_start_date', 'interim_outcome', 'identifier',
+                  'date_last_modified', 'sex')
         read_only_fields = ('date_created', 'date_last_modified',)
 
 
