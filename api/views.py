@@ -15,6 +15,7 @@ from counselling_sessions.models import CounsellingSession
 from programs.models import Program
 from patients.models import Patient, Enrollment
 from user.models import CommuniqueUser, Profile
+from drf_multiple_model.views import MultipleModelAPIView
 
 
 
