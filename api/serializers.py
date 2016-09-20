@@ -28,10 +28,10 @@ class PatientSerializer(serializers.ModelSerializer):
     """
     created_by = serializers.ReadOnlyField(source='created_by.username')
     last_modified_by = serializers.ReadOnlyField(source='last_modified_by.username')
-    enrollments = serializers.SlugRelatedField(read_only=True, slug_field='program')
+    enrollments = serializers.StringRelatedField(read_only=True)
     class Meta:
         model = Patient
-        fields = ('id', 'first_name','enrollments', 'last_name', 'middle_name', 'birth_date', 'identifier', 'location',
+        fields = ('id', 'first_name', 'last_name', 'middle_name', 'birth_date', 'identifier', 'location',
                   'contact_number', 'reference_health_centre', 'enrollments', 'enrolled_programs', 'created_by', 'last_modified_by',
                   'date_created', 'date_last_modified')
         read_only_fields = ('date_created', 'date_last_modified',)
