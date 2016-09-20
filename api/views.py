@@ -15,17 +15,6 @@ from counselling_sessions.models import CounsellingSession
 from programs.models import Program
 from patients.models import Patient, Enrollment
 from user.models import CommuniqueUser, Profile
-from drf_multiple_model.views import MultipleModelAPIView
-
-
-class EnrollmentView(MultipleModelAPIView):
-    def list(self, request):
-        queryList = [(Patient.objects.all(), PatientSerializer, 'patients'),
-                     (Enrollment.objects.all(), EnrollmentSerializer, 'enrollments')
-                     (Program.objects.all(), ProgramSerializer, 'programs')
-                     (CommuniqueUser.objects.all(), CommuniqueUserSerializer, 'users')]
-        permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
-        return Response(queryList)
 
 
 class ProgramViewSet(views.APIView):
