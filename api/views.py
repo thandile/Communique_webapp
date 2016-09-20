@@ -5,9 +5,6 @@ from rest_framework import permissions
 
 from rest_framework.response import Response
 from rest_framework import views
-from rest_framework_extensions.cache.decorators import (
-    cache_response
-)
 
 from .serializers import *
 from .permissions import IsActiveUser, IsSuperUser, IsProfileOrReadOnly
