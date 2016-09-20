@@ -19,11 +19,13 @@ from drf_multiple_model.views import MultipleModelAPIView
 
 
 class EnrollmentView(MultipleModelAPIView):
-    queryList = [(Patient.objects.all(), PatientSerializer),
-                 (Enrollment.objects.all(), EnrollmentSerializer)
-                 (Program.objects.all(), ProgramSerializer)
-                 (CommuniqueUser.objects.all(), CommuniqueUserSerializer)]
-    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
+    def list(self, request):
+        queryList = [(Patient.objects.all(), PatientSerializer, 'patients'),
+                     (Enrollment.objects.all(), EnrollmentSerializer, 'enrollments')
+                     (Program.objects.all(), ProgramSerializer, 'programs')
+                     (CommuniqueUser.objects.all(), CommuniqueUserSerializer, 'users')]
+        permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
+        return Response(queryList)
 
 
 class ProgramViewSet(views.APIView):
