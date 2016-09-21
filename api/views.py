@@ -3,21 +3,15 @@ from rest_framework import viewsets
 from rest_framework import generics
 from rest_framework import permissions
 
-from rest_framework.response import Response
-from rest_framework import views
-
 from .serializers import *
 from .permissions import IsActiveUser, IsSuperUser, IsProfileOrReadOnly
 
-from admissions.models import Admission
-from appointments.models import Appointment
-from counselling_sessions.models import CounsellingSession
 from programs.models import Program
 from patients.models import Patient, Enrollment
 from user.models import CommuniqueUser, Profile
 
 
-class ProgramViewSet(views.APIView):
+class ProgramViewSet(viewsets.ModelViewSet):
     """
     This endpoint provides calls to CRUD Program models.
     """
@@ -26,13 +20,12 @@ class ProgramViewSet(views.APIView):
     permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
 
     def perform_create(self, serializer):
-        # save the user that has created the Patient
+        # save the user that has created the Program
         serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
 
     def perform_update(self, serializer):
         # save the user that has made the modification
         serializer.save(last_modified_by=self.request.user)
-
 
 
 class PatientViewSet(viewsets.ModelViewSet):
@@ -64,10 +57,6 @@ class EnrollmentViewSet(viewsets.ModelViewSet):
         # save the user that is enrolling the patient
         serializer.save(enrolled_by=self.request.user)
 
-    def perform_update(self, serializer):
-        # save the user that has made the modification
-        serializer.save(last_modified_by=self.request.user)
-
 
 class CommuniqueUserViewSet(viewsets.ModelViewSet):
     """
@@ -98,71 +87,3 @@ class ProfileLoginView(generics.RetrieveAPIView):
     lookup_field = 'username'
     lookup_url_kwarg = 'username'
     permission_classes = (permissions.IsAuthenticated,)
-
-
-class CounsellingSessionViewSet(viewsets.ModelViewSet):
-    """
-    This endpoint provides calls to CRUD CounsellingSession models.
-    """
-    queryset = CounsellingSession.objects.all()
-    serializer_class = CounsellingSessionSerializer
-    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
-
-    def perform_create(self, serializer):
-        # save the user that is enrolling the patient
-        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
-
-    def perform_update(self, serializer):
-        # save the user that has made the modification
-        serializer.save(last_modified_by=self.request.user)
-
-
-class CounsellingSessionTypeViewSet(viewsets.ModelViewSet):
-    """
-    This endpoint provides calls to CRUD CounsellingSessionType models.
-    """
-    queryset = CounsellingSessionType.objects.all()
-    serializer_class = CounsellingSessionTypeSerializer
-    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
-
-    def perform_create(self, serializer):
-        # save the user that is enrolling the patient
-        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
-
-    def perform_update(self, serializer):
-        # save the user that has made the modification
-        serializer.save(last_modified_by=self.request.user)
-
-
-class AppointmentViewSet(viewsets.ModelViewSet):
-    """
-    This endpoint provides calls to CRUD Appointment models.
-    """
-    queryset = Appointment.objects.all()
-    serializer_class = AppointmentSerializer
-    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
-
-    def perform_create(self, serializer):
-        # save the user that is enrolling the patient
-        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
-
-    def perform_update(self, serializer):
-        # save the user that has made the modification
-        serializer.save(last_modified_by=self.request.user)
-
-
-class AdmissionsViewSet(viewsets.ModelViewSet):
-    """
-    This endpoint provides calls to CRUD Admissions models.
-    """
-    queryset = Admission.objects.all()
-    serializer_class = AdmissionSerializer
-    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
-
-    def perform_create(self, serializer):
-        # save the user that is enrolling the patient
-        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
-
-    def perform_update(self, serializer):
-        # save the user that has made the modification
-        serializer.save(last_modified_by=self.request.user)
