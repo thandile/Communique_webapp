@@ -165,7 +165,7 @@ class AdmissionsViewSet(viewsets.ModelViewSet):
         serializer.save(last_modified_by=self.request.user)
 
 
-class MedicalReportViewSet(viewsets.ModelViewSet):
+class MedicalReportTypeViewSet(viewsets.ModelViewSet):
     """
     This endpoint provides calls to CRUD MedicalReportType models.
     """
