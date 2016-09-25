@@ -24,6 +24,18 @@ class ProgramSerializer(serializers.ModelSerializer):
         read_only_fields = ('date_created', 'date_last_modified',)
 
 
+class EnrollmentSerializer(serializers.ModelSerializer):
+    """
+    A serializer for the Enrollment model.
+    """
+    enrolled_by = serializers.ReadOnlyField(source='enrolled_by.username')
+
+    class Meta:
+        model = Enrollment
+        fields = ('id', 'patient', 'program', 'comment', 'is_active', 'enrolled_by', 'date_enrolled')
+        read_only_fields = ('date_enrolled',)
+
+
 class PatientSerializer(serializers.ModelSerializer):
     """
     A serializer for the Patient model.
@@ -38,18 +50,6 @@ class PatientSerializer(serializers.ModelSerializer):
                   'contact_number', 'reference_health_centre', 'enrolled_programs', 'created_by', 'last_modified_by',
                   'date_created', 'date_last_modified', 'enrollment')
         read_only_fields = ('date_created', 'date_last_modified',)
-
-
-class EnrollmentSerializer(serializers.ModelSerializer):
-    """
-    A serializer for the Enrollment model.
-    """
-    enrolled_by = serializers.ReadOnlyField(source='enrolled_by.username')
-
-    class Meta:
-        model = Enrollment
-        fields = ('id', 'patient', 'program', 'comment', 'is_active', 'enrolled_by', 'date_enrolled')
-        read_only_fields = ('date_enrolled',)
 
 
 class CommuniqueUserSerializer(serializers.ModelSerializer):
