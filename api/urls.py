@@ -14,10 +14,10 @@ router.register(r'profiles', ProfileViewSet)
 router.register(r'counselling', CounsellingSessionViewSet)
 router.register(r'session', CounsellingSessionTypeViewSet)
 router.register(r'appointments', AppointmentViewSet)
-router.register(r'admissions', AdmissionSerializer)
-router.register(r'medicalReportType', MedicalReportTypeSerializer)
-router.register(r'medicalReport', MedicalReportSerializer)
-router.register(r'events', EventSerializer)
+router.register(r'admissions', AdmissionsViewSet)
+router.register(r'medicalReportType', MedicalReportTypeViewSet)
+router.register(r'medicalReport', MedicalReportViewSet)
+router.register(r'events', EventViewSet)
 
 
 urlpatterns = [
