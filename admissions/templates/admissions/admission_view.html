@@ -82,10 +82,10 @@
                     {% if admission.patient %}
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>Name</b> <a class="pull-right">{{ admission.patient.get_full_name }}</a>
+                                <b>Name</b> <a class="pull-right">{{ admission.patient }}</a>
                             </li>
                             <li class="list-group-item">
-                                <b>Patient ID</b>
+                                <b>Identifier</b>
                                 <a class="pull-right">
                                     {% if admission.patient.identifier %}
                                         {{ admission.patient.identifier }}
@@ -95,7 +95,7 @@
                                 </a>
                             </li>
                             <li class="list-group-item">
-                                <b>Health Centre</b>
+                                <b>Clinic/Hospital</b>
                                 <a class="pull-right">
                                     {% if admission.patient.reference_health_centre %}
                                         {{ admission.patient.reference_health_centre }}

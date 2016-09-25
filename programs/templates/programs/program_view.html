@@ -100,8 +100,8 @@
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Patient ID</th>
-                                <th>Patient Names</th>
+                                <th>Patient</th>
+                                <th>Patient Identifier</th>
                                 <th>Enrollment Date</th>
                                 <th>Enrollment Status</th>
                             </tr>
@@ -110,11 +110,15 @@
                             {% for enrollment in program.enrollments.all %}
                                 <tr>
                                     <td>
-                                        <a href="{{ enrollment.patient.get_absolute_url }}">{{ enrollment.patient.identifier }}</a>
+                                        <a href="{{ enrollment.patient.get_absolute_url }}">{{ enrollment.patient }}</a>
                                     </td>
                                     <td>
                                         <a href="{{ enrollment.patient.get_absolute_url }}">
-                                            {{ enrollment.patient.get_full_name }}
+                                            {% if enrollment.patient.identifier %}
+                                                {{ enrollment.patient.identifier }}
+                                            {% else %}
+                                                Unavailable
+                                            {% endif %}
                                         </a>
                                     </td>
                                     <td>
@@ -136,8 +140,8 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Patient ID</th>
-                                <th>Patient Names</th>
+                                <th>Patient</th>
+                                <th>Patient Identifier</th>
                                 <th>Enrollment</th>
                                 <th>Enrollment Status</th>
                             </tr>

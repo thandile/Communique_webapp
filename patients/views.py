@@ -1,16 +1,14 @@
 from django.core.urlresolvers import reverse_lazy
-from django.contrib.messages.views import SuccessMessageMixin
 
 from communique.views import (CommuniqueDeleteView, CommuniqueListView, CommuniqueDetailView, CommuniqueUpdateView,
-                              CommuniqueCreateView, CommuniqueFormView)
+                              CommuniqueCreateView)
 from .models import Patient, Enrollment
 from counselling_sessions.models import CounsellingSession
 from appointments.models import Appointment
 from medical.models import MedicalReport
-from .forms import PatientAppointmentForm, PatientUploadFileForm
+from .forms import PatientAppointmentForm
 from admissions.models import Admission
 from admissions.forms import AdmissionUpdateForm
-from patients.utils.utils_views import import_patients_from_file
 
 
 class PatientListView(CommuniqueListView):
@@ -27,8 +25,8 @@ class PatientCreateView(CommuniqueCreateView):
     A view to handle creation of patients.
     """
     model = Patient
-    fields = ['last_name', 'other_names', 'identifier', 'reference_health_centre', 'birth_date', 'sex', 'location',
-              'treatment_start_date', 'interim_outcome', 'contact_number']
+    fields = ['first_name', 'last_name', 'middle_name', 'birth_date', 'identifier', 'location', 'contact_number',
+              'reference_health_centre']
     template_name = 'patients/patient_form.html'
 
     def form_valid(self, form):
@@ -54,8 +52,8 @@ class PatientUpdateView(CommuniqueUpdateView):
     A view to handle updating patient information.
     """
     model = Patient
-    fields = ['last_name', 'other_names', 'identifier', 'reference_health_centre', 'birth_date', 'sex', 'location',
-              'treatment_start_date', 'interim_outcome', 'contact_number']
+    fields = ['first_name', 'last_name', 'middle_name', 'birth_date', 'identifier', 'location', 'contact_number',
+              'reference_health_centre']
     template_name = 'patients/patient_update_form.html'
     context_object_name = 'patient'
 
@@ -75,22 +73,6 @@ class PatientDeleteView(CommuniqueDeleteView):
     success_url = reverse_lazy('patients_patient_list')
     context_object_name = 'patient'
     template_name = 'patients/patient_confirm_delete.html'
-
-
-class PatientImportView(SuccessMessageMixin, CommuniqueFormView):
-    """
-    A view to handle the importation of patients through an uploaded file.
-    """
-    template_name = 'patients/patient_import_form.html'
-    form_class = PatientUploadFileForm
-    success_url = reverse_lazy('patients_patient_list')
-    success_message = 'The patients have successfully been added to the system.'
-
-    def form_valid(self, form):
-        # import the patients in the uploaded file
-        uploaded_file = self.get_form_kwargs().get('files')['uploaded_file']
-        import_patients_from_file(uploaded_file, self.request.user)
-        return super(PatientImportView, self).form_valid(form)
 
 
 class EnrollmentListView(CommuniqueListView):

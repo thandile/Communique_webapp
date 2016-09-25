@@ -42,8 +42,8 @@
                     <table id="table1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Patient ID</th>
-                                <th>Patient Name</th>
+                                <th>Patient</th>
+                                <th>Identifier</th>
                                 <th>Admission Date</th>
                                 <th>Discharge Date</th>
                                 <th>Added By</th>
@@ -54,13 +54,15 @@
                             {% for admission in admission_list %}
                                 <tr>
                                     <td>
-                                        <a href="{{ admission.get_absolute_url }}">
-                                            {{ admission.patient.identifier }}
-                                        </a>
+                                        <a href="{{ admission.get_absolute_url }}">{{ admission.patient }}</a>
                                     </td>
                                     <td>
                                         <a href="{{ admission.get_absolute_url }}">
-                                            {{ admission.patient.get_full_name }}
+                                            {% if admission.patient.identifier %}
+                                                {{ admission.patient.identifier }}
+                                            {% else %}
+                                                Unavailable
+                                            {% endif %}
                                         </a>
                                     </td>
                                     <td>
@@ -92,8 +94,8 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Patient ID</th>
-                                <th>Patient Name</th>
+                                <th>Patient</th>
+                                <th>Identifier</th>
                                 <th>Admission Date</th>
                                 <th>Discharge Date</th>
                                 <th>Added By</th>

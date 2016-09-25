@@ -42,8 +42,8 @@
                     <table id="table1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Patient ID</th>
-                                <th>Patient Names</th>
+                                <th>Patient</th>
+                                <th>Patient Identifier</th>
                                 <th>Session Type</th>
                                 <th>Created By</th>
                                 <th>Date Created</th>
@@ -54,12 +54,16 @@
                                 <tr>
                                     <td>
                                         <a href="{{ counselling_session.get_absolute_url }}">
-                                            {{ counselling_session.patient.identifier }}
+                                            {{ counselling_session.patient }}
                                         </a>
                                     </td>
                                     <td>
                                         <a href="{{ counselling_session.get_absolute_url }}">
-                                            {{ counselling_session.patient.get_full_name }}
+                                            {% if counselling_session.patient.identifier %}
+                                                {{ counselling_session.patient.identifier }}
+                                            {% else %}
+                                                Unavailable
+                                            {% endif %}
                                         </a>
                                     </td>
                                     <td>
@@ -82,8 +86,8 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Patient ID</th>
-                                <th>Patient Names</th>
+                                <th>Patient</th>
+                                <th>Patient Identifier</th>
                                 <th>Session Type</th>
                                 <th>Created By</th>
                                 <th>Date Created</th>

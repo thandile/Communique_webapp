@@ -42,8 +42,7 @@
                     <table id="table1" class="table table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Patient ID</th>
-                            <th>Patient Name</th>
+                            <th>Patient</th>
                             <th>Program</th>
                             <th>Date Enrolled</th>
                             <th>Enrolled By</th>
@@ -53,14 +52,7 @@
                         <tbody>
                             {% for enrollment in enrollment_list %}
                                 <tr>
-                                    <td>
-                                        <a href="{{ enrollment.get_absolute_url }}">{{ enrollment.patient.identifier }}</a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ enrollment.get_absolute_url }}">
-                                            {{ enrollment.patient.get_full_name }}
-                                        </a>
-                                    </td>
+                                    <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.patient }}</a></td>
                                     <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.program }}</a></td>
                                     <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.date_enrolled }}</a></td>
                                     <td><a href="{{ enrollment.get_absolute_url }}">{{ enrollment.enrolled_by.get_full_name }}</a></td>
@@ -78,8 +70,7 @@
                         </tbody>
                         <tfoot>
                         <tr>
-                            <th>Patient ID</th>
-                            <th>Patient Name</th>
+                            <th>Patient</th>
                             <th>Program</th>
                             <th>Date Enrolled</th>
                             <th>Enrolled By</th>

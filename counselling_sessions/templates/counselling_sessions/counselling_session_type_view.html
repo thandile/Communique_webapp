@@ -82,8 +82,7 @@
                     <table id="table1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>Patient ID</th>
-                                <th>Patient Names</th>
+                                <th>Patient</th>
                                 <th>Created By</th>
                                 <th>Date Created</th>
                             </tr>
@@ -93,17 +92,12 @@
                                 <tr>
                                     <td>
                                         <a href="{{ counselling_session.get_absolute_url }}">
-                                            {{ counselling_session.patient.identifier }}
+                                            {{ counselling_session.patient }}
                                         </a>
                                     </td>
                                     <td>
                                         <a href="{{ counselling_session.get_absolute_url }}">
-                                            {{ counselling_session.patient.get_full_name }}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="{{ counselling_session.get_absolute_url }}">
-                                            {{ counselling_session.created_by.get_full_name }}
+                                            {{ counselling_session.created_by }}
                                         </a>
                                     </td>
                                     <td>
@@ -116,8 +110,7 @@
                         </tbody>
                         <tfoot>
                             <tr>
-                                <th>Patient ID</th>
-                                <th>Patient Names</th>
+                                <th>Patient</th>
                                 <th>Created By</th>
                                 <th>Date Created</th>
                             </tr>
