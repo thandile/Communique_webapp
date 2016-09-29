@@ -1,0 +1,612 @@
+{% load staticfiles %}
+{% load notifications_tags %}
+
+<! DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <title>
+        {% block title %}
+            Communiqué
+        {% endblock %}
+    </title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <!-- Bootstrap 3.3.6 -->
+    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{% static "dist/css/AdminLTE.min.css" %}">
+
+    <link rel="stylesheet" href="{% static "dist/css/skins/skin-green.min.css" %}">
+
+    {% block head %}
+    {% endblock %}
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+      <![endif]-->
+</head>
+
+{% block body %}
+    <body class="hold-transition skin-green sidebar-mini">
+    <div class="wrapper">
+        {% block menu %}
+            <!-- main header -->
+            <header class="main-header">
+                <!-- Logo -->
+                <a href="{% url 'dashboard_home' %}" class="logo">
+                    <!-- mini logo for sidebar mini 50x50 pixels -->
+                    <span class="logo-mini"><b>CQ</b></span>
+                    <!-- logo for regular state and mobile devices -->
+                    <span class="logo-lg"><b>Communiqué</b></span>
+                </a>
+
+                <!-- header navbar -->
+                <nav class="navbar navbar-static-top">
+                    <!-- sidebar toggle button -->
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <!-- navbar right menu -->
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <!-- notifications -->
+                            <li class="dropdown notifications-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="fa fa-bell-o"></i> Notifications
+                                    {% live_notify_badge classes='label label-danger' %}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li id="notification-counter" class="header">You have 10 notifications</li>
+                                    <li>
+                                        <!-- inner menu -->
+                                        <ul id="notification-list" class="menu">
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-users text-aqua"></i> 5 new members joined today
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-warning text-yellow"></i> Very long description here
+                                                    that might not fit on the page and cause design problems
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-users text-red"></i> 5 new members joined
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-shopping-cart text-green"></i> 25 sales made
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="fa fa-user text-red"></i> You changed your username
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="footer">
+                                        <a href="{% url 'user_profile_notification_list' %}">
+                                            <b>View all notifications</b>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <!-- user account -->
+                            <li class="dropdown user user-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <span class="hidden-xs">
+                                        {% if user.get_full_name %}
+                                            {{ user.get_full_name }}
+                                        {% else %}
+                                            {{ user.username }}
+                                        {% endif %}
+                                    </span>
+                                </a>
+
+                                <ul class="dropdown-menu">
+                                    <!-- menu footer -->
+                                    <li class="user-footer">
+                                        <div class="pull-left">
+                                            <a href="{% url 'user_profile_detail' pk=user.pk %}" class="btn btn-primary btn-flat">
+                                                Profile
+                                            </a>
+                                        </div>
+                                        <div class="pull-right">
+                                            <a href="{% url 'user_logout' %}" class="btn btn-primary btn-flat">
+                                                Log out
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#" data-toggle="control-sidebar">
+                                    <i class="fa fa-gears"></i> <span class="hidden-xs">Shortcuts</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </header>
+
+            <!-- =============================================== -->
+            <!-- Left side column. contains the sidebar -->
+            <aside class="main-sidebar">
+                <!-- side bar -->
+                <section class="sidebar">
+                    <!-- sidebar menu -->
+                    <ul class="sidebar-menu">
+                        <li class="header">MAIN NAVIGATION</li>
+                        <li>
+                            <a href="{% url 'dashboard_home' %}">
+                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'user_profile_calendar_view' %}">
+                                <i class="fa fa-calendar"></i> <span>Calendar</span>
+                            </a>
+                        </li>
+                        {% if user.is_superuser %}
+                            {% block user_menu %}
+                                <li class="treeview">
+                                    <a href="#">
+                                        <i class="fa fa-users"></i> <span>Communiqué Users</span>
+                                          <span class="pull-right-container">
+                                            <i class="fa fa-angle-left pull-right"></i>
+                                          </span>
+                                    </a>
+                                    <ul class="treeview-menu">
+                                        <li>
+                                            <a href="{% url 'user_communique_user_list' %}">
+                                                <i class="fa fa-circle-o text-aqua"></i> User List
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{% url 'user_communique_user_create' %}">
+                                                <i class="fa fa-circle-o text-aqua"></i> Register User
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            {% endblock %}
+                        {% endif %}
+                        {% block appointments_menu %}
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-calendar-plus-o"></i> <span>Appointments</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{% url 'appointments_appointment_list' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Appointments List
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'appointments_appointment_create' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Add Appointment
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endblock %}
+                        {% block events_menu %}
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-calendar-o"></i> <span>Events</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                       <a href="{% url 'occasions_event_list' %}">
+                                           <i class="fa fa-circle-o text-aqua"></i> Events List
+                                       </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'occasions_event_create' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Add Event
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endblock %}
+                        {% block programs_menu %}
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-tags"></i> <span>Pilot Programs</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{% url 'programs_program_list' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Pilot Programs List
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'programs_program_create' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Add Pilot Program
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endblock %}
+                        {% block patients_menu %}
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-heartbeat"></i> <span>Patients</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{% url 'patients_patient_list' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Patients List
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'patients_patient_create' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Register Patient
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endblock %}
+                        {% block enrollments_menu %}
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-support"></i> <span>Enrollments</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{% url 'patients_enrollment_list' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Enrollment List
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'patients_enrollment_create' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Register Enrollment
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endblock %}
+                        {% block admissions_menu %}
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-ambulance"></i> <span>Admissions</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="{% url 'admissions_admission_list' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Admissions List
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{% url 'admissions_admission_create' %}">
+                                            <i class="fa fa-circle-o text-aqua"></i> Add Admission
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endblock %}
+                        {% block counselling_sessions_menu %}
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-plus-square"></i> <span>Counselling Sessions</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="#"><i class="fa fa-circle-o"></i> Session Types
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a href="{% url 'counselling_sessions_type_list' %}">
+                                                    <i class="fa fa-circle-o text-aqua"></i> Session Type List
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'counselling_sessions_type_create' %}">
+                                                    <i class="fa fa-circle-o text-aqua"></i> Add Session Type
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-circle-o"></i> Sessions
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a href="{% url 'counselling_sessions_session_list' %}">
+                                                    <i class="fa fa-circle-o text-aqua"></i> Session List
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'counselling_sessions_session_create' %}">
+                                                    <i class="fa fa-circle-o text-aqua"></i> Add Session
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endblock %}
+                        {% block medical_menu %}
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa fa-medkit"></i> <span>Medical Reports</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    <li>
+                                        <a href="#"><i class="fa fa-circle-o"></i> Report Types
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a href="{% url 'medical_report_type_list' %}">
+                                                    <i class="fa fa-circle-o text-aqua"></i> Report Type List
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'medical_report_type_create' %}">
+                                                    <i class="fa fa-circle-o text-aqua"></i> Add Report Type
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#"><i class="fa fa-circle-o"></i> Reports
+                                            <span class="pull-right-container">
+                                                <i class="fa fa-angle-left pull-right"></i>
+                                            </span>
+                                        </a>
+                                        <ul class="treeview-menu">
+                                            <li>
+                                                <a href="{% url 'medical_report_list' %}">
+                                                    <i class="fa fa-circle-o text-aqua"></i> Report List
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{% url 'medical_report_create' %}">
+                                                    <i class="fa fa-circle-o text-aqua"></i> Add Report
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        {% endblock %}
+                        <li>
+                            <a href="#"><i class="fa fa-book"></i> <span>Manual</span></a>
+                        </li>
+                    </ul>
+                </section>
+            </aside>
+
+        {% endblock %}
+        {% block content %}
+            <div class="content-wrapper">
+                <!-- Content/Page header -->
+                <section class="content-header">
+                    <h1>
+                        {% block page_heading %}
+                            Blank page
+                        {% endblock %}
+                        <small>
+                            {% block page_subheading %}
+                                it all starts here
+                            {% endblock %}
+                        </small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        {% block page_breadcrumb %}
+                            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                            <li><a href="#">Examples</a></li>
+                            <li class="active">Blank page</li>
+                        {% endblock %}
+                    </ol>
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    {% block page_content %}
+                        <!-- Default box -->
+                        <div class="box">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">Title</h3>
+
+                                <div class="box-tools pull-right">
+                                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                                        <i class="fa fa-minus"></i></button>
+                                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                                        <i class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                Start creating your amazing application!
+                            </div>
+                            <!-- /.box-body -->
+                            <div class="box-footer">
+                                Footer
+                            </div>
+                            <!-- /.box-footer-->
+                        </div>
+                        <!-- /.box -->
+                    {% endblock %}
+                </section>
+            </div>
+        {% endblock %}
+        <footer class="main-footer">
+            {% block footer %}
+                <div class="pull-right hidden-xs">
+                    <b>Version</b> 1.0.0
+                </div>
+                <strong>Copyright &copy; 2016 <a href="#">Communiqué Web App</a>.</strong> All rights reserved.
+            {% endblock %}
+        </footer>
+
+        <!-- control sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- create the tabs -->
+            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                <li class="active">
+                    <a href="#control-sidebar-user-tab" data-toggle="tab"><i class="fa fa-home"></i></a>
+                </li>
+            </ul>
+            <!-- tab panes -->
+            <div class="tab-content">
+                <!-- user tab content -->
+                <div class="tab-pane active" id="control-sidebar-user-tab">
+                    <ul class="control-sidebar-menu">
+                        <li>
+                            <a href="{% url 'user_profile_detail' pk=user.pk %}">
+                                <i class="menu-icon fa fa-user bg-red"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Profile</h4>
+                                    <p>View your profile</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'user_logout' %}">
+                                <i class="menu-icon fa fa-power-off bg-red"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Log out</h4>
+                                    <p>Exit the system</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{% url 'user_profile_notification_list' %}">
+                                <i class="menu-icon fa fa-bell-o bg-red"></i>
+
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Notifications</h4>
+                                    <p>View all your notifications</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+        <!-- Add the sidebar's background. This div must be placed immediately after the control sidebar -->
+        <div class="control-sidebar-bg"></div>
+    </div>
+
+
+    <!-- jQuery 2.2.3 -->
+    <script src="{% static "plugins/jQuery/jquery-2.2.3.min.js" %}"></script>
+    <!-- bootstrap 3.3.6 -->
+    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+    <!-- SlimScroll -->
+    <script src="{% static "plugins/slimScroll/jquery.slimscroll.min.js" %}"></script>
+    <!-- FastClick -->
+    <script src="{% static "plugins/fastclick/fastclick.js" %}"></script>
+    <!-- AdminLTE App -->
+    <script src="{% static "dist/js/app.min.js" %}" ></script>
+
+    <!-- Django notifications -->
+    <script>
+        function notification_callback(data) {
+            if (data.unread_list.length == 1){
+                $("#notification-counter").text("You have 1 notification");
+            }
+            else {
+                $("#notification-counter").text("You have " + data.unread_list.length + " notifications");
+            }
+
+            $("#notification-list").empty();
+            for (var i=0; i < data.unread_list.length; i++) {
+                var unread_ntf = data.unread_list[i];
+                var msg = unread_ntf.actor + ' ' + unread_ntf.verb + ' ' + unread_ntf.action_object;
+
+                var t = '<i class="fa fa-bell-o text-green"></i>';
+                var obj = JSON.parse(unread_ntf.data)
+                switch (obj.entity_name) {
+                    case 'program':
+                        t = '<i class="fa fa-tag text-aqua"></i>';
+                        break;
+                    case 'admission':
+                        t = '<i class="fa fa-ambulance text-yellow"></i>';
+                        break;
+                    case 'appointment':
+                        t = '<i class="fa fa-calendar-plus-o text-red"></i>';
+                        break;
+                    case 'event':
+                        t = '<i class="fa fa-calendar-o text-purple"></i>';
+                        break;
+                    case 'enrollment':
+                        t = '<i class="fa fa-support text-orange"></i>';
+                        break;
+                    case 'patient':
+                        t = '<i class="fa fa-heartbeat text-green"></i>';
+                        break;
+                    default:
+                        t = '<i class="fa fa-bell-o text-green"></i>';
+                }
+                var a = "<a>" + t + ' ' + msg + "</a>";
+                var li = "<li>" + a + "</li>";
+                $("#notification-list").append(li);
+
+            }
+        }
+    </script>
+    <script src="{% static 'notifications/notify.js' %}" type="text/javascript"></script>
+    {% register_notify_callbacks callbacks='fill_notification_badge,notification_callback' refresh_period=45 %}
+
+    {% block scripts %}
+    {% endblock %}
+    </body>
+{% endblock %}
+</html>

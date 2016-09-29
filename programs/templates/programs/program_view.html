@@ -1,0 +1,170 @@
+{% extends parent_template|default:"programs/base_programs.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} | Pilot Program
+{% endblock %}
+
+{% block head %}
+  <!-- DataTables -->
+  <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
+{% endblock %}
+
+{% block page_heading %}
+    Pilot Program
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'programs_program_list' %}"><i class="fa fa-tags"></i> Pilot Programs</a></li>
+    <li class="active"><i class="fa fa-tag"></i> Program</li>
+{% endblock %}
+
+{% block page_content %}
+    {% if not program.is_open %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <h4><i class="icon fa fa-info"></i> Alert!</h4>
+                    This program has been closed and as such, patients cannot be registered to it.
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <h3 class="text-center">{{ program }}</h3>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Date added</b> <a class="pull-right">{{ program.date_created }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Added by</b> <a class="pull-right">{{ program.created_by.get_full_name }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Last modified</b> <a class="pull-right">{{ program.date_last_modified }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Modified by</b> <a class="pull-right">{{ program.last_modified_by.get_full_name }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Status</b>
+                            <a class="pull-right">
+                                {% if program.is_open %}
+                                    <span class="label label-success">Open</span>
+                                {% else %}
+                                    <span class="label label-danger">Closed</span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Registered patients</b> <a class="pull-right">{{ program.enrolled_patients.count }}</a>
+                        </li>
+                    </ul>
+                    <a href="{{ program.get_update_url }}" class="btn btn-primary"><b>Edit</b></a>
+                    <a href="{{ program.get_delete_url }}" class="btn btn-danger"><b>Delete</b></a>
+                </div>
+            </div>
+
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">About Program</h3>
+                </div>
+                <div class="box-body">
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Description</strong>
+
+                    <p>
+                        {% if program.description %}
+                            {{ program.description }}
+                        {% else %}
+                            This program currently doesn't have a description.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Registered Patients</h3>
+                </div>
+
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Patient Names</th>
+                                <th>Enrollment Date</th>
+                                <th>Enrollment Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for enrollment in program.enrollments.all %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ enrollment.patient.get_absolute_url }}">{{ enrollment.patient.identifier }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ enrollment.patient.get_absolute_url }}">
+                                            {{ enrollment.patient.get_full_name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ enrollment.patient.get_absolute_url }}">
+                                            {{ enrollment.date_enrolled }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ enrollment.patient.get_absolute_url }}">
+                                            {% if enrollment.is_active %}
+                                                <span class="label label-success">Open</span>
+                                            {% else %}
+                                                <span class="label label-danger">Closed</span>
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Patient Names</th>
+                                <th>Enrollment</th>
+                                <th>Enrollment Status</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+  <!-- DataTables -->
+  <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+  <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+  <!-- page script -->
+  <script>
+    $(function () {
+      $("#example1").DataTable();
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": false,
+        "searching": false,
+        "ordering": true,
+        "info": true,
+        "autoWidth": false
+      });
+    });
+  </script>
+{% endblock %}

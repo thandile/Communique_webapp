@@ -1,0 +1,112 @@
+{% extends parent_template|default:'counselling_sessions/base_counselling_sessions.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} | Sessions
+{% endblock %}
+
+{% block head %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
+{% endblock %}
+
+{% block session_list_menu %}
+    <li class="active">
+        <a href="{% url 'counselling_sessions_session_list' %}">
+            <i class="fa fa-circle-o text-red"></i> Session List
+        </a>
+    </li>
+{% endblock %}
+
+{% block page_heading %}
+    Sessions
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'counselling_sessions_session_list' %}"><i class="fa fa-plus-square"></i> Sessions</a></li>
+    <li class="active"><i class="fa fa-table"></i> List</li>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Existing Sessions</h3>
+                </div>
+                <div class="box-body">
+                    <table id="table1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Patient Names</th>
+                                <th>Session Type</th>
+                                <th>Created By</th>
+                                <th>Date Created</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for counselling_session in counselling_session_list %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.patient.identifier }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.patient.get_full_name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.counselling_session_type }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.created_by.get_full_name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ counselling_session.get_absolute_url }}">
+                                            {{ counselling_session.date_created }}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Patient Names</th>
+                                <th>Session Type</th>
+                                <th>Created By</th>
+                                <th>Date Created</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{% url 'counselling_sessions_session_create' %}">Add Session</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- DataTables -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#table1").DataTable();
+        });
+    </script>
+{% endblock %}

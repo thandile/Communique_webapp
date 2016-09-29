@@ -1,0 +1,113 @@
+{% extends parent_template|default:'medical/base_medical.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} | Medical Reports
+{% endblock %}
+
+{% block head %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
+{% endblock %}
+
+{% block report_list_menu %}
+    <li class="active">
+        <a href="{% url 'medical_report_list' %}">
+            <i class="fa fa-circle-o text-red"></i> Report List
+        </a>
+    </li>
+{% endblock %}
+
+{% block page_heading %}
+    Medical Reports
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'medical_report_list' %}"><i class="fa fa-medkit"></i> Medical Reports</a></li>
+    <li class="active"><i class="fa fa-table"></i> List</li>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+               <div class="box-header with-border">
+                    <h3 class="box-title">Existing Medical Reports</h3>
+                </div>
+                <div class="box-body">
+                    <table id="table1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Report Type</th>
+                                <th>Patient ID</th>
+                                <th>Patient Names</th>
+                                <th>Date Created</th>
+                                <th>Created By</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for report in medical_report_list %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ report.get_absolute_url }}">{{ report.title|capfirst }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ report.get_absolute_url }}">{{ report.report_type }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ report.get_absolute_url }}">{{ report.patient.identifier }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ report.get_absolute_url }}">{{ report.patient.get_full_name }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ report.get_absolute_url }}">{{ report.date_created }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ report.get_absolute_url }}">
+                                            {% if report.created_by %}
+                                                {{ report.created_by.get_full_name }}
+                                            {% else %}
+                                                Unavailable
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Title</th>
+                                <th>Report Type</th>
+                                <th>Patient ID</th>
+                                <th>Patient Names</th>
+                                <th>Date Created</th>
+                                <th>Created By</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{% url 'medical_report_create' %}">Add Medical Report</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- DataTables -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#table1").DataTable();
+        });
+    </script>
+{% endblock %}

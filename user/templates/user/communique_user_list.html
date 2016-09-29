@@ -1,0 +1,128 @@
+{% extends parent_template|default:"user/base_user.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} | Users
+{% endblock %}
+
+{% block head %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
+{% endblock %}
+
+{% block user_list_menu %}
+    <li class="active">
+        <a href="{% url 'user_communique_user_list' %}">
+            <i class="fa fa-circle-o text-red"></i> User List
+        </a>
+    </li>
+{% endblock %}
+
+{% block page_heading %}
+    Communiqué Users
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'user_communique_user_list' %}"><i class="fa fa-users"></i> Communiqué Users</a></li>
+    <li class="active"><i class="fa fa-table"></i> List</li>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Registered users</h3>
+                </div>
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Position</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                             {% for communique_user in communique_user_list %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ communique_user.get_absolute_url }}">
+                                            {{ communique_user.get_full_name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ communique_user.get_absolute_url }}">
+                                            {{ communique_user.username }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ communique_user.get_absolute_url }}">
+                                            {{ communique_user.email }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ communique_user.get_absolute_url }}">
+                                            {% if communique_user.is_active %}
+                                                Activated
+                                            {% else %}
+                                                Deactivated
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ communique_user.get_absolute_url }}">
+                                            {% if communique_user.is_superuser %}
+                                                Superuser
+                                            {% else %}
+                                                Staff
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Name</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Position</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{% url 'user_communique_user_create' %}">Add User</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- DataTables -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
+        });
+    </script>
+{% endblock %}

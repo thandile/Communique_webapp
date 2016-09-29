@@ -1,0 +1,22 @@
+{% extends parent_template|default:"base.html" %}
+
+{% block title %}
+    HTTP Forbidden
+{% endblock %}
+
+{% block body %}
+    <div class="hold-transition">
+        <div class="error-page">
+            <h2 class="headline text-orange">403</h2>
+
+            <div class="error-content">
+                <h2><i class="fa fa-warning text-orange"></i> Permission denied!</h2>
+
+                <h3>
+                    You're not allowed to view this content. You may
+                    <a href="{% url 'dashboard_home' %}">go to the dashboard</a> to view available options.
+                </h3>
+            </div>
+        </div>
+    </div>
+{% endblock %}

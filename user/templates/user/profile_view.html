@@ -1,0 +1,107 @@
+{% extends parent_template|default:"base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} | User Profile
+{% endblock %}
+
+{% block head %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
+{% endblock %}
+
+{% block page_heading %}
+    User Profile
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li class="active"><i class="fa fa-user"></i> User Profile</li>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-5">
+            <div class="box box-primary">
+                <div class="box-body box-profile">
+
+                    <h3 class="profile-username text-center">Profile Details</h3>
+
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Username</b> <a class="pull-right">{{ user_profile.username }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>First name</b> <a class="pull-right">{{ user_profile.first_name }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Last name</b> <a class="pull-right">{{ user_profile.last_name }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Email</b> <a class="pull-right">{{ user_profile.email }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Last login</b> <a class="pull-right">{{ user_profile.last_login }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Date added</b> <a class="pull-right">{{ user_profile.date_joined }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Account status</b>
+                            {% if user_profile.is_active %}
+                                <span class="label label-success pull-right">Activated</span>
+                            {% else %}
+                                <span class="label label-danger pull-right">Deactivated</span>
+                            {% endif %}
+                        </li>
+                        <li class="list-group-item">
+                            <b>Position</b>
+                            {% if user_profile.is_superuser %}
+                                <span class="label label-warning pull-right">Superuser</span>
+                            {% else %}
+                                <span class="label label-success pull-right">Staff</span>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    <a href="{{ user_profile.get_update_url }}" class="btn btn-primary"><b>Edit Details</b></a>
+                    <a href="{% url 'password_change' %}" class="btn btn-warning pull-right"><b>Update Password</b></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Recent Activity</h3>
+                </div>
+
+                <div class="box-body">
+                </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- DataTables -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#example1").DataTable();
+            $('#example2').DataTable({
+                "paging": true,
+                "lengthChange": false,
+                "searching": false,
+                "ordering": true,
+                "info": true,
+                "autoWidth": false
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends parent_template|default:"base.html" %}
+
+{% block title %}
+    Bad Request
+{% endblock %}
+
+{% block body %}
+    <body class="hold-transition">
+        <div class="error-page">
+            <h2 class="headline text-orange">400</h2>
+
+            <div class="error-content">
+                <h2><i class="fa fa-warning text-orange"></i> Bad request</h2>
+
+                <h3>
+                    You provided an invalid URL. Are you sure you've got the
+                    right URL? <a href="{% url 'dashboard_home' %}">Proceed to the dashboard</a>  to view available
+                    options.
+                </h3>
+            </div>
+        </div>
+    </body>
+{% endblock %}

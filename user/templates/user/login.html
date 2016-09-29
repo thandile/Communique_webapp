@@ -1,0 +1,31 @@
+{% extends parent_template|default:"base.html" %}
+{% load staticfiles %}
+
+{% block title %}
+  {{ block.super }} | Login
+{% endblock %}
+
+{% block body %}
+  <body class="hold-transition login-page">
+    <div class="login-box">
+      <div class="login-logo">
+        <b>Communiqué</b> App
+      </div>
+      <div class="login-box-body">
+        {% if form.errors %}
+          <p class="login-box-msg text-red">
+            Your username and password didn't match. Please try again.
+          </p>
+        {% else %}
+          <p class="login-box-msg">Log in to start your session</p>
+        {% endif %}
+        {% include "user/login_form.html" %}
+      </div>
+    </div>
+
+    <!-- jQuery 2.2.3 -->
+    <script src="{% static "plugins/jQuery/jquery-2.2.3.min.js" %}"></script>
+    <!-- bootstrap 3.3.6 -->
+    <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+  </body>
+{% endblock %}

@@ -1,0 +1,123 @@
+{% extends parent_template|default:'admissions/base_admissions.html' %}
+{% load staticfiles %}
+
+{% block title %}
+    {{ block.super }} | Admissions
+{% endblock %}
+
+{% block head %}
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{% static "plugins/datatables/dataTables.bootstrap.css"%} ">
+{% endblock %}
+
+{% block admissions_list_menu %}
+    <li class="active">
+        <a href="{% url 'admissions_admission_list' %}">
+            <i class="fa fa-circle-o text-red"></i> Admissions List
+        </a>
+    </li>
+{% endblock %}
+
+{% block page_heading %}
+    Admissions
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'admissions_admission_list' %}"><i class="fa fa-ambulance"></i> Admissions</a></li>
+    <li class="active"><i class="fa fa-table"></i> List</li>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Existing Admissions</h3>
+                </div>
+                <div class="box-body">
+                    <table id="table1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Patient Name</th>
+                                <th>Admission Date</th>
+                                <th>Discharge Date</th>
+                                <th>Added By</th>
+                                <th>Added On</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for admission in admission_list %}
+                                <tr>
+                                    <td>
+                                        <a href="{{ admission.get_absolute_url }}">
+                                            {{ admission.patient.identifier }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ admission.get_absolute_url }}">
+                                            {{ admission.patient.get_full_name }}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ admission.get_absolute_url }}">{{ admission.admission_date }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ admission.get_absolute_url }}">
+                                            {% if admission.discharge_date %}
+                                                {{ admission.discharge_date }}
+                                            {% else %}
+                                                Unavailable
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ admission.get_absolute_url }}">
+                                            {% if admission.created_by %}
+                                                {{ admission.created_by.get_full_name }}
+                                            {% else %}
+                                                Unavailable
+                                            {% endif %}
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{{ admission.get_absolute_url }}">{{ admission.date_created }}</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Patient Name</th>
+                                <th>Admission Date</th>
+                                <th>Discharge Date</th>
+                                <th>Added By</th>
+                                <th>Added On</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="box-footer">
+                    <a class="btn btn-primary" href="{% url 'admissions_admission_create' %}">Add Admission</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- DataTables -->
+    <script src="{% static "plugins/datatables/jquery.dataTables.min.js" %}"></script>
+    <script src="{% static "plugins/datatables/dataTables.bootstrap.min.js" %}"></script>
+    <!-- page script -->
+    <script>
+        $(function () {
+            $("#table1").DataTable();
+        });
+    </script>
+{% endblock %}

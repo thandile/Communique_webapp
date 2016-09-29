@@ -1,0 +1,24 @@
+{% extends parent_template|default:"base.html" %}
+
+{% block title %}
+    Server Error
+{% endblock %}
+
+{% block body %}
+    <body class="hold-transition">
+        <div class="error-page">
+            <h2 class="headline text-red">500</h2>
+
+            <div class="error-content">
+                <h2><i class="fa fa-warning text-red"></i> Something went wrong!</h2>
+
+                <h3>
+                    We will work on fixing that right away. Meanwhile, you may
+                    <a href="{% url 'dashboard_home' %}">go to the dashboard.</a>
+                </h3>
+            </div>
+        </div>
+    </body>
+{% endblock %}
+
+

@@ -1,0 +1,135 @@
+{% extends parent_template|default:'medical/base_medical.html' %}
+
+{% block title %}
+    {{ block.super }} | Medical Report
+{% endblock %}
+
+{% block page_heading %}
+    Medical Report
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'medical_report_list' %}"><i class="fa fa-medkit"></i> Medical Reports</a></li>
+    <li class="active"><i class="fa fa-medkit"></i> Medical Report</li>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <h3 class="text-center">Medical Report Details</h3>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Report Type</b>
+                            <a class="pull-right">{{ medical_report.report_type }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Added By</b>
+                            <a class="pull-right">
+                                {% if medical_report.created_by %}
+                                    {{ medical_report.created_by.get_full_name }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Added On</b> <a class="pull-right">{{ medical_report.date_created }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Modified By</b>
+                            <a class="pull-right">
+                                {% if medical_report.last_modified_by %}
+                                    {{ medical_report.last_modified_by.get_full_name }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Modified On</b> <a class="pull-right">{{ medical_report.date_last_modified }}</a>
+                        </li>
+                    </ul>
+                    <a href="{{ medical_report.get_update_url }}" class="btn btn-primary"><b>Edit</b></a>
+                    <a href="{{ medical_report.get_delete_url }}" class="btn btn-danger">
+                        <b>Delete</b>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <h3 class="text-center">Patient Details</h3>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Name</b> <a class="pull-right">{{ medical_report.patient.get_full_name }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Patient ID</b>
+                            <a class="pull-right">
+                                {% if medical_report.patient.identifier %}
+                                    {{ medical_report.patient.identifier }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Clinic/Hospital</b>
+                            <a class="pull-right">
+                                {% if medical_report.patient.reference_health_centre %}
+                                    {{ medical_report.patient.reference_health_centre }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Address</b>
+                            <a class="pull-right">
+                                {% if medical_report.patient.location %}
+                                    {{ medical_report.patient.location }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Contact Number</b>
+                            <a class="pull-right">
+                                {% if medical_report.patient.contact_number %}
+                                    {{ medical_report.patient.contact_number }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                    </ul>
+                    <a href="{{ medical_report.patient.get_absolute_url }}" class="btn btn-primary btn-block">
+                        <b>More patient details</b>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+                    <p>
+                        {% if medical_report.notes %}
+                            {{ medical_report.notes }}
+                        {% else %}
+                            This report currently doesn't have any notes.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends parent_template|default:'admissions/base_admissions.html' %}
+
+{% block title %}
+    {{ block.super }} | Admission
+{% endblock %}
+
+{% block page_heading %}
+    Admission
+{% endblock %}
+
+{% block page_subheading %}
+{% endblock %}
+
+{% block page_breadcrumb %}
+    <li><a href="{% url 'dashboard_home' %}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li><a href="{% url 'admissions_admission_list' %}"><i class="fa fa-ambulance"></i> Admissions</a></li>
+    <li class="active"><i class="fa fa-ambulance"></i> Admission</li>
+{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <h3 class="text-center">Admission Details</h3>
+                    <ul class="list-group list-group-unbordered">
+                        <li class="list-group-item">
+                            <b>Admission Date</b><a class="pull-right">{{ admission.admission_date }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Discharge Date</b>
+                            <a class="pull-right">
+                                {% if admission.discharge_date %}
+                                    {{ admission.discharge_date }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Admitted To</b>
+                            <a class="pull-right">{{ admission.health_centre }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Created By</b>
+                            <a class="pull-right">
+                                {% if admission.created_by %}
+                                    {{ admission.created_by.get_full_name }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Created On</b>
+                            <a class="pull-right">{{ admission.date_created }}</a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Modified By</b>
+                            <a class="pull-right">
+                                {% if admission.last_modified_by %}
+                                    {{ admission.last_modified_by.get_full_name }}
+                                {% else %}
+                                    Unavailable
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Modified On</b>
+                            <a class="pull-right">{{ admission.date_last_modified }}</a>
+                        </li>
+                    </ul>
+                    <a href="{{ admission.get_update_url }}" class="btn btn-primary"><b>Edit</b></a>
+                    <a href="{{ admission.get_delete_url }}" class="btn btn-danger"><b>Delete</b></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <h3 class="text-center">Patient Details</h3>
+                    {% if admission.patient %}
+                        <ul class="list-group list-group-unbordered">
+                            <li class="list-group-item">
+                                <b>Name</b> <a class="pull-right">{{ admission.patient.get_full_name }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Patient ID</b>
+                                <a class="pull-right">
+                                    {% if admission.patient.identifier %}
+                                        {{ admission.patient.identifier }}
+                                    {% else %}
+                                        Unavailable
+                                    {% endif %}
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Health Centre</b>
+                                <a class="pull-right">
+                                    {% if admission.patient.reference_health_centre %}
+                                        {{ admission.patient.reference_health_centre }}
+                                    {% else %}
+                                        Unavailable
+                                    {% endif %}
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Address</b>
+                                <a class="pull-right">
+                                    {% if admission.patient.location %}
+                                        {{ admission.patient.location }}
+                                    {% else %}
+                                        Unavailable
+                                    {% endif %}
+                                </a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Contact Number</b>
+                                <a class="pull-right">
+                                    {% if admission.patient.contact_number %}
+                                        {{ admission.patient.contact_number }}
+                                    {% else %}
+                                        Unavailable
+                                    {% endif %}
+                                </a>
+                            </li>
+                        </ul>
+                        <a href="{{ admission.patient.get_absolute_url }}" class="btn btn-primary btn-block">
+                            <b>More patient details</b>
+                        </a>
+                    {% else %}
+                        <p>This admission currently doesn't have a patient assigned to it.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <div class="box box-primary">
+                <div class="box-body">
+                    <strong><i class="fa fa-file-text-o margin-r-5"></i> Notes</strong>
+                    <p>
+                        {% if admission.notes %}
+                            {{ admission.notes }}
+                        {% else %}
+                            This admission currently doesn't have any notes.
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
