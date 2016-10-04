@@ -1,12 +1,14 @@
 from rest_framework import serializers
 
 from admissions.models import Admission
+from adverse.models import EmergencyContact, AdverseEventType, AdverseEvent
 from appointments.models import Appointment
 from counselling_sessions.models import CounsellingSession, CounsellingSessionType
 from medical.models import MedicalReportType, MedicalReport
 from occasions.models import Event
 from programs.models import Program
 from patients.models import Patient, Enrollment
+from regimens.models import Drug, Regimen
 from user.models import CommuniqueUser, Profile
 
 
@@ -24,6 +26,21 @@ class ProgramSerializer(serializers.ModelSerializer):
         read_only_fields = ('date_created', 'date_last_modified',)
 
 
+class PatientSerializer(serializers.ModelSerializer):
+    """
+    A serializer for the Patient model.
+    """
+    created_by = serializers.ReadOnlyField(source='created_by.username')
+    last_modified_by = serializers.ReadOnlyField(source='last_modified_by.username')
+
+    class Meta:
+        model = Patient
+        fields = ('id', 'last_name', 'other_names',  'sex', 'birth_date', 'identifier', 'location',
+                  'contact_number', 'reference_health_centre', 'interim_outcome', 'treatment_start_date',
+                  'created_by', 'last_modified_by', 'date_created', 'date_last_modified', 'enrolled_programs')
+        read_only_fields = ('date_created', 'date_last_modified',)
+
+
 class EnrollmentSerializer(serializers.ModelSerializer):
     """
     A serializer for the Enrollment model.
@@ -34,22 +51,6 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         model = Enrollment
         fields = ('id', 'patient', 'program', 'comment', 'is_active', 'enrolled_by', 'date_enrolled')
         read_only_fields = ('date_enrolled',)
-
-
-class PatientSerializer(serializers.ModelSerializer):
-    """
-    A serializer for the Patient model.
-    """
-    created_by = serializers.ReadOnlyField(source='created_by.username')
-    last_modified_by = serializers.ReadOnlyField(source='last_modified_by.username')
-    enrollments = EnrollmentSerializer(many=True)
-
-    class Meta:
-        model = Patient
-        fields = ('id', 'first_name', 'last_name', 'middle_name', 'birth_date', 'identifier', 'location',
-                  'contact_number', 'reference_health_centre', 'enrolled_programs', 'created_by', 'last_modified_by',
-                  'date_created', 'date_last_modified', 'enrollment')
-        read_only_fields = ('date_created', 'date_last_modified',)
 
 
 class CommuniqueUserSerializer(serializers.ModelSerializer):
@@ -102,7 +103,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Appointment
-        fields = ('title', 'notes', 'patient', 'owner', 'appointment_date', 'start_time', 'end_time', 'created_by',
+        fields = ('id', 'title', 'notes', 'patient', 'owner', 'appointment_date', 'start_time', 'end_time', 'created_by',
                   'last_modified_by', 'date_created', 'date_last_modified')
         read_only_fields = ('date_created', 'date_last_modified')
 
@@ -113,7 +114,7 @@ class AdmissionSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Admission
-        fields = ('patient', 'admission_date', 'discharge_date', 'health_centre', 'notes', 'created_by',
+        fields = ('id', 'patient', 'admission_date', 'discharge_date', 'health_centre', 'notes', 'created_by',
                   'last_modified_by', 'date_created', 'date_last_modified')
         read_only_fields = ('date_created', 'date_last_modified')
 
@@ -124,7 +125,7 @@ class MedicalReportTypeSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = MedicalReportType
-        fields = ('name', 'description', 'created_by', 'last_modified_by', 'date_created', 'date_last_modified')
+        fields = ('id', 'name', 'description', 'created_by', 'last_modified_by', 'date_created', 'date_last_modified')
         read_only_fields = ('date_created', 'date_last_modified')
 
 
@@ -134,7 +135,7 @@ class MedicalReportSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = MedicalReport
-        fields = ('title', 'report_type', 'patient', 'notes', 'date_created', 'date_last_modified', 'created_by',
+        fields = ('id', 'title', 'report_type', 'patient', 'notes', 'date_created', 'date_last_modified', 'created_by',
                   'last_modified_by')
         read_only_fields = ('date_created', 'date_last_modified')
 
@@ -145,6 +146,60 @@ class EventSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Event
-        fields = ('name', 'description', 'event_date', 'start_time', 'end_time', 'created_by', 'last_modified_by',
+        fields = ('id', 'name', 'description', 'event_date', 'start_time', 'end_time', 'created_by', 'last_modified_by',
                   'date_created', 'date_last_modified')
-        ead_only_fields = ('date_created', 'date_last_modified')
+        read_only_fields = ('date_created', 'date_last_modified')
+
+
+class EmergencyContactSerializer(serializers.ModelSerializer):
+    """"
+    A serializer for the EmergencyContact model.
+    """
+    class Meta:
+        model = EmergencyContact
+        fields = ('id', 'name', 'email', 'date_created', 'date_last_modified', 'created_by', 'last_modified_by')
+        read_only_fields = ('date_created', 'date_last_modified')
+
+
+class AdverseEventTypeSerializer(serializers.ModelSerializer):
+    """"
+    A serializer for the AdverseEventType model.
+    """
+    class Meta:
+        model = AdverseEventType
+        fields = ('id', 'name', 'description', 'emergency_contacts', 'date_created', 'date_last_modified', 'created_by',
+                  'last_modified_by')
+        read_only_fields = ('date_created', 'date_last_modified')
+
+
+class AdverseEventSerializer(serializers.ModelSerializer):
+    """"
+    A serializer for the AdverseEvent model.
+    """
+    class Meta:
+        model = AdverseEvent
+        fields = ('id', 'patient', 'adverse_event_type', 'event_date', 'notes', 'date_created', 'date_last_modified',
+                  'created_by', 'last_modified_by')
+        read_only_fields = ('date_created', 'date_last_modified')
+
+
+class DrugSerializer(serializers.ModelSerializer):
+    """"
+    A serializer for the Drug model.
+    """
+    class Meta:
+        model = Drug
+        fields = ('id', 'name', 'adverse_event_type', 'description', 'date_created', 'date_last_modified',
+                  'created_by', 'last_modified_by')
+        read_only_fields = ('date_created', 'date_last_modified')
+
+
+class RegimenSerializer(serializers.ModelSerializer):
+    """"
+    A serializer for the Regimen model.
+    """
+    class Meta:
+        model = Regimen
+        fields = ('id', 'patient', 'notes', 'drugs', 'date_started', 'date_ended', 'date_created', 'date_last_modified',
+                  'created_by', 'last_modified_by')
+        read_only_fields = ('date_created', 'date_last_modified')

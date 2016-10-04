@@ -214,3 +214,88 @@ class EventViewSet(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         # save the user that has made the modification
         serializer.save(last_modified_by=self.request.user)
+
+
+class EmergencyContactViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint provides calls to CRUD EmergencyContact models.
+    """
+    queryset = EmergencyContact.objects.all()
+    serializer_class = EmergencyContactSerializer
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
+
+    def perform_create(self, serializer):
+        # save the user that is enrolling the patient
+        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
+
+    def perform_update(self, serializer):
+        # save the user that has made the modification
+        serializer.save(last_modified_by=self.request.user)
+
+
+class AdverseEventTypeViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint provides calls to CRUD AdverseEventType models.
+    """
+    queryset = AdverseEventType.objects.all()
+    serializer_class = AdverseEventTypeSerializer
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
+
+    def perform_create(self, serializer):
+        # save the user that is enrolling the patient
+        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
+
+    def perform_update(self, serializer):
+        # save the user that has made the modification
+        serializer.save(last_modified_by=self.request.user)
+
+
+class AdverseEventViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint provides calls to CRUD AdverseEvent models.
+    """
+    queryset = AdverseEvent.objects.all()
+    serializer_class = AdverseEventSerializer
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
+
+    def perform_create(self, serializer):
+        # save the user that is enrolling the patient
+        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
+
+    def perform_update(self, serializer):
+        # save the user that has made the modification
+        serializer.save(last_modified_by=self.request.user)
+
+
+class DrugViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint provides calls to CRUD Drug models.
+    """
+    queryset = Drug.objects.all()
+    serializer_class = DrugSerializer
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
+
+    def perform_create(self, serializer):
+        # save the user that is enrolling the patient
+        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
+
+    def perform_update(self, serializer):
+        # save the user that has made the modification
+        serializer.save(last_modified_by=self.request.user)
+
+
+class RegimenViewSet(viewsets.ModelViewSet):
+    """
+    This endpoint provides calls to CRUD Regimen models.
+    """
+    queryset = Regimen.objects.all()
+    serializer_class = RegimenSerializer
+    permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
+
+    def perform_create(self, serializer):
+        # save the user that is enrolling the patient
+        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
+
+    def perform_update(self, serializer):
+        # save the user that has made the modification
+        serializer.save(last_modified_by=self.request.user)
