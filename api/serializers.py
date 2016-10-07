@@ -189,7 +189,7 @@ class DrugSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Drug
-        fields = ('id', 'name', 'adverse_event_type', 'description', 'date_created', 'date_last_modified',
+        fields = ('id', 'name', 'description', 'date_created', 'date_last_modified',
                   'created_by', 'last_modified_by')
         read_only_fields = ('date_created', 'date_last_modified')
 
