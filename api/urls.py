@@ -1,6 +1,7 @@
 from django.conf.urls import url, include
 
 from rest_framework.routers import DefaultRouter
+from fcm_django.api.rest_framework import FCMDeviceAuthorizedViewSet
 
 from .views import *
 
@@ -25,7 +26,7 @@ router.register(r'drug', DrugViewSet)
 router.register(r'regimen', RegimenViewSet)
 router.register(r'outcomeType', OutcomeTypeViewSet)
 router.register(r'outcome', OutcomeViewSet)
-
+router.register(r'devices', FCMDeviceAuthorizedViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
