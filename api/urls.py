@@ -23,6 +23,8 @@ router.register(r'adverseEventType', AdverseEventTypeViewSet)
 router.register(r'contact', EmergencyContactViewSet)
 router.register(r'drug', DrugViewSet)
 router.register(r'regimen', RegimenViewSet)
+router.register(r'outcomeType', OutcomeTypeViewSet)
+router.register(r'outcome', OutcomeViewSet)
 
 
 urlpatterns = [
