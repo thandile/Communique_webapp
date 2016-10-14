@@ -3,9 +3,7 @@ from django.dispatch import receiver
 
 from communique.utils.utils_signals import send_notification
 from .models import Patient, Enrollment
-from fcm_django.models import FCMDevice
 
-device = FCMDevice.objects.all().first()
 
 @receiver(post_save, sender=Patient)
 def post_patient_save_callback(sender, **kwargs):
@@ -24,11 +22,6 @@ def post_patient_save_callback(sender, **kwargs):
             temp_str = 'updated'
 
         verb = "{0} the patient:".format(temp_str)
-        try:
-            device.send_message("Title", "Message")
-            device.send_message(data={"test": "test"})
-        except:
-            print("Oops!  That was no valid number.  Try again...")
 
         send_notification(actor=patient.last_modified_by, action_object=patient, verb=verb, entity_name='patient')
 
