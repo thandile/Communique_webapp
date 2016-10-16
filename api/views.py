@@ -350,12 +350,5 @@ class NotificationRegistrationViewSet(viewsets.ModelViewSet):
     queryset = NotificationRegistration.objects.all()
     serializer_class = NotificationRegistrationSerializer
     permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
-    
-    def perform_create(self, serializer):
-        # save the user that is enrolling the patient
-        serializer.save(created_by=self.request.user, last_modified_by=self.request.user)
-
-    def perform_update(self, serializer):
-        # save the user that has made the modification
-        serializer.save(last_modified_by=self.request.user)
+  
     
