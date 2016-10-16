@@ -69,9 +69,9 @@ class EmergencyContactDeleteViewTestCase(ExistingEmergencyContactViewsTestCase):
     """
     view_template_name = 'adverse/emergency_contact_confirm_delete.html'
 
-    def test_active_user_access(self):
+    def test_active_super_user_access(self):
         emergency_contact = EmergencyContact.objects.get(id=1)
-        self.only_active_user_access_test(emergency_contact.get_delete_url(), self.view_template_name)
+        self.only_active_super_user_access_test(emergency_contact.get_delete_url(), self.view_template_name)
 
 
 class AdverseEventTypeCreateViewTestCase(ViewsTestCase):
@@ -135,9 +135,9 @@ class AdverseEventTypeDeleteViewTestCase(ExistingAdverseEventTypeViewsTestCase):
     """
     view_template_name = 'adverse/adverse_event_type_confirm_delete.html'
 
-    def test_active_user_access(self):
+    def test_active_super_user_access(self):
         adverse_event_type = AdverseEventType.objects.get(id=1)
-        self.only_active_user_access_test(adverse_event_type.get_delete_url(), self.view_template_name)
+        self.only_active_super_user_access_test(adverse_event_type.get_delete_url(), self.view_template_name)
 
 
 class AdverseEventCreateViewTestCase(ViewsTestCase):
@@ -159,6 +159,31 @@ class AdverseEventListViewTestCase(ViewsTestCase):
     view_name = 'adverse_event_list'
     view_template_name = 'adverse/adverse_event_list.html'
     view_url = reverse(view_name)
+
+    def test_active_user_access(self):
+        self.only_active_user_access_test(self.view_url, self.view_template_name)
+
+
+class AdverseEventExportFormViewTestCase(ViewsTestCase):
+    """
+    Test cases for the view that displays the export form
+    """
+    view_name = 'adverse_event_export_form'
+    view_template_name = 'adverse/adverse_event_export_list.html'
+    view_url = reverse(view_name)
+
+    def test_active_user_access(self):
+        self.only_active_user_access_test(self.view_url, self.view_template_name)
+
+
+class AdverseEventExportListViewTestCase(ViewsTestCase):
+    """
+    Test cases for the view to list adverse events for exportation
+    """
+    view_name = 'adverse_event_export_list'
+    view_template_name = 'adverse/adverse_event_export_list.html'
+    view_url = reverse(view_name, kwargs={'start_year':'2000', 'start_month':'01', 'start_day':'01',
+                                          'end_year':'2001', 'end_month':'01', 'end_day':'01'})
 
     def test_active_user_access(self):
         self.only_active_user_access_test(self.view_url, self.view_template_name)
@@ -204,6 +229,6 @@ class AdverseEventDeleteViewTestCase(ExistingAdverseEventViewsTestCase):
     """
     view_template_name = 'adverse/adverse_event_confirm_delete.html'
 
-    def test_active_user_access(self):
+    def test_active_super_user_access(self):
         adverse_event = AdverseEvent.objects.get(id=1)
-        self.only_active_user_access_test(adverse_event.get_delete_url(), self.view_template_name)
+        self.only_active_super_user_access_test(adverse_event.get_delete_url(), self.view_template_name)

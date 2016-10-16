@@ -7,3 +7,4 @@ whitenoise==3.2
 django-widget-tweaks==1.4.1
 django-notifications-hq==1.2
 fcm-django
+
