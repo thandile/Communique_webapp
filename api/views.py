@@ -57,13 +57,7 @@ class EnrollmentViewSet(viewsets.ModelViewSet):
     serializer_class = EnrollmentSerializer
     permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
 
-    def perform_create(self, serializer):
-        # save the user that is enrolling the patient
-        serializer.save(enrolled_by=self.request.user)
 
-    def perform_update(self, serializer):
-        # save the user that has made the modification
-        serializer.save(last_modified_by=self.request.user)
 
 
 class CommuniqueUserViewSet(viewsets.ModelViewSet):
