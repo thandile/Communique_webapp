@@ -342,7 +342,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
     serializer_class = NotificationSerializer
     permission_classes = (permissions.IsAuthenticated, IsActiveUser,)
     
-    
+
 class NotificationRegistrationViewSet(viewsets.ModelViewSet):
     """
     This endpoint provides calls to CRUD NotificationRegistration models.
@@ -358,7 +358,4 @@ class NotificationRegistrationViewSet(viewsets.ModelViewSet):
     def perform_update(self, serializer):
         # save the user that has made the modification
         serializer.save(last_modified_by=self.request.user)
-    
-
-
     

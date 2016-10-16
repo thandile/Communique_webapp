@@ -29,6 +29,7 @@ router.register(r'notifications', NotificationViewSet)
 router.register(r'devices', FCMDeviceAuthorizedViewSet)
 router.register(r'notificationRegistration', NotificationRegistrationViewSet)
 
+
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^login/(?P<username>\w+)/$', ProfileLoginView.as_view(), name='api_login'),

@@ -231,7 +231,7 @@ class OutcomeSerializer(serializers.ModelSerializer):
 
 class NotificationSerializer(serializers.ModelSerializer):
     """
-    A serializer for the Notification model.
+    A serializer for the Outcome model.
     """
     class Meta:
         model = Notification
